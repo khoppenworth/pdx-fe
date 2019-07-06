@@ -1,0 +1,81 @@
+<div class="row form-horizontal">
+    <div class="col-md-12">
+        <table class="table mainTable table-hovered fixedTableLayout" ng-validate-form="vm.prescreenValidation.checklist">
+            <thead>
+                <tr>
+                    <th class="text-center checklistDropDownArrow"></th>
+                    <th class="text-center checklistNameReducedWidth">Checklist</th>
+                    <th class="text-center checklistOptionGroups">Applicant</th>
+                    <th class="text-center checklistOptionGroups">Screener</th>
+                </tr>
+            </thead>
+            <tbody ng-include src="'checklist-body'">
+            </tbody>
+        </table>
+        <a ng-click="vm.CompareCheckList()" class="btn btn-default">Compare</a>
+        <a ng-click="vm.saveChecklist()" class="btn btn-default">Save</a>
+        <a ng-click="vm.returnMa()" permission="permissions.MA.MAReturnToApplicant" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Return' class="btn btn-warning">Return</a>
+        <a ng-click="vm.completePrescreen()" permission="permissions.MA.MAPrescreen" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Complete' class="btn btn-primary">Complete</a>
+        <!-- <button class="btn btn-primary" permission="permissions.MA.MAVerify" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Verify' ng-click="vm.verifyMa()">Verifiy</button> -->
+    </div>
+</div>
+<script type="text/ng-template " id="checklist-body">
+    <tr ng-class="{'redClass': checklist.isMatch!=null &&!checklist.isMatch,'greenClass' :checklist.isMatch }" ng-repeat-start="checklist in vm.maregistration.checklists | orderBy:'priority' track by checklist.id " ng-init="checklist.rowExpanded=checklist.children.length>0;
+      checklist.style = 'min-width:60px';
+      checklist.showAnswerButton=vm.showAnswerButton(checklist);">
+        <td class="checklistDropDownArrow">
+            <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down pull-right"></span>
+            <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up pull-right"></span>
+        </td>
+        <td colspan="{{checklist.showAnswerButton?1:3}}">
+            {{checklist.label}} &nbsp; {{checklist.name}}
+        </td>
+        <td class="text-center checklistOptionGroups" ng-if="checklist.showAnswerButton" ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'APL'}}">
+            <button-group group-style="checklist.style" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions"></button-group>
+        </td>
+        <td ng-if="checklist.showAnswerButton" class="text-center checklistOptionGroups" ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'PRSC'}}">
+            <button-group group-style="checklist.style" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.prePossibleOptions" ng-validate="vm.prescreenValidation.checklist[checklist.id].optionID" ng-change="vm.notifyChecklistChanged()"></button-group>
+            <div class=" text-error-table" ng-if="!vm.prescreenValidation.checklist[checklist.id].optionID && vm.prescreenValidation.checklist.$showError">
+                <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+        <td class="checklistChildCell" colspan="4" ng-include src="'checklist-children'"></td>
+    </tr>
+</script>
+
+<script type="text/ng-template " id="checklist-children">
+    <table class="table table-hovered detailTable fixedTableLayout">
+        <tr ng-class="{'redClass':checklist.isMatch!=null && !checklist.isMatch,'greenClass' :checklist.isMatch}" ng-repeat-start="checklist in checklist.children | orderBy:'priority' track by checklist.id" ng-init="checklist.rowExpanded=checklist.children.length>0;
+        checklist.style = 'min-width:60px';
+        checklist.showAnswerButton=vm.showAnswerButton(checklist);">
+            <td ng-style="{'padding-left': checklist.depth*35+'px','width':checklist.depth*25+35+'px', 'padding-right':0}">
+                <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down pull-right"></span>
+                <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up pull-right"></span>
+            </td>
+            <td colspan="{{checklist.showAnswerButton?1:3}}">
+                {{checklist.label}} &nbsp; {{checklist.name}}
+            </td>
+            <td ng-if="checklist.showAnswerButton" class="text-center checklistOptionGroups">
+                <button-group disabled ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'APL'}}" style="min-width:40px;" group-style="checklist.style" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions"></button-group>
+                <div class="col-lg-12" ng-if="(checklist.maChecklists|filter:{responderType:{responderTypeCode:'APL'}}).length == 0">
+                    <p>Not answered yet!!!</p>
+                </div>
+            </td>
+            <td ng-if="checklist.showAnswerButton" class="text-center checklistOptionGroups">
+                <button-group ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'PRSC'}}" style="min-width:40px;" group-style="checklist.style" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.prePossibleOptions"
+                    ng-validate="vm.prescreenValidation.checklist[checklist.id].optionID" ng-change="vm.notifyChecklistChanged()"></button-group>
+                <div class=" text-error-table" ng-if="!vm.prescreenValidation.checklist[checklist.id].optionID && vm.prescreenValidation.checklist.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+                <div class="col-lg-12" ng-if="(checklist.maChecklists|filter:{responderType:{responderTypeCode:'PRSC'}}).length == 0">
+                    <p>Not answered yet!!!</p>
+                </div>
+            </td>
+        </tr>
+        <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+            <td class="checklistChildCell" colspan="4" ng-include src="'checklist-children'"></td>
+        </tr>
+    </table>
+</script>

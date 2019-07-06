@@ -1,0 +1,13 @@
+<div class="ibox-title">
+    <div class="col-lg-6 no-padding">
+        <!--<input class="form-control" placeholder="Search ...."></input>-->
+    </div>
+    <div ibox-tools class="pull-right">
+        <a class=" btn btn-primary  btn-outline btn-sm" type="button" permission="permissions.Agent.CreateAgent" ng-click="vm.createAgent()" title="Add Applicant"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
+<div class="ibox-content">
+    <div class="table-responsive">
+        <table id="agentListTable" class="table table-striped" datatable="" dt-options="vm.dtOptions" dt-columns="vm.dtColumns" dt-instance="vm.dtInstance"></table>
+    </div>
+</div>

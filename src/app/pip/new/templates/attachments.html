@@ -1,0 +1,46 @@
+<fieldset ng-validate-form="vm.importPermitValidation.attachment">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th style="width:50%">Attachement</th>
+                    <th>Upload</th>
+                    <th>Status</th>
+                    <th>Preview</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="md in vm.moduleDocuments |orderBy:'-isRequired'" track by $index>
+                    <td>{{$index + 1}}</td>
+                    <td style="width:50%">
+                        {{md.documentType.name}}  <span class="text-danger" ng-if="md.isRequired">*</span>
+                        <br>
+                        <small>{{md.documentType.description}}</small>
+                    </td>
+                    <td>
+                        <file-uploader attachment-info="md.attachmentInfo"></file-uploader>
+                        <small>{{md.attachmentInfo.fileName}}</small>
+                        <small ng-if="md.isRequired && !vm.importPermitValidation.attachment[$index].document && vm.importPermitValidation.attachment.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+                    </td>
+
+                    <td>
+                        <a href="" ng-show="md.attachmentInfo.document">
+                            <i class="fa fa-check text-navy"></i>
+                        </a>
+                        <input ng-if="md.isRequired" ng-model="md.attachmentInfo.document" class="hidden" ng-validate="vm.importPermitValidation.attachment[$index].document" />
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-outline" ng-show="md.attachmentInfo.document" type="button" ng-click="vm.openFileModal(md)">
+                                <i class="fa fa-eye text-navy"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a ng-click="vm.SaveDraft()" class="btn btn-default">Save</a>
+    <a ui-sref="pip.new.detail" class="btn btn-default">Previous</a>
+    <a ng-click="vm.attachmentToTerms()" class="btn btn-primary">Next</a>
+</fieldset>

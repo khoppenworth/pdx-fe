@@ -1,0 +1,96 @@
+<fieldset>
+    <div class="row form-horizontal" ng-disabled="vm.isInputDisabled('Manufacturers')">
+        <div class="col-md-12" ng-validate-form="vm.manufacturerValidation">
+            <div class="col-md-6 form-group">
+                <div class=" col-xs-12 ">
+                    <label>Manufacturer <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <ui-select ng-model="vm.manu" theme="bootstrap" id="manufacturerSelect" reset-search-input="false" on-select="vm.onProductSelected()" ng-validate="vm.manufacturerValidation.manufacturer">
+                            <ui-select-match placeholder="Search by name [2 characters] ...">{{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="man in vm.manufacturers | filter: $select.search|orderBy:['name']" refresh="vm.searchManufacturer($select.search)" refresh-delay="300" minimum-input-length="2">
+                                <div><span ng-bind-html="man.name | highlight: $select.search"></span></div>
+                                <small><span ng-bind-html="man.site | highlight: $select.search"></span></small>
+                                <span ng-if="man.site!=null"><br/></span>
+                                <small><span ng-bind-html="man.country | highlight: $select.search"></span></small>
+                                <div ng-if="$index == $select.items.length-1">
+                                    <button class="btn btn-xs btn-primary" style="width: 100%; margin-top: 5px;" ng-click="vm.searchManufacturer($select.search, $event);" ng-disabled="loading">Load more...
+                  </button>
+                                </div>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-btn">
+              <button style="padding:7px 12px" title="Register New Manufacturer"
+                      ng-click="vm.registerNewManufacturer()"
+                      class="btn btn-primary btn-sm btn-outline"><i class="fa fa fa-plus"></i></button>
+            </span>
+                    </div>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.manufacturerValidation.manufacturer && vm.manufacturerValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div style="margin:0 2px;" class="col-md-5 form-group">
+                <div class="col-xs-12">
+                    <label>Manufacturer Type <span class="text-danger">*</span></label>
+                    <ui-select style="min-height:33px;" name="userRoles" multiple ng-model="vm.manufacturerT" theme="bootstrap" ng-validate="vm.manufacturerValidation.manufacturer_type">
+                        <ui-select-match>{{$item.name}}</ui-select-match>
+                        <ui-select-choices repeat="mType in vm.manufacturerTypes | orderBy:'name' | filter: $select.search">
+                            <div><span ng-bind-html="mType.name | highlight: $select.search"></span></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.manufacturerValidation.manufacturer_type && vm.manufacturerValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-1">
+                <button style="margin-top:24px;" title="Add to List" ng-click="vm.addManufacturerToList()" class="btn btn-primary btn-sm btn-outline">ADD</i></button>
+            </div>
+        </div>
+        <div class="col-md-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+
+                        <th></th>
+                        <th>Name</th>
+                        <th>Country</th>
+                        <th>Site Address</th>
+                        <th>Type</th>
+                        <th>GMP Inspection</th>
+                        <th>Certificate Number</th>
+                        <th>GMP Inspection Date</th>
+                        <th>License Number</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-validate-form="vm.maregistrationValidation.productManu" ng-repeat="man in vm.maregistration.product.productManufacturers" track by $index>
+                        <td>{{$index+1}}</td>
+                        <td ng-validate="vm.maregistrationValidation.productManu[$index].manufacturer" ng-model="man.manufacturerAddress.manufacturer.name">{{man.manufacturerAddress.manufacturer.name}}
+                        </td>
+                        <td>{{man.manufacturerAddress.address.country.name}}</td>
+                        <td>{{man.manufacturerAddress.address.line1 ? man.manufacturerAddress.address.line1 : man.manufacturerAddress.manufacturer.site}}</td>
+                        <td>{{man.manufacturerType.name || man.manufacturer_type.name}}</td>
+                        <td>{{man.manufacturerAddress.manufacturer.isGMPInspected? "Yes" : "No"}}</td>
+                        <td>{{man.manufacturerAddress.manufacturer.gmpCertificateNumber | filterNull}}</td>
+                        <td>{{man.manufacturerAddress.manufacturer.gmpInspectedDate | filterNull | date}}</td>
+                        <td>{{man.manufacturerAddress.manufacturer.licenseNumber | filterNull}}</td>
+                        <td ng-click="vm.deleteManufacturerFromList(man)"><i class="btn btn-primary btn-outline btn-xs btn-danger fa fa-remove"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ng-click="vm.backToComposition()" class="btn btn-default">Previous</a>
+            <a ng-if="!vm.isLegacy" ng-click="vm.manufacturersToForeignApplications()" class="btn btn-primary">Next</a>
+            <a ng-if="vm.isLegacy" ng-click="vm.SubmitNewApplication()" class="btn btn-primary">Update</a>
+        </div>
+    </div>
+</div>

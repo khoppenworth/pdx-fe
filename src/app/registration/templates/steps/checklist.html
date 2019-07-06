@@ -1,0 +1,66 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.checklist">
+    <div class="row form-horizontal" ng-disabled="vm.isInputDisabled('Checklists')">
+        <div class="col-md-12">
+            <table class="table mainTable table-hovered" ng-show="vm.submoduleCheckList.length > 0">
+                <thead>
+                    <tr>
+                        <th>Checklist</th>
+                        <th class="text-right">Included</th>
+                    </tr>
+                </thead>
+                <tbody ng-include src="'checklist-body'">
+                </tbody>
+            </table>
+            <div ng-show="vm.submoduleCheckList.length === 0">
+                <h4 class="disabledLookingText">No Checklist Available for {{vm.maregistration.ma.maType.name}} </h4>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ui-sref="{{vm.states.dossier}}" class="btn btn-default">Previous</a>
+            <a ng-click="vm.checklistToTerms()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template " id="checklist-body">
+    <tr ng-repeat-start="checklist in vm.submoduleCheckList | orderBy:'priority' track by checklist.id " ng-init="checklist.rowExpanded=checklist.children.length>0;checklist.style = 'min-width:60px'">
+        <td ng-class="{'left-26':!checklist.children || checklist.children.length<=0 }" colspan="{{vm.showAnswerButton(checklist)?1:2}}">
+            <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+            <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span> {{checklist.label}} &nbsp; {{checklist.name}}
+        </td>
+        <td ng-if="vm.showAnswerButton(checklist)" class="text-right">
+            <button-group group-style="checklist.style" ng-if="!checklist.children.length>0" ng-model="checklist.optionID" lookups="checklist.optionGroup.possibleOptions" ng-validate="vm.maregistrationValidation.checklist[checklist.id].optionID"></button-group>
+            <div class=" text-error-table" ng-if="!vm.maregistrationValidation.checklist[checklist.id].optionID && vm.maregistrationValidation.checklist.$showError">
+                <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+        <td style="padding-right:0;" class="left-26" colspan="2" ng-include src="'checklist-children'"></td>
+    </tr>
+</script>
+
+<script type="text/ng-template " id="checklist-children">
+    <table class="table table-hovered detailTable left-26">
+        <tr ng-repeat-start="checklist in checklist.children | orderBy:'priority' track by checklist.id" ng-init="checklist.rowExpanded=checklist.children.length>0;checklist.style = 'min-width:60px'">
+            <td ng-class="{'left-26':!checklist.children || checklist.children.length<=0 }" colspan="{{vm.showAnswerButton(checklist)?1:2}}">
+                <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+                <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span> {{checklist.label}} &nbsp; {{checklist.name}}
+            </td>
+            <td ng-if="vm.showAnswerButton(checklist)" class="text-right" style="min-width:200px;">
+                <button-group group-style="checklist.style" group-style="checklist.style" ng-model="checklist.optionID" lookups="checklist.optionGroup.possibleOptions" ng-validate="vm.maregistrationValidation.checklist[checklist.id].optionID"></button-group>
+                <div class=" text-error-table" ng-if="!checklist.children.length>0 && !vm.maregistrationValidation.checklist[checklist.id].optionID && vm.maregistrationValidation.checklist.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </td>
+        </tr>
+        <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+            <td style="padding-right:0;" class="left-26" colspan="2" ng-include src="'checklist-children'"></td>
+        </tr>
+    </table>
+</script>

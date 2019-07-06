@@ -1,0 +1,107 @@
+<div class="row form-horizontal" ng-validate-form="vm.reportModalValidationBasic">
+  <div class="col-md-6">
+    <div class="form-group">
+      <div class="col-xs-12">
+        <label>Report Type <span class="text-danger">*</span></label>
+        <ui-select ng-model="vm.reportModelBasic.reportType" theme="bootstrap"
+                   ng-validate="vm.reportModalValidationBasic.reportType">
+          <ui-select-match>{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat=" item in vm.reportTypes | filter: $select.search |orderBy:'name'">
+            <div ng-bind-html="item.name | highlight: $select.search "></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.reportModalValidationBasic.reportType && vm.reportModalValidationBasic.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+    <fieldset ng-disabled="!vm.reportModelBasic.reportType || !vm.reportModelBasic.reportType.name">
+      <div class="form-group">
+        <div class=" col-xs-12">
+          <label>Name <span class="text-danger">*</span></label>
+          <div>
+            <input ng-model="vm.reportModelBasic.name" name="name" type="text" class="form-control"
+                   ng-validate="vm.reportModalValidationBasic.name">
+          </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationBasic.name && vm.reportModalValidationBasic.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Title <span class="text-danger">*</span></label>
+          <div>
+            <input ng-model="vm.reportModelBasic.title" name="title" type="text" class="form-control"
+                   ng-validate="vm.reportModalValidationBasic.title">
+          </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationBasic.title && vm.reportModalValidationBasic.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+      <fieldset ng-if="vm.reportModelBasic.reportType && vm.reportModelBasic.reportType.reportTypeCode!='Tabular'">
+        <div class="form-group">
+          <div class="col-xs-12">
+            <label>Series Columns </label>
+            <div>
+              <input ng-model="vm.reportModelBasic.seriesColumns" name="seriesColumns" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <label>Width</label>
+            <div>
+              <input ng-model="vm.reportModelBasic.width" name="width" type="number" min="0" max="12" class="form-control">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Priority</label>
+          <div>
+            <input ng-model="vm.reportModelBasic.priority" name="priority" type="number" class="form-control">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="col-md-6">
+    <fieldset ng-disabled="!vm.reportModelBasic.reportType || !vm.reportModelBasic.reportType.name">
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Query <span class="text-danger">*</span></label>
+          <div>
+                <textarea rows="5" ng-model="vm.reportModelBasic.query" name="query" type="text"
+                          class="form-control" ng-validate="vm.reportModalValidationBasic.query"></textarea>
+
+          </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationBasic.query && vm.reportModalValidationBasic.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Description</label>
+          <div>
+                <textarea cols="40" rows="3" ng-model="vm.reportModelBasic.description" name="description" type="text"
+                          class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Is Active </label>
+          <div>
+            <input icheck  type="checkbox" ng-model="vm.reportModelBasic.isActive" name="IsActive" class="form-control">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+

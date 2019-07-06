@@ -1,0 +1,4 @@
+<div id="form-views " ui-view="pipApp">
+    <div ng-if="vm.subModuleType.selected.submoduleTypeCode != vm.CONSTANT.SUB_MODULE_TYPE.MEDICAL_DEVICE" ng-include src="'app/pip/templates/productDetail.html'"></div>
+    <div ng-if="vm.subModuleType.selected.submoduleTypeCode == vm.CONSTANT.SUB_MODULE_TYPE.MEDICAL_DEVICE" ng-include src="'app/pip/templates/mdProductDetail.html'"></div>
+</div>

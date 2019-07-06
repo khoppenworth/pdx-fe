@@ -1,0 +1,46 @@
+<div class="ibox-title">
+    <div class="row">
+        <div class="col-lg-5">
+            <h4><a ui-sref="maregistration.assessment({maId:vm.maId,submoduleCode:vm.submoduleCode})" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px"><i class="fa fa-arrow-left" ></i></a></h4>
+        </div>
+        <div class="col-lg-7">
+            <h5 class="pull-right" permission="permissions.MA.MARecommendApproval" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SubmittedForApproval'>
+                <!-- <input icheck type="checkbox" id="discountCheckBox" ng-model="vm.maStatusModel.isDraft" name="discount">
+                <label>Draft </label> -->
+                <div class="btn-group" uib-dropdown style="margin: 0px 12px">
+                    <button type="button" class="btn btn-primary btn-outline  btn-xs" uib-dropdown-toggle>
+                            Submit <span class="caret"></span>
+                        </button>
+                    <ul role="menu" uib-dropdown-menu="" class="dropdown-menu-right">
+                        <li ng-if="vm.tlStatusVisibility('SFA','TLD')"><a permission="permissions.MA.MARecommendApproval" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SubmittedForApproval' ng-click="vm.submitForApproval()">Submit for Approval</a></li>
+                        <li ng-if="vm.tlStatusVisibility('SFR','TLD')"><a permission="permissions.MA.MARecommendRejection" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SubmittedForRejection' ng-click="vm.submitForRejection()">Submit for Rejection</a></li>
+                        <li ng-if="vm.tlStatusVisibility('FIR','TLD')"><a permission="permissions.MA.MARequestFIR" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SubmittedForFIR' ng-click="vm.submitForFIR()">Submit for FIR</a></li>
+                        <li><a permission="permissions.MA.MAReturnToAssessors" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='ReturnToAssessors' ng-click="vm.returnToAss()">Return to Assessors</a></li>
+                    </ul>
+                </div>
+            </h5>
+            <h5 class="pull-right" permission="permissions.MA.MASuggestApproval" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SuggestSubmittedForApproval'>
+                <!-- <input icheck type="checkbox" id="discountCheckBox" ng-model="vm.maStatusModel.isDraft" name="discount">
+                <label>Draft </label> -->
+                <div class="btn-group" uib-dropdown style="margin: 0px 12px">
+                    <button type="button" class="btn btn-primary btn-outline  btn-xs" uib-dropdown-toggle>
+                            Submit <span class="caret"></span>
+                        </button>
+                    <ul role="menu" uib-dropdown-menu="" class="dropdown-menu-right">
+                        <li ng-if="vm.tlStatusVisibility('SFA','SCAS')"><a permission="permissions.MA.MASuggestApproval" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SuggestSubmittedForApproval' ng-click="vm.submitForApproval()">Submit for Approval</a></li>
+                        <li ng-if="vm.tlStatusVisibility('SFR','SCAS')"><a permission="permissions.MA.MASuggestRejection" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SuggestSubmittedForRejection' ng-click="vm.submitForRejection()">Submit for Rejection</a></li>
+                        <li ng-if="vm.tlStatusVisibility('FIR','SCAS')"><a permission="permissions.MA.MASuggestFIR" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SuggestSubmittedForFIR' ng-click="vm.suggestForFir()">Submit for FIR</a></li>
+                        <li ng-if="vm.assesserType.responderTypeCode =='SCAS'"><a permission="permissions.MA.MAReturnToAssessors" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='SuggestSubmittedForRTPS' ng-click="vm.suggestForRTPS()">Return to Primary</a></li>
+                    </ul>
+                </div>
+            </h5>
+        </div>
+    </div>
+</div>
+<div class="ibox-content" ng-validate-form="vm.maregistrationValidation.review">
+    <trix-editor angular-trix ng-model="vm.maStatusModel.comment" class="trix-content" style="min-height: 30em" ng-validate="vm.maregistrationValidation.review.comment"></trix-editor>
+    <div class=" text-error-table" ng-if="!vm.maregistrationValidation.review.comment && vm.maregistrationValidation.review.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+    </div>
+    <button ng-click="vm.saveAsDraft()" class="btn btn-default">Save as draft</button>
+</div>

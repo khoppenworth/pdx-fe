@@ -1,0 +1,64 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-6">
+            <dl class="dl-horizontal">
+                <dt>Trade Name:</dt>
+                <dd>{{vm.product.brandName}}</dd>
+                <dt>Full Item Name:</dt>
+                <dd>{{vm.product.genericName}} - {{vm.product.dosageStrength}} - {{vm.product.dosageUnit}} - {{vm.product.dosageForm}}</dd>
+                <dt>Dosage Form:</dt>
+                <dd>{{vm.product.dosageForm}}</dd>
+                <dt>Dosage Strength:</dt>
+                <dd>{{vm.product.dosageStrength | filterNull}}</dd>
+                <dt>Dosage Unit:</dt>
+                <dd>{{vm.product.dosageUnit | filterNull}}</dd>
+
+            </dl>
+        </div>
+        <div class="col-lg-6">
+            <dl class="dl-horizontal">
+                <dt>Product Category:</dt>
+                <dd>{{vm.product.commodityType | filterNull}}</dd>
+                <dt>Application Type:</dt>
+                <dd>{{vm.product.applicationType | filterNull}}</dd>
+                <dt>Registration Date:</dt>
+                <dd>{{vm.product.registrationDate | filterNull}}</dd>
+                <dt>Expiry Date:</dt>
+                <dd>{{vm.product.expiryDate | date | filterNull}}</dd>
+            </dl>
+        </div>
+    </div>
+    <hr/>
+
+  <div class="row">
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt title="Statement of similarity and difference of clinical, bio batch, stability, validation and commercial batch sizes">Statement of similarity and difference of clinical, bio batch, stability, validation and commercial batch sizes:</dt>
+        <dd>{{vm.product.ingredientStatement | filterNull}}</dd>
+        <dt title="Indication for Use">Indication for Use:</dt>
+        <dd>{{vm.product.indication | filterNull}}</dd>
+        <dt title="Proposed Posology and Method of Administration">Proposed Posology and Method of Administration:</dt>
+        <dd>{{vm.product.posology | filterNull}}</dd>
+        <dt>Shelf Life (in Months):</dt>
+        <dd>{{vm.product.shelfLifeObj.name | filterNull}}</dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt>Product Type:</dt>
+        <dd>{{vm.product.productType.name | filterNull}}</dd>
+        <dt title="Storage Conditions">Storage Conditions:</dt>
+        <dd>{{vm.product.storageCondition | filterNull}}</dd>
+        <dt>Use Category:</dt>
+        <dd>{{vm.product.useCategory.name | filterNull}}</dd>
+        <dt title="Product Description and Physical Appearance">Product Description and Physical Appearance:</dt>
+        <dd>{{vm.product.description | filterNull}}</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.navbar-default').addClass('navbar-scroll')
+    });
+</script>

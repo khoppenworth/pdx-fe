@@ -1,0 +1,35 @@
+<div style="display:inline-block" ng-controller="PushNotificationController as vm">
+    <ul class="nav navbar-top-links navbar-right">
+        <li uib-dropdown is-open="vm.bellOpened" on-toggle="vm.requestPermission(open)">
+            <a id="notificationBell" class="count-info dropdown-toggle" href="" uib-dropdown-toggle aria-haspopup="true" aria-expanded="true">
+                <i class="fa fa-bell"></i>
+                <span class="label label-primary" ng-if="vm.unreadCount>0">{{vm.unreadCount}}</span>
+            </a>
+            <ul class="dropdown-alerts dropdown-menu" uib-dropdown-menu auto-close="outsideClick">
+                <li ng-class="{'unreadNotification': notification.isRead==false}" ng-repeat-start="notification in vm.notifications">
+                    <a ng-click="vm.markAsRead(notification)">
+                        <div>
+                            <i class="fa fa-envelope"></i> <span class="text-center">{{notification.data.subject}}</span>
+                            <span class="pull-right text-muted small">{{notification.createdDate | fromNow}}</span>
+                        </div>
+                        <div>
+                            <span ng-bind-html="notification.data.body"></span>
+                        </div>
+                    </a>
+                </li>
+                <li ng-repeat-end class="divider"></li>
+                <li ng-if="vm.notifications.length > 0">
+                    <div class="text-center link-block">
+                        <a ng-click="vm.seeAllNotifictions()">
+                            <strong>See All Alerts</strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </li>
+                <li ng-if="vm.notifications.length==0">
+                    Currently you have no notification.
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,103 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div ng-show="vm.dataAvailability.isAvailable" class="ibox">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <h4>
+                                <a ng-click="vm.back()" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px"><i
+                                    class="fa fa-arrow-left"></i></a> {{vm.maregistration.ma.maNumber}}
+                            </h4>
+                        </div>
+                        <div class="col-lg-7 pull-right" style="padding:0px" ng-if="vm.maregistration.submoduleCode!=null">
+                            <h4 class="pull-right"><a permission="permissions.MA.MAEdit" ng-click="vm.submitMa()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Submit' class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Submit</a></h4>
+                            <h4 class="pull-right"><a permission="permissions.MA.MAEdit" ng-click="vm.editMa()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Edit' class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Edit</a></h4>
+                            <h4 class="pull-right"><a permission="permissions.MA.MADeleteApplicant" ng-click="vm.deleteMa()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='DeleteApplicant' class="btn btn-danger btn-outline  btn-xs" style="margin-right:10px">Delete</a></h4>
+                            <h4 class="pull-right"><a permission="permissions.MA.MADeleteStaff" ng-click="vm.deleteMa()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='DeleteStaff' class="btn btn-danger btn-outline  btn-xs" style="margin-right:10px">Delete</a></h4>
+                            <h4 class="pull-right"><a permission="permissions.MA.MAEdit" ng-click="vm.editMa()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='EditLegacyData' class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Edit Legacy Data</a></h4>
+                            <h4 class="pull-right"><a permission="permissions.MA.MAPrescreen" ng-click="vm.preScreen()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='PreScreen' class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Screen</a></h4>
+                            <h4 class="pull-right">
+                                <button class="btn btn-primary btn-outline  btn-xs" permission="permissions.MA.MAVerify" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Verify' ng-click="vm.verifyMa()">Verifiy</button>
+                            </h4>
+                            <h4 class="pull-right"><a permission="permissions.MA.MAPrescreen" ng-click="vm.backToPreScreen()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='BackToPreScreen' class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Back to applicant</a></h4>
+
+                            <h4 class="pull-right" ng-if="vm.assesserType.responderTypeCode!== vm.CONSTANT.RESPONDER_TYPE.TEAM_LEADER && vm.isMaNotificationType !== true"><a permission="permissions.MA.MAAssess" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Assess' ui-sref="maregistration.assessment({maId:vm.maId,submoduleCode:vm.maregistration.ma.maType.maTypeCode})"
+                                    class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Assess</a>
+                            </h4>
+                            <h4 class="pull-right" ng-if="vm.assesserType.responderTypeCode== vm.CONSTANT.RESPONDER_TYPE.TEAM_LEADER && vm.isMaNotificationType !== true" ><a permission="permissions.MA.MAAssess" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='AssessTLD' ui-sref="maregistration.assessment({maId:vm.maId,submoduleCode:vm.maregistration.ma.maType.maTypeCode})"
+                                    class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Assess</a>
+                            </h4>
+                            <h4 class="pull-right"><a ng-click="vm.reprintMA()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='RePrint' class="btn btn-outline btn-primary  btn-xs" style="margin-right:10px">Re-print</a></h4>
+
+                            <h4 class="pull-right"><a permission="permissions.MA.MAWithdraw" ng-click="vm.withdrawMa()" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='Withdraw' class="btn btn-warning btn-outline  btn-xs" style="margin-right:10px">Withdraw</a></h4>
+                            <h4 class="pull-right" ng-if="vm.assesserType.responderTypeCode== vm.CONSTANT.RESPONDER_TYPE.TEAM_LEADER && !vm.maregistration.isLabResultUploaded && vm.labrequest[0].attachmentInfo.document==undefined"><a permission="permissions.MA.MARequestLabTest" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='generateLabRequest' ng-click="vm.generateLabRequest()" class="btn btn-primary btn-outline  btn-xs"
+                                    style="margin-right:10px">Generate Lab Request</a></h4>
+                            <!-- Generate Food Notification Letter -->
+                            <h4 class="pull-right" ng-if="vm.isMaNotificationType === true">
+                                <a permission="permissions.MA.MANotification" hideon-registration="vm.maregistration.ma.maStatus.maStatusCode" buttonFunction='generateNotificationLetter' ng-click="vm.generateNotificationLetter()" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Generate Notification Letter</a></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content  m-b-sm border-bottom">
+                    <div class="tabs-container">
+                        <uib-tabset>
+                            <uib-tab heading="Basic">
+                                <div ng-include="'app/registration/list/detail/templates/basic.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="Product" ng-if="vm.maregistration.submoduleTypeCode === vm.CONSTANT.SUB_MODULE_TYPE.MEDICINE && vm.maregistration.product.productType.productTypeCode!=='MDS'">
+                                <div ng-include="'app/registration/list/detail/templates/product.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="Products" ng-if="vm.maregistration.submoduleTypeCode === vm.CONSTANT.SUB_MODULE_TYPE.MEDICAL_DEVICE && vm.maregistration.product.productType.productTypeCode=='MDS'">
+                                <div ng-include="'app/registration/list/detail/templates/mdProducts.template.html'"></div>
+                            </uib-tab>
+                            <!-- Product for Food -->
+                            <uib-tab heading="Product" ng-if="vm.maregistration.submoduleTypeCode === vm.CONSTANT.SUB_MODULE_TYPE.FOOD">
+                                <div ng-include="'app/registration/list/detail/templates/foodproduct.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="Manufacturers">
+                                <div ng-include="'app/registration/list/detail/templates/productDetail.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="Documents">
+                                <div ng-include="'app/registration/list/detail/templates/documents.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="Dossiers">
+                                <div ng-include="'app/registration/list/detail/templates/dossier.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="Checklists">
+                                <div ng-include="'app/registration/list/detail/templates/checklist.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab permission="permissions.MA.MAUploadEvaluationFeeReceipt" ng-if="vm.userInfo.isAgent && vm.maregistration.ma.maStatus.maStatusCode === vm.CONSTANT.MA_STATUS.PRSC" heading="Registration Fee Attachment">
+                                <div ng-include="'app/registration/list/detail/templates/feeAtachemnt.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab permission="permissions.MA.MAUploadLabResult" ng-if="!vm.maregistration.isLabResultUploaded" heading="Lab Attachment">
+                                <div ng-include="'app/registration/list/detail/templates/labAtachemnt.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab permission="permissions.MA.MAUploadClinicalReview" ng-if="vm.assesserType.responderTypeCode== vm.CONSTANT.RESPONDER_TYPE.TEAM_LEADER && vm.maregistration.ma.maType.maTypeCode == vm.CONSTANT.SUBMODULE.NEW_MOLECULE" heading="Clinical Review Attachment">
+                                <div ng-include="'app/registration/list/detail/templates/clinicalReviewAtachemnt.template.html'"></div>
+                            </uib-tab>
+                            <!--isVariationType === (three states Null/True/False)  -->
+                            <uib-tab ng-if="vm.isVariationType === true" heading="Variations">
+                                <div ng-include="'app/registration/list/detail/templates/variation.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="Applicant">
+                                <div ng-include="'app/registration/list/detail/templates/applicant.template.html'"></div>
+                            </uib-tab>
+                            <uib-tab heading="License Holder">
+                                <div ng-include="'app/registration/list/detail/templates/licenseholder.template.html'"></div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!vm.dataAvailability.isAvailable" class="ibox">
+                <div class="ibox-content  m-b-sm border-bottom">
+                    <h2 class="p-lg text-danger">{{vm.dataAvailability.message}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

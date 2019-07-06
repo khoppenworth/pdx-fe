@@ -1,0 +1,46 @@
+<div ng-controller="DocumentDetailController as vm">
+  <table id="mainMenus" class="table table-hovered">
+    <thead>
+    <tr>
+      <th>Document</th>
+      <th>Active</th>
+      <th>Required</th>
+      <th ng-if="vm.sraAvailable==true">SRA</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="document in vm.allDocuments | orderBy:'name'" >
+        <td>
+          <span >{{document.name}}</span>
+        </td>
+        <td>
+          <input icheck  type="checkbox" ng-model="document.subModuleDocuments.isActive"
+                         ng-change="vm.notify(document)">
+        </td>
+        <td>
+         <!-- <switch ng-model="document.isRequiredToModule" title="{{document.isActiveToModule?'':'Document is inactive (doesn\'t exist) for this module! You can\'t change required field!'}}"
+                  disabled="!document.isActiveToModule" arial-label="assigned role" ng-change="vm.notify(document)"></switch>-->
+          <input icheck  type="checkbox" ng-model="document.subModuleDocuments.isRequired"
+                         title="{{document.subModuleDocuments.isActive?'':'Document is inactive (doesn\'t exist) for this module! You can\'t change required field!'}}"
+                         ng-change="vm.notify(document)">
+          <!--disabled="{{!document.isActiveToModule}}"-->
+        </td>
+        <td ng-if="vm.sraAvailable==true">
+          <!--<input icheck  type="checkbox" ng-model="document.subModuleDocuments.isSra" ng-disabled="vm.sraAvailable===false"-->
+                         <!--title="{{vm.sraAvailable?'':'SRA is not available for this module!'}}"-->
+                         <!--ng-change="vm.notify(document)">-->
+          <button-group group-style="'min-width:35px  !important; '" ng-model="document.subModuleDocuments.isSra"
+                        lookups="document.sraOptions" ng-change="vm.notify(document)"></button-group>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div ng-if="vm.showButtons" class="pull-right col-md-4">
+    <button  ng-click="vm.updateDocuments()" class="btn  btn-primary">Save</button>
+    <button class="btn btn-default" ng-click="vm.showButtons=false;">Canel</button>
+
+  </div>
+
+</div>

@@ -1,0 +1,120 @@
+<div class="ibox-content">
+    <div class="row form-horizontal" ng-validate-form="vm.userValidation">
+        <div class="col-md-12">
+            <div class="form-group col-md-6">
+                <div class="col-xs-12">
+                    <label>First Name *</label>
+                    <div>
+                        <input id="firstName" ng-model="vm.user.firstName" name="firstName" type="text" class="form-control" ng-validate="vm.userValidation.firstName">
+                    </div>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.userValidation.firstName && vm.userValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-xs-12">
+                    <label>Last Name *</label>
+                    <div>
+                        <input id="lastName" ng-model="vm.user.lastName" name="lastName" type="text" class="form-control" ng-validate="vm.userValidation.lastName">
+                    </div>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.userValidation.lastName && vm.userValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group col-md-6">
+                <div class="col-xs-12">
+                    <label>Username *</label>
+                    <div>
+                        <input id="username" ng-model="vm.user.username" name="username" type="text" class="form-control" ng-validate="vm.userValidation.username">
+                    </div>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.userValidation.username && vm.userValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-xs-12">
+                    <label>Email *</label>
+                    <div>
+                        <input id="email" ng-model="vm.user.email" name="email" type="email" class="form-control" ng-validate="vm.userValidation.email">
+                    </div>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.userValidation.email && vm.userValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group col-md-6">
+                <div class="col-xs-12">
+                    <label>User type *</label>
+                    <ui-select name="userType" ng-model="vm.user.userType" theme="bootstrap" ng-validate="vm.userValidation.userType">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="type in vm.userType | orderBy:'name' | filter: $select.search">
+                            <div ng-bind-html="type.name | highlight: $select.search"></div>
+                            <!--<small ng-bind-html="item.portCode | highlight: $select.search"></small>-->
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.userValidation.userType && vm.userValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-xs-12">
+                    <label>Role *</label>
+                    <ui-select name="userRoles" multiple ng-model="vm.user.roles" theme="bootstrap" ng-validate="vm.userValidation.roles">
+                        <ui-select-match>{{$item.name}}</ui-select-match>
+                        <ui-select-choices repeat="role in vm.roles | orderBy:'name' | filter: $select.search">
+                            <div ng-bind-html="role.name | highlight: $select.search"></div>
+                            <!--<small ng-bind-html="item.portCode | highlight: $select.search"></small>-->
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.userValidation.roles && vm.userValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group col-md-6">
+                <div class="col-xs-12 ">
+                    <label>Primary Phone  </label>
+                    <span ng-if="vm.morePhones.length<2" class="pull-right btn-primary btn-outline fa fa-plus" title="More phone" ng-click="vm.addMorePhone()"></span>
+                    <div>
+                        <input type="text" class="form-control" name="phone" ng-model="vm.user.phone" ng-intl-tel-input data-initial-country="et" />
+                    </div>
+                </div>
+                <div class="col-xs-12 ">
+                    <span class="text-danger" ng-if="(vm.userValidation.$showError && createUserForm.phone.$invalid) || (createUserForm.phone.$invalid && createUserForm.phone.$touched)">Invalid phone format</span>
+                </div>
+            </div>
+            <div ng-if="vm.title.toLowerCase().indexOf('update')>-1" class="form-group col-md-6">
+                <div class="col-xs-12">
+                    <label>Status *</label>
+                    <div>
+                        <switch name="IsActive" ng-model="vm.user.isActive"></switch>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div ng-repeat="extra in vm.morePhones" class="form-group col-md-6">
+                <div class="col-xs-12 ">
+                    <label>Phone {{$index+2}} </label>
+                    <span class="pull-right btn-primary btn-danger fa fa-remove" title="Remove" ng-click="vm.removeAdditionalPhone(extra)"></span>
+                    <div>
+                        <input type="text" class="form-control" name="phone{{$index}}" ng-model="extra.phoneNumber" ng-intl-tel-input data-initial-country="et" />
+                    </div>
+                </div>
+                <div class="col-xs-12 ">
+                    <span class="text-danger" ng-if="(vm.userValidation.$showError && createUserForm['phone'+$index].$invalid) || (createUserForm['phone'+$index].$invalid && createUserForm['phone'+$index].$touched)">Invalid phone format</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

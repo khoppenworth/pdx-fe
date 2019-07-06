@@ -1,0 +1,113 @@
+<div class="ibox-title">
+    <div class="row">
+        <div style="width:92%;margin:auto">
+            <slick id="slickContainer" settings="vm.slickConfig" current-index="vm.slickIndex" class="slick_demo_2" infinite="false" variable-width="false" slides-to-show="5" slides-to-scroll="1" center-mode="false" responsive="[ { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3, infinite: false, dots: true } },
+             { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } } ]">
+
+                <!--Application Detail-->
+                <div ng-class="{currentslide: $state.is(vm.states.previous)}">
+                    <div class="" ui-sref="{{vm.states.previous}}">
+                        <span class="btn btn-primary btn-circle btn-xs text-center"> 1</span>
+                        <small>
+              {{vm.editMode ? "Application Detail" : "Registered Product " }}
+            </small>
+                    </div>
+                </div>
+
+                <!--Product Detail-->
+                <div ng-class="{currentslide: $state.is(vm.states.product) || $state.is(vm.states.foodproduct) || $state.is(vm.states.deviceProduct)}">
+                    <div class="" ng-click="vm.previousAppToProduct()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('Product')}"> 2 </span>
+                        <small>
+              Product Detail
+            </small>
+                    </div>
+                </div>
+
+                <!--Product Detail Cont.-->
+                <div ng-class="{currentslide: $state.is(vm.states.productdetailContinued) || $state.is(vm.states.foodproductContinued) || $state.is(vm.states.deviceProductContinued)}" ng-disabled="!vm.maregistrationValidation.productdetail.$isValid">
+                    <div class="" ng-click="vm.productToContinued()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('Product')}"> 3 </span>
+                        <small>
+              Product Detail Cont.
+            </small>
+                    </div>
+                </div>
+
+                <!--Composition-->
+                <div ng-class="{currentslide: $state.is(vm.states.composition) || $state.is(vm.states.foodcomposition) || $state.is(vm.states.deviceComposition)}" ng-disabled="!vm.maregistrationValidation.productdetailContinued.$isValid">
+                    <div ng-click="vm.productContinuedToComposition()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('ProductComposition')}"> 4 </span>
+                        <small>
+              Composition
+            </small>
+                    </div>
+                </div>
+
+                <!--Manufacturers-->
+                <div ng-class="{currentslide: $state.is(vm.states.manufacturer)}" ng-disabled="!vm.maregistrationValidation.productInn.$isValid && !vm.maregistrationValidation.productExi.$isValid">
+                    <div ng-click="vm.compositionToManufacturers()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('Manufacturers')}"> 5 </span>
+                        <small>
+              Manufacturers
+            </small>
+                    </div>
+                </div>
+
+                <!--Foreign Applications-->
+                <div ng-class="{currentslide: $state.is(vm.states.foreignStatus)}" ng-disabled="!vm.maregistrationValidation.productManu.$isValid">
+                    <div ng-click="vm.manufacturersToForeignApplications()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('ForeignApplications')}"> 6 </span>
+                        <small>
+              Foreign Applications
+            </small>
+                    </div>
+                </div>
+
+                <!--File Attachments-->
+                <div ng-class="{currentslide: $state.is(vm.states.attachment)}" ng-disabled="(!vm.registrationRenewal.previousApplication.$isValid && !vm.editMode) || vm.allowEditLegacyData()">
+                    <div class="" ng-click="vm.previousAppToAttachement()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('Documents')}"> 7</span>
+                        <small>
+              File Attachments
+            </small>
+                    </div>
+                </div>
+
+                <!--Dossier-->
+                <div ng-class="{currentslide: $state.is(vm.states.dossier)}" ng-disabled="!vm.registrationRenewal.attachment.$isValid && !vm.editMode">
+                    <div class="" ng-click="vm.attachmentToDossier()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('Dossier')}"> 8</span>
+                        <small>
+              Dossier
+            </small>
+                    </div>
+                </div>
+
+                <!--Checklist-->
+                <div ng-class="{currentslide: $state.is(vm.states.checklist)}" ng-disabled="!vm.registrationRenewal.dossier.$isValid && !vm.editMode">
+                    <div class="" ng-click="vm.dossierToChecklist()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('Checklists')}"> 9</span>
+                        <small>
+              Checklist
+            </small>
+                    </div>
+                </div>
+
+                <!--Terms and Conditions-->
+                <div ng-if="$state.includes(renewalStates.new.parent) || $state.includes(renewalStates.wip.parent)" ng-class="{currentslide: $state.is(vm.states.termsAndConditions) || $state.is(vm.states.foodTermsConditions) || $state.is(vm.states.deviceTermsConditions)}"
+                    ng-disabled="!vm.registrationRenewal.checklist.$isValid">
+                    <div class="" ng-click="vm.checklistToTerms()">
+                        <span class="btn btn-primary btn-circle btn-xs text-center" ng-class="{'btn-warning': $$childTail.vm.hasError('Checklists')}"> 10</span>
+                        <small>
+              Terms and Conditions
+            </small>
+                    </div>
+                </div>
+            </slick>
+        </div>
+    </div>
+</div>
+<div class="ibox-content">
+    <div id="form-views " ui-view="renewalSteps " ng-validate-form="vm.registrationRenewal"></div>
+</div>

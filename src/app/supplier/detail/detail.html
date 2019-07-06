@@ -1,0 +1,38 @@
+<div class="ibox-title">
+  <div class="row actionButtons" >
+      <div  class="col-lg-5 ">
+        <h4><a ui-sref="supplier.list" class="btn btn-primary btn-outline  btn-xs"><i class="fa fa-arrow-left" ></i></a>{{vm.supplier.name.charAt(0)+vm.supplier.name.slice(1)}}</h4>
+      </div>
+      <div class="col-lg-7 pull-right">
+
+        <div class="pull-right">
+          <div ng-show="vm.activeTab == 0">
+              <button class="btn btn-primary btn-outline btn-sm" permission="permissions.Supplier.CreateSupplier" ng-click="vm.updateSupplier()">Update</button>
+              <button class="btn btn-primary btn-outline btn-sm" permission="permissions.Supplier.SuspendSupplier" ng-click="vm.suspend()">
+                {{vm.supplierStatus[vm.supplier.isActive].action}}
+              </button>
+          </div>
+          <div ng-show="vm.activeTab == 1">
+            <button class="btn btn-primary btn-outline btn-sm" permission="permissions.Supplier.LinkSupplierAndAgent"
+                    ng-click="vm.LinkSupplierAndAgent()">Add</button>
+            <!--<button class="btn btn-primary btn-outline btn-sm" permission="vm.permissions.LinkSupplierAndAgent"-->
+                    <!--ng-click="vm.removeSupplierAgent()">Remove</button>-->
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="ibox-content">
+      <uib-tabset id="supplierDetail" active="vm.activeTab" justified="false">
+          <uib-tab index="0" heading="Detail" select="vm.tabChanged(0)">
+            <div ng-include="'app/supplier/template/supplier.detail.template.html'"></div>
+          </uib-tab>
+          <uib-tab index="1" heading="Applicants" select="vm.tabChanged(1)">
+            <div ng-include="'app/supplier/template/supplier.agents.template.html'"></div>
+          </uib-tab>
+          <uib-tab index="2" heading="Products" select="vm.tabChanged(2)">
+            <div ng-include="'app/supplier/template/supplier.products.template.html'"></div>
+          </uib-tab>
+      </uib-tabset>
+</div>
+

@@ -1,0 +1,20 @@
+<uib-tabset id="roleMenu" active="vm.activeTab" justified="false">
+    <!--Tab 1-->
+    <uib-tab index="0" ng-if="vm.setTabVisibility(vm.tabVisibility.documents)" heading="Documents">
+        <div ng-include="'app/admin/modulesettings/detail/documentmgmt/detail.html'"></div>
+    </uib-tab>
+    <!--Tab 2-->
+    <uib-tab index="1" ng-if="vm.setTabVisibility(vm.tabVisibility.feeType)" heading="Fee Types">
+      <div ng-include="'app/admin/modulesettings/detail/feetypemgmt/detail.html'"></div>
+    </uib-tab>
+   <!--Tab 3-->
+   <uib-tab index="2" ng-if="vm.setTabVisibility(vm.tabVisibility.checklist)" heading="Checklist">
+      <div ng-include="'app/admin/checklistmgmt/detail.html'"></div>
+    </uib-tab>
+  <!--Tab 4  Dossier-->
+   <uib-tab index="3" ng-if="vm.setTabVisibility(vm.tabVisibility.dossier)" heading="Dossier">
+      <div ng-include="'app/admin/modulesettings/detail/dossiermgmt/detail.html'"></div>
+    </uib-tab>
+</uib-tabset>
+
+

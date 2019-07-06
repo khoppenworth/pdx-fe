@@ -1,0 +1,15 @@
+<fieldset ng-validate-form="vm.importPermitValidation.terms">
+
+    <ol ng-if="vm.subModuleType.selected.submoduleTypeCode !=vm.CONSTANT.SUB_MODULE_TYPE.MEDICAL_DEVICE" ng-include src="'app/pip/templates/termsAndConditions.html'"></ol>
+    <ol ng-if="vm.subModuleType.selected.submoduleTypeCode == vm.CONSTANT.SUB_MODULE_TYPE.MEDICAL_DEVICE" ng-include src="'app/pip/templates/termsAndConditionsForMedicalDevice.html'"></ol>
+
+    <input id="acceptTerms" name="acceptTerms" type="checkbox" ng-model="vm.importPermit.importPermit.terms" class="required" ng-validate="vm.importPermitValidation.terms.term" ng-change="vm.importPermit.importPermit.terms=vm.importPermit.importPermit.terms===false?undefined:true">
+    <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+    <small ng-if="!vm.importPermitValidation.terms.term && vm.importPermitValidation.terms.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+</fieldset>
+<fieldset class="m-t-md">
+    <a ng-click="vm.SaveDraft()" class="btn btn-default">Save</a>
+    <a ui-sref="pip.new.attachments" class="btn btn-default">Previous</a>
+    <button type="submit" class="btn btn-primary btn-outline" ng-click="vm.SaveImportPermit(false)">Submit</button>
+</fieldset>

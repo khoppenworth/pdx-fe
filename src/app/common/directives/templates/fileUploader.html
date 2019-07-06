@@ -1,0 +1,14 @@
+<div>
+    <button class="btn btn-primary btn-outline" type="button" ngf-select="uploadFiles($file, $invalidFiles)" accept="uploaderConfig.accept" ngf-max-size="uploaderConfig.maxSize">
+        <i class="fa fa-upload"></i>&nbsp;&nbsp;<span class="bold">Upload</span>
+    </button>
+    <br>
+    <div ng-show="f.progress > 0 && f.progress < 100">
+        <b>File:</b>
+        <small><i>{{f.name}} <strong>{{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}</strong></i></small>
+        <uib-progressbar value="f.progress"></uib-progressbar>
+    </div>
+    <div class="text-danger" ng-show="errorMsg">
+        <small>{{errorMsg}}</small>
+    </div>
+</div>

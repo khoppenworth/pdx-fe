@@ -1,0 +1,95 @@
+<div>
+    <form name="createUserForm">
+        <div class="modal-header"> Notification Form
+            <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="modal-body">
+            <div class="text-center">
+                <img src="assets/images/FDRE.png" height="65px">
+                <p><b>FOOD, MEDICINE AND HEALTH CARE ADMINISTRATION AND CONTROL AUTHORITY OF ETHIOPIA</b></p>
+                </br>
+                </br>
+                <p class="pull-right">Date : {{vm.today|date}}</p>
+            </div>
+            <div>
+                <h3><b>To:{{vm.ma.ma.agent.name}}</b></h3>
+                <h3 class="text-center"><b>Subject: Notification for Approval of the variation</b></h3>
+                <p>The submitted dossier for variations in the product mentioned below was substantially assessed based on the national guidelines and laws; and it is found to be complete. </p>
+            </div>
+            <div class="panel-body text-left">
+                <div class="col-xs-4">
+                    <p>
+                        <b>Product Name</b> :{{vm.ma.product.brandName}}
+                        <br> <b>Product Strength  </b>: {{vm.ma.product.dosageStrengthObj.name}}
+                        <br><b>Dosage Form </b> :{{vm.ma.product.dosageFormObj.name}}
+                        <br>
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <p> <b>PackSize </b> :{{vm.ma.product.presentation}}
+                        <br>
+                        <b>Shelf life </b> :{{vm.ma.product.shelfLife}}
+                        <br><b>Manufacturer
+                                        </b> :{{vm.ma.product.productManufacturers[0].manufacturer.name}}
+                        <br></p>
+                </div>
+                <div class="col-xs-4">
+                    <p> <b>Application number
+                            </b> :{{vm.ma.ma.maNumber}}
+                        <br>
+                </div>
+            </div>
+            <div class="panel-body text-left">
+                <div class="col-xs-12">
+                    <b>Variation Changes</b><br/><br/>
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Property Name</th>
+                            <th>Old Value</th>
+                            <th>New Value</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="var in vm.ma.variationChangeList">
+                                <td>{{var.propertyName}}</td>
+                                <td>{{var.oldValue}}</td>
+                                <td>{{var.newValue}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="">
+                <p>Therefore, your application for the requested variation in the product mentioned above is approved by the authority.</p>
+            </div>
+        </div>
+        <div class="panel-body col-xs-12">
+            <div class="row form-horizontal" ng-validate-form="vm.approveValidation">
+                <div class="col-md-12">
+                    <div class="form-group col-md-12">
+                        <div class="col-xs-12">
+                            <label>Comment <span class="text-danger">*</span></label>
+                            <div>
+                                <textarea id="firstName" ng-model="vm.maStatusModel.comment" name="firstName" type="text" class="form-control" ng-validate="vm.approveValidation.comment"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.approveValidation.comment && vm.approveValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="modal-footer">
+    <div class="buttons">
+        <button type="submit" class="btn btn-primary btn-outline" ng-click="vm.approve()">
+              Approve
+            </button>
+    </div>
+</div>
+
+</form>
+</div>

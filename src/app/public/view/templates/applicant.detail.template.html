@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-6">
+        <dl class="dl-horizontal">
+            <dt>Name:</dt>
+            <dd>{{vm.agent.name}}</dd>
+            <dt>Phone:</dt>
+            <dd>{{vm.agent.phone}}</dd>
+            <dt>Email:</dt>
+            <dd>{{vm.agent.email}}</dd>
+            <dt>Applicant Type:</dt>
+            <dd>{{vm.agent.agentType.name}}</dd>
+            <dt>License Number:</dt>
+            <dd>{{vm.agent.licenseNumber}}</dd>
+            <dt>Fax:</dt>
+            <dd>{{vm.agent.fax}}</dd>
+            <dt>Website:</dt>
+            <dd>{{vm.agent.website}}</dd>
+            <dt>Description:</dt>
+            <dd>{{vm.agent.description}}</dd>
+            <dt>Status:</dt>
+            <dd>
+                <switch ng-model="vm.agent.isActive" disabled="true"></switch>
+            </dd>
+        </dl>
+    </div>
+    <div class="col-lg-6">
+        <dl class="dl-horizontal">
+            <dt>Country:</dt>
+            <dd>{{vm.agent.address.country.name}}</dd>
+            <dt>City:</dt>
+            <dd>{{vm.agent.address.city}}</dd>
+            <dt>Street Name:</dt>
+            <dd>{{vm.agent.address.streetName}}</dd>
+            <dt>Postal Code:</dt>
+            <dd>{{vm.agent.address.zipCode}}</dd>
+            <dt>Address Line 1:</dt>
+            <dd>{{vm.agent.address.line1}}</dd>
+            <dt>Address Line 2:</dt>
+            <dd>{{vm.agent.address.line2}}</dd>
+        </dl>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.navbar-default').addClass('navbar-scroll')
+    });
+</script>

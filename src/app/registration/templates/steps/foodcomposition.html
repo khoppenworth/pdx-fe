@@ -1,0 +1,96 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.foodCompositions" ng-disabled="vm.isInputDisabled('ProductComposition')">
+    <!-- Composition -->
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Composition</h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addFoodComposition(vm.CONSTANT.FOOD_COMPOSITION_TYPE.COMPOSITION)"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px"> Name</th>
+                        <th>Quantity</th>
+                        <th>SI Unit</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fComp in vm.foodCompositions | filter: {compositionType : vm.CONSTANT.FOOD_COMPOSITION_TYPE.COMPOSITION.CODE}" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td style="width:250px">
+                            {{fComp.name}}
+                        </td>
+                        <td>{{fComp.amount}}</td>
+
+                        <td>{{fComp.unitFunction}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editFoodComposition(fComp)"><i
+                                class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeFoodComposition(fComp)"><i
+                                class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Nutritional Fact -->
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Nutrition Facts</h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addFoodComposition(vm.CONSTANT.FOOD_COMPOSITION_TYPE.NUTRITIONAL_FACT)"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px"> Name</th>
+                        <th>Quantity</th>
+                        <th>SI Unit</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fComp in vm.foodCompositions | filter: {compositionType : vm.CONSTANT.FOOD_COMPOSITION_TYPE.NUTRITIONAL_FACT.CODE}" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td style="width:250px">
+                            {{fComp.name}}
+                        </td>
+                        <td>{{fComp.amount}}</td>
+
+                        <td>{{fComp.unitFunction}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editFoodComposition(fComp)"><i
+                                class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeFoodComposition(fComp)"><i
+                                class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ng-click="vm.backToProductContinued()" class="btn btn-default">Previous</a>
+            <a ng-click="vm.compositionToManufacturers()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>

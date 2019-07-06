@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-lg-6">
+        <dl class="dl-horizontal">
+            <dt>Name:</dt>
+            <dd>{{vm.supplier.name | filterNull}}</dd>
+            <dt>Phone:</dt>
+            <dd>{{vm.supplier.phone | filterNull}}</dd>
+            <dt ng-repeat-start="phone in vm.morePhones">Phone{{$index+2}}:</dt>
+            <dd ng-repeat-end="">{{phone.phoneNumber | filterNull}}</dd>
+            <dt>Email:</dt>
+            <dd>{{vm.supplier.email | filterNull}}</dd>
+            <dt>Fax:</dt>
+            <dd>{{vm.supplier.fax | filterNull}}</dd>
+            <dt>Website:</dt>
+            <dd>{{vm.supplier.website | filterNull}}</dd>
+            <dt>Status:</dt>
+            <dd>{{vm.supplier.isActive? "Active": "Inactive"}}</dd>
+        </dl>
+    </div>
+    <div class="col-lg-6">
+        <dl class="dl-horizontal">
+            <dt>Country:</dt>
+            <dd>{{vm.supplier.address.country.name | filterNull}}</dd>
+            <dt>City:</dt>
+            <dd>{{vm.supplier.address.city | filterNull}}</dd>
+            <dt>Street Name:</dt>
+            <dd>{{vm.supplier.address.streetName | filterNull}}</dd>
+            <dt>Postal Code:</dt>
+            <dd>{{vm.supplier.address.zipCode | filterNull}}</dd>
+            <dt>Address Line 1:</dt>
+            <dd>{{vm.supplier.address.line1 | filterNull}}</dd>
+            <dt>Address Line 2:</dt>
+            <dd>{{vm.supplier.address.line2 | filterNull}}</dd>
+            <dt>Description:</dt>
+            <dd>{{vm.supplier.description | filterNull}}</dd>
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <a class="btn btn-primary btn-outline" ng-click="vm.showSupplierHistoryTimeLine()">
+      {{vm.showSupplierHistory === true ? "Hide " : "Show " }}
+    </a>
+    </div>
+</div>
+<div class="row" ng-if="vm.showSupplierHistory">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <h4 ng-show="!vm.supplierHistory.length">No history found</h4>
+            <div class="ibox-content inspinia-timeline">
+                <div class="timeline-item" ng-repeat="history in vm.supplierHistory">
+                    <div class="row">
+                        <div class="col-lg-2 date">
+                            <i class="fa fa-file-text"></i>
+                            <span>{{history.createdDate|date:'medium'}}</span>
+                            <br/>
+                            <small class="badge badge-info"><time  am-time-ago="history.createdDate" ></time></span></small>
+                        </div>
+                        <div class="col-lg-10 content no-top-border">
+                            <p class="m-b-xs"><strong>{{history.newValue == "True"? 'Activated License Holder' : 'Suspended License Holder'}}</strong></p>
+                            <p>{{history.comment}}</p>
+                            <small>changed By : {{history.modifiedByUser.username}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

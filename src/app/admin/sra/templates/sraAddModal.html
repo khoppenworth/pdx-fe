@@ -1,0 +1,69 @@
+<div>
+    <form name="createSRAForm">
+        <div class="modal-header">
+            <h3>{{vm.editMode ? "Edit SRA ":"Add SRA"}}
+                <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+            </h3>
+
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="modal-body">
+            <div class="row form-horizontal" ng-validate-form="vm.SRAValidation">
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <label> Name <span class="text-danger">*</span></label>
+                            <div>
+                                <input id="name" ng-model="vm.sra.name" name="name" type="text" class="form-control" ng-validate="vm.SRAValidation.name">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.SRAValidation.name && vm.SRAValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <label>Type <span class="text-danger">*</span></label>
+                            <div>
+                                <ui-select ng-model="vm.sra.sraType" theme="bootstrap" ng-validate="vm.SRAValidation.sraType">
+                                    <ui-select-match placeholder="Select Type">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat=" item in vm.sraTypes">
+                                        <div ng-bind-html="item.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.SRAValidation.sraType && vm.SRAValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <label>Code <span class="text-danger">*</span></label>
+                            <div>
+                                <input id="code" ng-model="vm.sra.sraCode" name="sraCode" type="text" class="form-control" ng-validate="vm.SRAValidation.sraCode">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.SRAValidation.sraCode && vm.SRAValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary btn-outline" ng-click="vm.saveSRA()">Save</button>
+                <button type="button" class="btn btn-default btn-outline" ng-click="$dismiss()">Cance </button>
+            </div>
+        </div>
+
+    </form>
+</div>

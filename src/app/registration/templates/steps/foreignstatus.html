@@ -1,0 +1,45 @@
+<fieldset ng-validate-form="vm.importPermitValidation.attachment" ng-disabled="vm.isInputDisabled('ForeignApplications')">
+    <div class="form-group col-md-12">
+        <button style="margin-top:4px;" class="btn btn-primary btn-sm btn-outline pull-right" ng-click="vm.addForeignApplicationStatus()"><i class="fa fa-plus"></i></button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Country</th>
+                    <th>Status Type</th>
+                    <th>Certificate Number</th>
+                    <th>Date of Decision</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="md in vm.maregistration.ma.foreignApplications" track by $index>
+                    <td>{{$index + 1}}</td>
+                    <td>
+                        {{md.country.name}}
+                    </td>
+                    <td>{{md.foreignApplicationStatus.name | filterNull}}</td>
+                    <td>{{md.certificateNumber | filterNull}}</td>
+                    <td>{{md.decisionDate | date | filterNull}}</td>
+                    <td>
+                        <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editForeignApplicationStatus(md)"><i
+            class="fa fa-edit"></i></button>
+                        <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeForeignApplicationStatus(md)"><i
+            class="fa fa-remove"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ng-click="vm.backToManufacturer()" class="btn btn-default">Previous</a>
+            <a ng-click="vm.foreignToAttachment()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>

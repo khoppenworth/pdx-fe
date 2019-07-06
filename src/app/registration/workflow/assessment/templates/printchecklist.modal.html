@@ -1,0 +1,117 @@
+<div>
+    <div class="modal-header"> Print Preview
+        <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+        <button ng-click="vm.printPreview()" style="margin:0 14px;" class="btn btn-defualt btn-xs pull-right">Print</button>
+        <div class="clearfix"></div>
+    </div>
+    <div id="printPreview" class="modal-body" style="overflow-y:auto;min-height:100%">
+        <div class="text-center">
+            <img src="assets/images/FDRE.png" height="65px">
+            <p><b>FOOD, MEDICINE AND HEALTH CARE ADMINISTRATION AND CONTROL AUTHORITY OF ETHIOPIA</b></p>
+            <p>Evaluation Report Of Drugs{{vm.productName}}</p>
+            <hr/>
+            </br>
+            </br>
+        </div>
+        <div class="row col-md-12">
+            <h3 class="blueClass"><b>General Information</b></h3>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>Trade Name:</dt>
+                    <dd>{{vm.maregistration.product.brandName}}</dd>
+                    <dt>Generic Name</dt>
+                    <dd>{{vm.maregistration.product.genericName}}</dd>
+                    <dt> Product Category:</dt>
+                    <dd>{{vm.maregistration.product.productCategory.name}}</dd>
+                    <dt>Dosage Strength:</dt>
+                    <dd>{{vm.maregistration.product.dosageStrengthObj.name}}</dd>
+                    <dt>Dosage Form:</dt>
+                    <dd>{{vm.maregistration.product.dosageFormObj.name}}</dd>
+                    <dt>Dosage Unit:</dt>
+                    <dd>{{vm.maregistration.product.dosageUnitObj.name}}</dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>Standard Claimed:</dt>
+                    <dd>{{vm.maregistration.product.pharmacopoeiaStandard.name}}</dd>
+                    <dt>Route of administration:</dt>
+                    <dd>{{vm.maregistration.product.adminRoute.name}}</dd>
+                    <dt>Age Group:</dt>
+                    <dd>{{vm.maregistration.product.ageGroup.name}}</dd>
+                    <dt title="Pharmacological Classification"> Pharmacological Classification:</dt>
+                    <dd>{{vm.maregistration.product.pharmacologicalClassification.name}}</dd>
+                    <dt title="Packaging/container and Closure with Type">Packaging/container and Closure with Type:</dt>
+                    <dd>{{vm.maregistration.product.containerType}}</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row col-md-12">
+            <h3 class="blueClass"><b>Common Information</b></h3>
+            The company {{vm.maregistration.ma.agent.name}} registered and based in Ethiopia. This presents the supporting documentation that acts as {{vm.maregistration.ma.supplier.name}} representative. The contents of the request addressed to Minister of health
+            presents data about the name of the product, the dosage, pharmaceutical form, presentation and the above referenced
+        </div>
+        <div class="row col-md-12">
+            <h3 class="blueClass"><b>Checklist Review</b>
+            </h3>
+            <table class="table printTable table-hovered">
+                <tbody ng-include src="'checklist-print'">
+                </tbody>
+            </table>
+        </div>
+        <div></div>
+    </div>
+</div>
+<script type="text/ng-template " id="checklist-print">
+    <tr ng-repeat-start="checklist in vm.checklistPrintAnswer | orderBy:'priority' track by $index" ng-init="checklist.rowExpanded=true;checklist.style = 'min-width:60px'">
+        <td class="">
+            <p ng-class="{'printChecklist':checklist.children.length>0}">{{checklist.label}} &nbsp; {{checklist.name}} </br>
+            </p>
+            </br>
+            <div ng-if="!checklist.children.length>0">
+                <div class="col-lg-12" ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'PRAS'}}"> <b>Primary Assessor</b> </br>
+                    <button-group group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions" disabled></button-group>
+                    <p ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'">{{maChecklist.answer|filterNull}}</p>
+                </div>
+                <br/>
+                <div class="col-lg-12" ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'SCAS'}}"><b>Secondary Assessor</b> </br>
+                    <button-group group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions" disabled></button-group>
+                    <p ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'">{{maChecklist.answer|filterNull}}</p>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+        <td style="padding-right:0;" colspan="4" ng-include src="'checklist-childrenprint'"></td>
+    </tr>
+</script>
+
+<script type="text/ng-template " id="checklist-childrenprint">
+    <table class="table table-hovered detailTable">
+        <tr ng-repeat-start="checklist in checklist.children | orderBy:'priority' track by checklist.id" ng-init="checklist.rowExpanded=true;checklist.style = 'min-width:60px'">
+            <td class="col-lg-12">
+                <p ng-class="{'printChecklist':checklist.children.length>0}">{{checklist.label}} &nbsp; {{checklist.name}} </br>
+                </p>
+                </br>
+                <div ng-if="!checklist.children.length>0">
+                    <div class="col-lg-12" ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'PRAS'}}"> <b>Primary Assessor</b> </br>
+                        <button-group group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions" disabled></button-group>
+                        <p ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'">{{maChecklist.answer|filterNull}}</p>
+                    </div>
+                    <br/>
+                    <div class="col-lg-12" ng-repeat="maChecklist in checklist.maChecklists|filter:{responderType:{responderTypeCode:'SCAS'}}"><b>Secondary Assessor</b> </br>
+                        <button-group group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions" disabled></button-group>
+                        <p ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'">{{maChecklist.answer|filterNull}}</p>
+                    </div>
+
+                </div>
+            </td>
+
+        </tr>
+        <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+            <td>
+                <ng-include src="'checklist-childrenprint'"></ng-include>
+            </td>
+        </tr>
+    </table>
+</script>

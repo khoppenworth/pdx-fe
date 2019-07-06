@@ -1,0 +1,81 @@
+<div class="ibox-title">
+    <div class="row">
+        <div class="col-lg-5">
+            <h4>
+                <a ui-sref="maregistration.list.info({maId:vm.maId})" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+            </h4>
+        </div>
+        <div class="col-lg-7">
+            <h4 class="pull-right" ng-if="vm.assesserType.responderTypeCode==='PRAS' || (vm.assesserType.responderTypeCode==='SCAS' && vm.primaryReviewResult.reviewChecklists.length>0)">
+                <button permission="permissions.MA.MAReview" ng-disabled="!vm.reviewViewStatus()" ng-click="vm.reviewRegistration()" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Summary Review</button>
+            </h4>
+
+            <h4 class="pull-right" ng-if="vm.assesserType.responderTypeCode=='TLD' && ((vm.ma.ma.isPremarketLabRequest && vm.ma.isLabResultUploaded)|| !vm.ma.ma.isPremarketLabRequest)">
+                <a permission="permissions.MA.MAReview" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='Review' ui-sref="maregistration.review({ maId: vm.maId, submoduleCode: vm.submoduleCode,submoduleTypeCode:vm.submoduleTypeCode })" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Summary Review</a>
+            </h4>
+
+            <div class="btn-group pull-right" uib-dropdown style="margin: 0px 2px;padding:4px;" permission="permissions.MA.MAApprove" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='RoleHead'>
+                <button type="button" class="btn btn-primary btn-outline  btn-xs" uib-dropdown-toggle>
+                        Actions
+                <span class="caret"></span>
+                    </button>
+                <ul role="menu" uib-dropdown-menu="" class="dropdown-menu-right">
+                    <li>
+                        <a permission="permissions.MA.MAApprove" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='Approve' ng-click="vm.approveMA()">Approve</a>
+                    </li>
+                    <li>
+                        <a permission="permissions.MA.MAReject" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='Reject' ng-click="vm.rejectMA()">Reject</a>
+                    </li>
+                    <li>
+                        <a permission="permissions.MA.MAVoid" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='Void' ng-click="vm.voidMA()">Void</a>
+                    </li>
+                    <li>
+                        <a permission="permissions.MA.MAReturnToRTL" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='ReturnTL' ng-click="vm.returnMA()">Return</a>
+                    </li>
+                </ul>
+            </div>
+
+            <h4 class="pull-right">
+                <button permission="permissions.MA.MAPrintReview" ng-click="vm.printResponse()" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px">Print Review</button>
+            </h4>
+            <div ng-if="vm.submoduleCode=='VMIN'" style="margin: 0px 2px;padding:4px;">
+                <h5 class="pull-right" style="margin: 0px 14px" permission="permissions.MA.MADecideNotification" hideon-registration="vm.currentStatus.maStatusCode" buttonFunction='Notification'>
+                    <input icheck type="checkbox" id="isNotificationType" ng-model="vm.maStatusModel.ma.isNotificationType" name="isNotificationType">
+                    <label>Notification </label>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ibox-content  m-b-sm border-bottom">
+    <div class="tabs-container">
+        <uib-tabset>
+            <uib-tab heading="Review" ng-if="vm.assesserType.responderTypeCode==='PRAS' || (vm.assesserType.responderTypeCode==='SCAS')">
+                <div ng-if="vm.reviewTabVisibility('review')" ng-include="'app/registration/workflow/assessment/templates/reviewerChecklist.template.html'"></div>
+                <div ng-if="vm.reviewTabVisibility('reviewPrimaryNotCompleted')">
+                    </br><span>Primary assessor has not been completed yet!!</span>
+                </div>
+            </uib-tab>
+            <uib-tab ng-if="vm.reviewTabVisibility('primary')" heading="Primary Review">
+                <div ng-include="'app/registration/workflow/assessment/templates/primaryAssessment.template.html'"></div>
+            </uib-tab>
+            <uib-tab ng-if="vm.reviewTabVisibility('secondary')" heading="Secondary Review">
+                <div ng-include="'app/registration/workflow/assessment/templates/secondaryAssessment.template.html'"></div>
+            </uib-tab>
+            <uib-tab heading="Team-Leader Summary" ng-if="vm.reviewTabVisibility('teamleader') || vm.reviewTabVisibility('reviewNotCompletedTeamLeader')">
+                <div ng-if="vm.reviewTabVisibility('teamleader')" ng-include="'app/registration/workflow/assessment/templates/teamLeaderAssessment.template.html'"></div>
+                <div ng-if="vm.reviewTabVisibility('reviewNotCompletedTeamLeader')">
+                    </br><span>Review has not been completed yet!!</span>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Dossiers" ng-if="vm.reviewTabVisibility('review') || vm.reviewTabVisibility('reviewNotCompletedTeamLeader')">
+                <div ng-if="vm.reviewTabVisibility('review')" ng-include="'app/registration/workflow/assessment/templates/dossier.template.html'"></div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <div ng-if="vm.ma.ma.isPremarketLabRequest && !vm.ma.isLabResultUploaded && !vm.reviewViewStatus()" class="text-center">
+        <p>Lab result has not been uploaded yet, Review can not be done!</p>
+    </div>
+</div>

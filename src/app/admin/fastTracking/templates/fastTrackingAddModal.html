@@ -1,0 +1,72 @@
+<div>
+    <form name="createFastTrackingForm">
+        <div class="modal-header">
+            <h3>{{vm.editMode ? "Edit Fast Tracking Item ":"Add Fast Tracking Item"}}
+                <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+            </h3>
+
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="modal-body">
+            <div class="row form-horizontal" ng-validate-form="vm.FastTrackingValidation">
+                <div class="col-md-12">
+                     <div class="form-group ">
+                    <div class="col-xs-12">
+                      <label>Therapeutic Group <span class="text-danger">*</span></label>
+                      <div>
+                        <ui-select ng-model="vm.fastTracking.therapeuticGroup" theme="bootstrap" ng-validate="vm.FastTrackingValidation.therapeuticGroup">
+                          <ui-select-match placeholder="Select Type">{{$select.selected.name}}</ui-select-match>
+                          <ui-select-choices repeat=" item in vm.therapeuticGroup">
+                            <div ng-bind-html="item.name"></div>
+                          </ui-select-choices>
+                        </ui-select>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 " ng-if="!vm.FastTrackingValidation.therapeuticGroup && vm.FastTrackingValidation.$showError">
+                      <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                  </div>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <label>INN<span class="text-danger">*</span></label>
+                            <div>
+                              <ui-select ng-model="vm.fastTracking.inn" theme="bootstrap_custom" ng-validate="vm.FastTrackingValidation.inn">
+                                <ui-select-match placeholder="Select Type">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices-custom collection="vm.inn" refresh-callback="Commodity.INNSearch">
+                                </ui-select-choices-custom>
+                              </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.FastTrackingValidation.inn && vm.FastTrackingValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <label>Medicine Indication <span class="text-danger">*</span></label>
+                            <div>
+                              <textarea id="code" ng-model="vm.fastTracking.medicineIndication" name="indication" class="form-control" ng-validate="vm.FastTrackingValidation.medicineIndication"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.FastTrackingValidation.medicineIndication && vm.FastTrackingValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary btn-outline" ng-click="vm.saveFastTracking()">Save</button>
+                <button type="button" class="btn btn-default btn-outline" ng-click="$dismiss()">Cance </button>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,194 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <h4>
+                                <a ui-sref="report.list" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px"><i class="fa fa-arrow-left"></i></a> {{vm.report.name || 'New Report'}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content  m-b-sm border-bottom">
+                    <div class="tabs-container">
+                        <div class="row">
+                            <uib-accordion close-others="false" class="panel-group payments-method">
+                                <div uib-accordion-group ng-class="{currentslide: is-open==true}" is-open="true">
+                                    <uib-accordion-heading>
+                                        <h5 class="panel-title">
+                                            Basic
+                                        </h5>
+                                    </uib-accordion-heading>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="pull-right">
+                                                <button ng-if="vm.basicTabViewMode=='Edit'" ng-click="vm.basicDetailModal()" class="btn btn-outline btn-xs btn-warning"><i
+                            class="fa fa-pencil"></i></button>
+                                                <button ng-if="vm.basicTabViewMode=='Create'" ng-click="vm.basicDetailModal()" class="btn btn-outline btn-xs btn-primary"><i
+                            class="fa fa-plus"></i></button>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div class="col-lg-6">
+                                                    <dl class="dl-horizontal ">
+                                                        <dt>Name:</dt>
+                                                        <dd>{{vm.report.name | filterNull}}</dd>
+                                                        <dt>Title:</dt>
+                                                        <dd>{{vm.report.title | filterNull}}</dd>
+                                                        <dt>Type:</dt>
+                                                        <dd>{{vm.report.reportType.name | filterNull}}</dd>
+                                                        <fieldset ng-if="vm.report.reportType.reportTypeCode != 'Tabular'">
+                                                            <dt>Width:</dt>
+                                                            <dd>{{vm.report.width | filterNull}}</dd>
+                                                            <dt>Series Column:</dt>
+                                                            <dd>{{vm.report.seriesColumns | filterNull}}</dd>
+                                                        </fieldset>
+                                                    </dl>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <dl class="dl-horizontal ">
+                                                        <dt>Priority:</dt>
+                                                        <dd>{{vm.report.priority | number: 0 | filterNull}}</dd>
+                                                        <dt>Description:</dt>
+                                                        <dd>{{vm.report.description | filterNull}}</dd>
+                                                        <dt>Status:</dt>
+                                                        <dd>{{vm.report.isActive ? 'Active': 'Inactive'}}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <dt>Query</dt>
+                                                <br>
+                                                <dd>
+                                                    <pre><code>{{vm.report.query | filterNull}}</code></pre>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div uib-accordion-group ng-if="vm.report.reportType.reportTypeCode == 'Tabular'" ng-class="{currentslide: is-open==true}">
+                                    <uib-accordion-heading>
+                                        <h5 class="panel-title">
+                                            Column Definitions
+                                        </h5>
+                                    </uib-accordion-heading>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="ibox-content">
+                                                <div class="pull-right">
+                                                    <button ng-click="vm.colDefModal()" class="btn btn-outline btn-xs btn-primary"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                                <div ng-if="vm.report.columnDefinitions && vm.report.columnDefinitions.length > 0" class="table-responsive">
+                                                    <table class="table table-hovered table-striped">
+                                                        <thead>
+                                                            <th style="width:3%;"></th>
+                                                            <th>Field Name</th>
+                                                            <th>Title</th>
+                                                            <th>Data Type</th>
+                                                            <th>Column Index</th>
+                                                            <th>Is Visible</th>
+                                                            <th>Is Sortable</th>
+                                                            <th>Action</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="colDef in vm.report.columnDefinitions | orderBy: 'ColumnIndex'">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{colDef.FieldName | filterNull}}</td>
+                                                                <td>{{colDef.Title | filterNull}}</td>
+                                                                <td>{{colDef.DataType | filterNull}}</td>
+                                                                <td>{{colDef.ColumnIndex | number: 0 | filterNull}}</td>
+                                                                <td>{{colDef.IsVisible ? 'Yes' : "No" | filterNull}}</td>
+                                                                <td>{{colDef.IsSortable ? 'Yes' : "No" | filterNull}}</td>
+                                                                <td>
+                                                                    <button ng-click="vm.colDefModal(colDef)" class="btn btn-outline btn-xs btn-warning"><i
+                                      class="fa fa-pencil"></i></button>
+                                                                    <button ng-click="vm.deleteColDef(colDef)" class="btn btn-outline btn-xs btn-warning"><i
+                                      class="fa fa-trash"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div ng-if="!vm.report.columnDefinitions || vm.report.columnDefinitions && vm.report.columnDefinitions.length <= 0">
+                                                    <p class="text-danger">No record found</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+                                    <uib-accordion-heading>
+                                        <h5 class="panel-title">
+                                            Filter Columns
+                                        </h5>
+                                    </uib-accordion-heading>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="ibox-content">
+                                                <div class="pull-right">
+                                                    <button ng-click="vm.filterColModal()" class="btn btn-outline btn-xs btn-primary"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                                <div ng-if="vm.report.filterColumns && vm.report.filterColumns.length > 0" class="table-responsive">
+                                                    <table class="table table-hovered table-striped">
+                                                        <thead>
+                                                            <th style="width:3%;"></th>
+                                                            <th>Field Name</th>
+                                                            <th>Title</th>
+                                                            <th>Type</th>
+                                                            <th>Value</th>
+                                                            <th>Query</th>
+                                                            <th>Inner Filter</th>
+                                                            <th>Action</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="filter in vm.report.filterColumns | orderBy: 'ColumnIndex'">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{filter.FieldName | filterNull}}</td>
+                                                                <td>{{filter.Title | filterNull}}</td>
+                                                                <td>{{filter.Type | filterNull}}</td>
+                                                                <td>{{filter.Value | filterNull}}</td>
+                                                                <td>
+                                                                    <pre><code>{{filter.Query | filterNull}}</pre></code>
+                                                                </td>
+                                                                <td>
+                                                                    <div ng-if="filter.IsInnerFilter"> <span title="Alias">{{filter.Alias | filterNull}}</span> | <span title="OverridingFieldName">{{filter.OverridingFieldName
+                                      | filterNull}}</span> | <span title="ParameterName">{{filter.ParameterName | filterNull}}</span> </div>
+                                                                    <div ng-if="!filter.IsInnerFilter">No</div>
+                                                                </td>
+
+                                                                <td>
+
+                                                                    <button ng-click="vm.filterColModal(filter)" class="btn btn-outline btn-xs btn-warning"><i
+                                    class="fa fa-pencil"></i></button>
+                                                                    <button ng-click="vm.deleteFilterCol(filter)" class="btn btn-outline btn-xs btn-warning"><i
+                                    class="fa fa-trash"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div ng-if="!vm.report.filterColumns || vm.report.filterColumns && vm.report.filterColumns.length <= 0">
+                                                    <p class="text-danger">No record found</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-accordion>
+                        </div>
+                        <div ng-if="vm.changeOccured" class="row actionButtons">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <a ng-click="vm.cancel()" class="btn btn-default">Cancel</a>
+                                    <a ng-if="vm.viewMode=='Create'" ng-click="vm.createNewReport()" class="btn btn-primary">Create</a>
+                                    <a ng-if="vm.viewMode=='Edit'" ng-click="vm.updateReport()" class="btn btn-primary">Update</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

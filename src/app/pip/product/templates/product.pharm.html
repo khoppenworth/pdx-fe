@@ -1,0 +1,127 @@
+<fieldset ng-validate-form="vm.productValidation" class="form-horizontal">
+    <div class="col-lg-6">
+        <div style="padding-right: 10px">
+            <!-- Brand Name -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('BrandName')}">
+                <div>
+                    <label>Proprietary Name (Trade Name)<span class="text-danger">*</span> </label>
+                    <input id="brandName" ng-model="vm.product.brandName" name="brandName" type="text" class="form-control" ng-validate="vm.productValidation.brandName">
+                </div>
+                <div class="text-error-table" ng-if="!vm.productValidation.brandName && vm.productValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Generic Name -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('GenericName')}">
+                <div>
+                    <label>Generic Name<span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.product.inn" theme="bootstrap_custom" ng-validate="vm.productValidation.innID" user-input="Commodity.INN">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices-custom collection="vm.inns" refresh-callback="Commodity.INNSearch">
+                        </ui-select-choices-custom>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.productValidation.innID && vm.productValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Dosage Strength -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('DosageStrength')}">
+                <div>
+                    <label>Dosage Strength<span class="text-danger">*</span> </label>
+                    <ui-select ng-model="vm.product.dosageStrengthObj" theme="bootstrap_custom" ng-validate="vm.productValidation.dosageStrength" user-input="Commodity.DosageStrength" ng-disabled="vm.isInputDisabled('DosageStrength')" ng-change="vm.onChange('DosageStrength')">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices-custom collection="vm.listOfdosageStrength" refresh-callback="Commodity.DosageStrengthSearch">
+                        </ui-select-choices-custom>
+                    </ui-select>
+                </div>
+
+                <div class="text-error-table" ng-if="!vm.productValidation.dosageStrength && vm.productValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Dosage Form -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('DosageForm')}">
+                <div>
+                    <label>Dosage Form<span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.product.dosageFormObj" theme="bootstrap" ng-validate="vm.productValidation.dosageForm">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices-custom collection="vm.dosageForms" refresh-callback="Commodity.DosageFormSearch"></ui-select-choices-custom>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.productValidation.dosageForm && vm.productValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+
+        <div style="padding-right: 10px">
+            <!-- Dosage Unit -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('DosageUnit')}">
+                <div>
+                    <label>Dosage Unit<span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.product.dosageUnitObj" theme="bootstrap_custom" ng-validate="vm.productValidation.dosageUnitID" user-input="Commodity.DosageUnit">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices-custom collection="vm.dosageUnits" refresh-callback="Commodity.DosageUnitSearch"></ui-select-choices-custom>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.productValidation.dosageUnitID && vm.productValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Pack Size -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('PackSize')}">
+                <div>
+                    <label>Pack Size<span class="text-danger">*</span> </label>
+                    <ui-select style="min-height:33px;" name="userRoles" multiple ng-model="vm.product.presentations" theme="bootstrap_custom" user-input="LookUp.PackSize" ng-validate="vm.productValidation.packSize">
+                        <ui-select-match>{{$item.name}}</ui-select-match>
+                        <ui-select-choices-custom collection="vm.packSizes" refresh-callback="LookUp.PackSizeSearch"></ui-select-choices-custom>
+                    </ui-select>
+                </div>
+                <div class="text-error-table" ng-if="!vm.productValidation.packSize && vm.productValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Manufacturer -->
+            <div class="form-group">
+                <label>Manufacturer <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <ui-select ng-model="vm.product.manufacturer" theme="bootstrap" id="manufacturerSelect" reset-search-input="false" on-select="vm.onManufacturerSelected()" ng-validate="vm.productValidation.manufacturer">
+                        <ui-select-match placeholder="Search by name [2 characters] ...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="man in vm.manufacturers | filter: $select.search|orderBy:['name']" refresh="vm.searchManufacturer($select.search)" refresh-delay="300" minimum-input-length="2">
+                            <div><span ng-bind-html="man.name | highlight: $select.search"></span></div>
+                            <small><span ng-bind-html="man.site | highlight: $select.search"></span></small>
+                            <span ng-if="man.site!=null"><br/></span>
+                            <small><span ng-bind-html="man.country | highlight: $select.search"></span></small>
+                            <div ng-if="$index == $select.items.length-1">
+                                <button class="btn btn-xs btn-primary" style="width: 100%; margin-top: 5px;" ng-click="vm.searchManufacturer($select.search, $event);" ng-disabled="loading">Load more...
+                                                          </button>
+                            </div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                                                      <button style="padding:7px 12px" title="Register New Manufacturer"
+                                                              ng-click="vm.openManufacturerModal()"
+                                                              class="btn btn-primary btn-sm btn-outline"><i class="fa fa fa-plus"></i></button>
+                                                    </span>
+                </div>
+                <div class="text-error-table" ng-if="!vm.productValidation.manufacturer && vm.productValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</fieldset>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.save()" class="btn btn-default">Save</a>
+            <a ng-click="vm.cancel()" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+</div>

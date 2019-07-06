@@ -1,0 +1,60 @@
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div class="tree-node tree-node-content">
+        <div data-nodrag>
+            <label><input ng-disabled="vm.disableNonSelectedVariationFields(node)" icheck type="checkbox"  ng-model="node.isSelected" ng-change="fvm.notify(node, this)" /> {{fvm.formatCamelCase(node.field.name)}}</label>
+
+            <a class="pull-right" ng-if="node.children && node.children.length > 0" data-nodrag ng-click="fvm.toggle(this)">
+                <span ng-class="{'btn-sm glyphicon glyphicon-menu-down': collapsed, 'btn-sm glyphicon glyphicon-menu-up': !collapsed}">
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div ng-show="!collapsed">
+        <ol ui-tree-nodes="" ng-model="node.children" data-nodrop-enabled="true">
+            <li ng-repeat="node in node.children | filter:{'isActive':true} " ui-tree-node data-collapsed="true" ng-include="'nodes_renderer.html'"></li>
+        </ol>
+    </div>
+
+</script>
+
+<div class="row" ng-controller="fieldsModalController as fvm">
+    <div class="container col-sm-12">
+        <form ng-validate-form="vm.updateStatusLogValidation">
+            <div ui-tree id="tree-root">
+                <ol ui-tree-nodes ng-model="vm.data" data-nodrop-enabled="true">
+                    <div class="form-group">
+                        <li ng-repeat="node in vm.data | filter:{'isActive':true}" ui-tree-node data-collapsed="true" ng-include="'nodes_renderer.html'"></li>
+                    </div>
+                </ol>
+            </div>
+            <hr>
+            <div class="form-group col-sm-12" ng-if="vm.showComment">
+                <label>Comment <span class="text-danger">*</span></label>
+                <div>
+                    <textarea ng-model="vm.maStatusModel.Comment" class="form-control" ng-validate="vm.updateStatusLogValidation.comment" rows="5"></textarea>
+                </div>
+                <div class="col-sm-12 " ng-if="!vm.updateStatusLogValidation.comment && vm.updateStatusLogValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+
+            </div>
+            <div class="form-group col-md-12" ng-if="vm.showFIRDueDate">
+                <label for="dueDatePrimary">FIR Due Date</label>
+                <div>
+                    <p class="input-group">
+                        <input id="dueDatePrimary" ng-model="vm.maStatusModel.firDueDate" name="DueDate" type="text" class="form-control" uib-datepicker-popup="" is-open="vm.maStatusModel.firDueDate.isOpened" close-text="Close" datepicker-options="vm.datePickerOptions" readonly
+                            ng-validate="vm.updateStatusLogValidation.firDueDate" />
+                        <span class="input-group-btn">
+                         <button type="button" class="btn btn-default" ng-click="vm.maStatusModel.firDueDate.isOpened=true"><i
+                           class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                </div>
+                <div class="col-sm-12 " ng-if="!vm.updateStatusLogValidation.firDueDate && vm.updateStatusLogValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

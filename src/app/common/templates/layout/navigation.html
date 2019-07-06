@@ -1,0 +1,61 @@
+<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="MenuController as self">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li id="iImport_min_max_button">
+              <span class="clear" minimaliza-sidebar></span>
+            </li>
+            <li class="nav-header">
+                <div class="profile-element" uib-dropdown>
+                    <!--<img alt="image" class="img-circle" src="assets/images/001-profile.png" />-->
+                  <div class="avatar-circle">
+                      <span class="initials">{{self.userInfo.fullName.split(" ")[0].charAt(0).toUpperCase()}}{{self.userInfo.fullName.split(" ")[1].charAt(0).toUpperCase()}}</span>
+                  </div>
+
+                  <a uib-dropdown-toggle="" href>
+                      <span class="clear">
+                              <span class="block m-t-xs">
+                                  <strong class="font-bold">{{self.userInfo.fullName}}</strong>
+                           </span>
+                      <span class="text-muted text-xs block">{{self.userInfo.role}} <b class="caret"></b></span>
+                      </span>
+                  </a>
+                  <ul uib-dropdown-menu class="animated flipInX m-t-xs">
+                      <li><a href="" ng-click="self.logout()">Logout</a></li>
+                      <li><a href="" ng-click="self.updatePassword()">Change Password</a></li>
+                  </ul>
+                </div>
+                <div class="logo-element">
+                    IMP
+                </div>
+            </li>
+
+            <ul id="main-menu" class="nav metismenu" ng-include="'menu-items-tpl'">
+            </ul>
+        </ul>
+
+    </div>
+</nav>
+
+
+<script type="text/ng-template " id="menu-items-tpl ">
+    <li ng-repeat="item in self.menuItems " ng-class="{ active: $state.includes ( '{{item.state}}')}" metis=" ">
+        <a href="{{item.link}} " target="{{}}" ng-include=" 'menu-item-link-tpl' "></a>
+
+        <ul class="nav nav-second-level metismenu" ng-if="item.menuItems.length " 
+            ng-init="subItems=item.menuItems " ng-include=" 'menu-items-recursive-tpl' "></ul>
+    </li>
+</script>
+
+<script type="text/ng-template " id="menu-item-link-tpl ">
+    <i ng-if="item.icon " class="{{item.icon}} "></i>
+    <span class="nav-label ">{{item.title}}</span>
+    <span ng-if="item.menuItems.length " class="fa arrow ">	</span>
+</script>
+
+<script type="text/ng-template " id="menu-items-recursive-tpl ">
+    <li ng-repeat="item in subItems " ng-class="{ active: $state.includes ( '{{item.state}}')}" metis=" ">
+        <a href="{{item.link}} " ng-include=" 'menu-item-link-tpl' "></a>
+        <ul class="nav nav-third-level " ng-if="item.menuItems.length " ng-init="subItems=item.menuItems " ng-include=" 'menu-items-recursive-tpl' "></ul>
+    </li>
+</script>
+

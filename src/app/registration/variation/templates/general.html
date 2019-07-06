@@ -1,0 +1,30 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.generalInfo" class="form-horizontal">
+  <div class="col-lg-6">
+    <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('Supplier')}">
+      <div>
+        <label>License Holder <span class="text-danger">*</span></label>
+        <ui-select ng-model="vm.maregistration.ma.supplier" theme="bootstrap"
+                   ng-validate="vm.maregistrationValidation.generalInfo.supplierID"
+                   ng-disabled="vm.isUpdateMode && vm.isInputDisabled('Supplier')"
+                   ng-change="vm.onChange('Supplier')">
+          <ui-select-match>{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat=" item in vm.suppliers | filter: $select.search |orderBy:'name'">
+            <div ng-bind-html="item.name | highlight: $select.search "></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class=" text-error-table"
+           ng-if="!vm.maregistrationValidation.generalInfo.supplierID && vm.maregistrationValidation.generalInfo.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+  </div>
+</fieldset>
+<div class="row">
+  <div class="col-md-12">
+    <div class="pull-right">
+      <a ng-if="!vm.firOrRta" ng-click="vm.saveDraft()" class="btn btn-default">Save</a>
+      <a ng-click="vm.generalToProduct()" class="btn btn-primary">Next</a>
+    </div>
+  </div>
+</div>

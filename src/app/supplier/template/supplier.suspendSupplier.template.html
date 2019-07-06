@@ -1,0 +1,19 @@
+<div class="row form-horizontal" ng-validate-form="vm.suspendSupplierValidation">
+    <div class="col-md-12">
+        <div class="form-group col-md-12">
+            <div class="col-xs-12">
+                <p>Are you sure?</p>
+                <p>If so please enter reason.</p>
+            </div>
+            <div class="col-xs-12">
+                <label>Remark <span class="text-danger">*</span></label>
+                <div>
+                    <textarea ng-model="vm.suspendReason" class="form-control" ng-validate="vm.suspendSupplierValidation.comment" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-12 " ng-if="!vm.suspendReason && vm.suspendSupplierValidation.$showError">
+                <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+            </div>
+        </div>
+    </div>
+</div>

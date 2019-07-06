@@ -1,0 +1,31 @@
+<div class="ibox-content">
+    <div class="row">
+        <div class="col-md-4 itemListWithVerticalBorder">
+            <table id="roleList" class="table  table-condensed table-hovered" style="height:50px;overflow-y:scroll">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="role in vm.user.roles | orderBy:'name'" ng-click="vm.roleChanged(role)" ng-class="{'btn-primary': vm.selectedID === role.id}">
+                        <td>{{$index+1}}</td>
+                        <td>{{role.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8" ng-show="vm.selectedRole.id">
+            <p class="text-center">
+                <b>{{vm.selectedRole.name}} Departments</b>
+            </p>
+            <ui-select name="userRoles" multiple ng-model="vm.selectedRole.userSubmoduleTypes" theme="bootstrap">
+                <ui-select-match>{{$item.name}}</ui-select-match>
+                <ui-select-choices repeat="app in vm.applicationList | orderBy:'name' | filter: $select.search track by app.id">
+                    <div ng-bind-html="app.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</div>

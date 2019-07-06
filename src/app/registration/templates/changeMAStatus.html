@@ -1,0 +1,59 @@
+<div class="row form-horizontal" ng-validate-form="vm.updateStatusLogValidation">
+  <div class="col-md-12">
+    <div class="form-group col-md-12">
+      <div class="col-xs-12">
+        <label>{{vm.commentTitle}} <span class="text-danger">*</span></label>
+        <div>
+          <textarea ng-model="vm.maStatusModel.Comment" class="form-control"
+                    ng-validate="vm.updateStatusLogValidation.comment" rows="5"></textarea>
+        </div>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.updateStatusLogValidation.comment && vm.updateStatusLogValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+      <br/>
+      <div class="table-responsive col-xs-12">
+        <div>
+          <br/>
+          <button class="btn btn-primary btn-outline btn-xs pull-right" title="Add Attachment" ng-click="vm.addFirDoc()"><i class="fa fa-plus"></i></button>
+        </div>
+        <table ng-if="vm.firDoc.length>0" class="table table-striped">
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>Attachement</th>
+            <th>Upload</th>
+            <th>Status</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="md in vm.firDoc |orderBy:'-isRequired' track by $index">
+            <td>{{$index + 1}}</td>
+            <td>
+              {{md.documentType.name}} <span class="text-danger">*</span>
+              <br>
+              <small>{{md.documentType.description}}</small>
+            </td>
+            <td>
+              <file-uploader attachment-info="md.attachmentInfo"></file-uploader>
+              <small>{{md.attachmentInfo.fileName}}</small>
+              <small ng-if="!vm.feeUpload[$index].document && vm.feeUpload.$showError"
+                     ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+            </td>
+
+            <td>
+              <a href="" ng-show="md.attachmentInfo.document">
+                <i class="fa fa-check text-navy"></i>
+              </a>
+              <input ng-model="md.attachmentInfo.document" class="hidden" ng-validate="vm.feeUpload[$index].document"/>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

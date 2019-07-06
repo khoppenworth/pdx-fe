@@ -1,0 +1,22 @@
+<div class="row border-bottom " ng-controller="TopNavBarController as self">
+    <nav class="navbar navbar-static-top m-b-none" role="navigation">
+        <!--Logo-->
+
+        <div class="col-md-8">
+            <!--<span id="iImport_min_max_button">-->
+            <span id="iImport_min_max_button_small_screen" minimaliza-sidebar></span>
+            <!--</span>-->
+            <div id="fmhacaLogo">
+                <img src="assets/images/FDRE.png" alt="logo" />
+                <span lang="am">የኢትዮጵያ ምግብና መድኃኒት ባለስልጣን</span>
+                <br/>
+                <span>Ethiopian Food and Drug Authority</span>
+            </div>
+        </div>
+        <!-- Breadcrump -->
+        <div class="navbar-collapse collapse page-heading" id="navbar">
+            <div style="display:inline-block" ng-class="{'margin-20':settings.APN.toLowerCase() == 'false'}" ng-include="'app/common/templates/layout/breadcrumb.html'"></div>
+            <ng-include ng-if="settings.APN.toLowerCase() == 'true'" src="'app/notification/templates/notification.html'"></ng-include>
+        </div>
+    </nav>
+</div>

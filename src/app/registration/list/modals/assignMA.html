@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="container col-sm-12">
+    <form ng-validate-form="vm.AssignValidation">
+      <div class="form-group col-sm-12">
+        <label for="role">Role <span class="text-danger">*</span></label>
+        <ui-select id="role" search-enabled="false" ng-disabled="true" ng-model="vm.roleSelected" theme="bootstrap"
+                   ng-validate="vm.AssignValidation.roleID" on-select="vm.onRoleSelected($item)">
+          <ui-select-match>{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="item in vm.roles | filter: $select.search">
+            <div ng-bind-html="item.name | highlight: $select.search"></div>
+            <!--<small ng-bind-html="item.paymentCode | highlight: $select.search"></small>-->
+          </ui-select-choices>
+        </ui-select>
+
+        <div class="col-sm-6" ng-if="!vm.AssignValidation.roleID && vm.AssignValidation.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-8">
+        <label for="primaryAssessor">{{vm.roleCode==='CSO'? 'User' : 'Primary Assessor' }} <span
+          class="text-danger">*</span></label>
+        <ui-select id="primaryAssessor" ng-model="vm.assignedUser" theme="bootstrap" ng-change="vm.assessorChanged(vm.roleCode==='CSO' ? 'cso': 'primary')"
+                   ng-validate="vm.AssignValidation.assignedUserID">
+          <ui-select-match>{{$select.selected.firstName + ' '+$select.selected.lastName}}</ui-select-match>
+          <ui-select-choices repeat="item in vm.users | filter: $select.search">
+            <div><span ng-bind-html="item.firstName | highlight: $select.search"></span> &nbsp;<span
+              ng-bind-html="item.lastName | highlight: $select.search"></span></div>
+
+          </ui-select-choices>
+        </ui-select>
+        <div ng-if="!vm.AssignValidation.assignedUserID && vm.AssignValidation.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-4">
+        <label for="dueDatePrimary">Due Date</label>
+        <div>
+          <p class="input-group">
+            <input id="dueDatePrimary" ng-model="vm.dueDatePrimary" name="DueDate" type="text" class="form-control"
+                   uib-datepicker-popup=""
+                   is-open="vm.primaryAssessorsDueDate.isOpened" close-text="Close" datepicker-options="vm.datePickerOptions" readonly ng-validate="vm.AssignValidation.dueDate"/>
+            <span class="input-group-btn">
+                 <button type="button" class="btn btn-default" ng-click="vm.primaryAssessorsDueDate.isOpened=true"><i
+                   class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+        <div ng-if="!vm.AssignValidation.dueDate && vm.AssignValidation.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12" ng-if="vm.roleCode==='CSO' && vm.csoChanged.exists && vm.csoChanged.changed">
+        <label for="csoReplacement">CSO Replacement Reason <span class="text-danger">*</span></label>
+        <textarea class="col-sm-12" id="csoReplacement"  rows="2" ng-model="vm.csoChanged.reason"
+                   ng-validate="vm.AssignValidation.csoReplacementReason">
+        </textarea>
+
+        <div class="col-sm-6" ng-if="!vm.AssignValidation.primaryReplacementReason && vm.AssignValidation.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12" ng-if="vm.roleCode!='CSO' && vm.assessorsChanged.primaryExists && vm.assessorsChanged.primaryChanged">
+        <label for="primaryReplacement">Primary Replacement Reason <span class="text-danger">*</span></label>
+        <textarea class="col-sm-12" id="primaryReplacement"  rows="2" ng-model="vm.assignedUserChangeReason.primary"
+                   ng-validate="vm.AssignValidation.primaryReplacementReason">
+        </textarea>
+
+        <div class="col-sm-6" ng-if="!vm.AssignValidation.primaryReplacementReason && vm.AssignValidation.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+
+      <div ng-if="vm.showAddSecondaryAssessors && vm.roleCode==='ROLE_REVIEWER'">
+        <div class="form-group col-sm-8">
+          <label for="secondaryAssessor">Secondary Assessor</label>
+          <div>
+            <!-- for secondary  asssor-->
+            <ui-select id="secondaryAssessor" ng-model="vm.assignedUserSecondary" ng-change="vm.assessorChanged('secondary')" theme="bootstrap">
+              <ui-select-match  allow-clear="true">{{$select.selected.firstName + ' '+$select.selected.lastName}}</ui-select-match>
+              <ui-select-choices repeat="item in vm.users | filter: $select.search">
+                <div><span ng-bind-html="item.firstName | highlight: $select.search"></span> &nbsp;<span
+                  ng-bind-html="item.lastName | highlight: $select.search"></span></div>
+
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label for="dueDateSecondary">Due Date</label>
+          <div>
+            <p class="input-group" style="margin:0px;">
+              <input id="dueDateSecondary" ng-model="vm.dueDateSecondary" name="SDueDate" type="text"
+                     class="form-control" uib-datepicker-popup=""  datepicker-options="vm.datePickerOptions"
+                     is-open="vm.secondaryAssessorsDueDate.isOpened" close-text="Close" readonly/>
+              <span class="input-group-btn">
+                 <button type="button" class="btn btn-default" ng-click="vm.secondaryAssessorsDueDate.isOpened=true"><i
+                   class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12" ng-if="vm.assessorsChanged.secondaryExists && vm.assessorsChanged.secondaryChanged">
+          <label for="secondaryReplacement">Secondary Replacement Reason <span class="text-danger">*</span></label>
+          <textarea class="col-sm-12" id="secondaryReplacement"  rows="2" ng-model="vm.assignedUserChangeReason.secondary"
+                    ng-validate="vm.AssignValidation.secondaryReplacementReason">
+        </textarea>
+
+          <div class="col-sm-6" ng-if="!vm.AssignValidation.secondaryReplacementReason && vm.AssignValidation.$showError">
+            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12" ng-if="vm.roleCode =='ROLE_REVIEWER'">
+          <label><input icheck type="checkbox" ng-model="vm.showAddSecondaryAssessors" class="pull-left"
+                        ng-change="vm.notify(node)"/> Add Secondary Assessor</label>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

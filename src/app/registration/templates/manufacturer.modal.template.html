@@ -1,0 +1,208 @@
+<div>
+    <form name="createManufacturer">
+        <div class="modal-header"> {{vm.title}}
+            <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+            <div class="clearfix"></div>
+        </div>
+        <div class="modal-body">
+            <div class="row form-horizontal" ng-validate-form="vm.manufacturerValidation">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class=" col-xs-12">
+                            <label>Name <span class="text-danger">*</span></label>
+                            <div>
+                                <input ng-model="vm.manufacturer.name" name="name" type="text" class="form-control" ng-validate="vm.manufacturerValidation.name">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.manufacturerValidation.name && vm.manufacturerValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Primary Phone <span class="text-danger">*</span></label>
+                            <span ng-if="vm.morePhones.length<2" class="pull-right btn-primary btn-outline fa fa-plus" title="More phone" ng-click="vm.addMorePhone()"></span>
+                            <div>
+                                <input type="text" class="form-control" name="phone" ng-model="vm.manufacturer.phone" ng-intl-tel-input data-initial-country="et" ng-validate="vm.manufacturerValidation.phone" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 ">
+                            <span class="text-danger" ng-show="createManufacturer.phone.$invalid && createManufacturer.phone.$touched">Invalid phone format</span>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.manufacturerValidation.phone && vm.manufacturerValidation.$showError && !createManufacturer.phone.$invalid">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div ng-repeat="extra in vm.morePhones" class="form-group">
+                        <div class="col-xs-12">
+                            <label>Phone {{$index+2}} </label>
+                            <span class="pull-right btn-primary btn-danger fa fa-remove" title="Remove" ng-click="vm.removeAdditionalPhone(extra)"></span>
+                            <div>
+                                <input type="text" class="form-control" name="phone{{$index}}" ng-model="extra.phoneNumber" ng-intl-tel-input data-initial-country="et" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 ">
+                            <span class="text-danger" ng-show="createManufacturer['phone'+$index].$invalid && createManufacturer['phone'+$index].$touched">Invalid phone format</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Email <span class="text-danger">*</span></label>
+                            <div>
+                                <input ng-model="vm.manufacturer.email" name="email" type="email" class="form-control" ng-validate="vm.manufacturerValidation.email">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.manufacturerValidation.email && vm.manufacturerValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>GMP Inspection <span class="text-danger">*</span> </label>
+                            <div style="margin-top:10px;">
+                                <input icheck name="GSMInspection" type="checkbox" ng-model="vm.manufacturer.isGMPInspected"> &nbsp; &nbsp;<span>{{vm.manufacturer.isGMPInspected?"Yes":"No"}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Certificate Number </label>
+                            <div>
+                                <input ng-disabled="!vm.manufacturer.isGMPInspected" ng-model="vm.manufacturer.gmpCertificateNumber" name="CertificateNumber" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Certificate Issue Date</label>
+                            <div>
+                                <p class="input-group" style="margin:0px;">
+                                    <input ng-disabled="!vm.manufacturer.isGMPInspected" ng-model="vm.manufacturer.gmpInspectedDate" name="CertificationDate" type="text" class="form-control" uib-datepicker-popup="" is-open="vm.gmpInspectedDate.date.isOpened" close-text="Close" ng-validate="vm.linkSupplierAndAgentValidation.endDate"
+                                        readonly/>
+                                    <span class="input-group-btn">
+                           <button type="button" class="btn btn-default"
+                                   ng-click="vm.gmpInspectedDate.date.isOpened=true"><i
+                             class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Applicant Master File Number</label>
+                            <div>
+                                <input ng-model="vm.manufacturer.masterFileNumber" name="site" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Fax </label>
+                            <div>
+                                <input ng-model="vm.manufacturer.fax" name="fax" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Website </label>
+                            <div>
+                                <input ng-model="vm.manufacturer.website" name="website" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Description</label>
+                            <div>
+                                <textarea cols="40" rows="1" ng-model="vm.manufacturer.description" name="description" type="text" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LicenseNumber -->
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>License Number</label>
+                            <div>
+                                <input ng-model="vm.manufacturer.LicenseNumber" name="LicenseNumber" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label>Address Section</label>&nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-xs btn-outline btn-primary" title="Add More Address" ng-click="vm.addAddress()">ADD</button>
+                    <hr/>
+                </div>
+                <div class="col-md-6 bordered" ng-repeat="address in vm.addresses">
+                    <div class="form-group" style="margin-top : 5px;">
+                        <div class="col-xs-12"><label>Address {{$index+1}} </label>
+                            <!-- Enable delete address if there are more than one addresses -->
+                            <button class="btn btn-xs btn-outline btn-danger pull-right" title="Remove Address" ng-click="vm.removeAddress(address,$index)" ng-disabled="$index == 0"><i class="fa fa-trash"></i></button></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Country <span class="text-danger">*</span></label>
+                            <ui-select ng-model="address.country" theme="bootstrap" ng-validate="vm.manufacturerValidation.address[$index].country">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="country in vm.countryList | filter: $select.search">
+                                    <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                    <!--<small ng-bind-html="item.portCode | highlight: $select.search"></small>-->
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.manufacturerValidation.address[$index].country && vm.manufacturerValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>City </label>
+                            <div>
+                                <input ng-model="address.city" name="fax" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Manufacturing Site Address -->
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Manufacturing Site Address <span class="text-danger">*</span></label>
+                            <div>
+                                <textarea rows="5" ng-model="address.line1" name="line1" type="text" ng-validate="vm.manufacturerValidation.address[$index].line1" class="form-control">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.manufacturerValidation.address[$index].line1 && vm.manufacturerValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Postal code </label>
+                            <div>
+                                <input ng-model="address.zipCode" name="zipCode" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="buttons">
+                <button type="submit" ng-if="vm.title.toLowerCase().indexOf('update')>-1" class="btn btn-primary btn-outline" ng-click="vm.updateManufacturer()">
+          Update
+        </button>
+                <button type="submit" ng-if="vm.title.toLowerCase().indexOf('new')>-1" class="btn btn-primary btn-outline" ng-click="vm.createManufacturer()">
+          Create
+        </button>
+                <button type="button" class="btn btn-default btn-outline" ng-click="$dismiss()">
+          Cancel
+        </button>
+            </div>
+        </div>
+    </form>
+</div>LicenseNumber

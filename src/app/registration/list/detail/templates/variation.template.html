@@ -1,0 +1,75 @@
+<div class="row">
+    <uib-accordion close-others="false" class="panel-group payments-method">
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}" is-open="true">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Variations
+                </h5>
+            </uib-accordion-heading>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Variation Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="field in vm.maFields | orderBy:['isMajor','name' ] | filter:vm.filterVariationFields " ng-class="{'productExpired': field.isMajor,'productNotApproved':!field.isMajor}">
+                                <td>{{$index+1}}</td>
+                                <td>{{field.name}}</td>
+                                <td>{{field.isMajor? 'Major': 'Minor'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}" is-open="true">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Fee and Summary
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <label for="Fees">Fee</label>
+                <table id="Fees" class="table table-hovered table-striped detailTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Type</th>
+                            <th class="numberInTable">Quantity</th>
+                            <th class="numberInTable">Unit Price</th>
+                            <th class="numberInTable">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="fee in vm.maregistration.ma.maPayments">
+                            <td>{{$index + 1}}</td>
+                            <td>{{fee.submoduleFee.feeType.name}}</td>
+                            <td class="numberInTable">{{fee.quantity}}</td>
+                            <td class="numberInTable">{{fee.submoduleFee.feeType.currency.symbol}} {{fee.submoduleFee.fee}}</td>
+                            <td class="numberInTable">{{fee.submoduleFee.feeType.currency.symbol}} {{fee.submoduleFee.subTotal}}</td>
+                        </tr>
+                        <tr class="text-right">
+                            <td colspan="4"><b><strong>Grand Total</strong></b></td>
+                            <td>{{vm.maregistration.ma.maPayments[0].submoduleFee.feeType.currency.symbol}} {{vm.submoduleFeeGrandTotal}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <label for="summary">Summary</label>
+                <div>
+                    <label class="badge badge-success"> {{vm.variationSummary.majorVariationCount}} major </label>
+                    <label class="badge badge-info">{{vm.variationSummary.minorVariationCount}} minor</label>
+                </div>
+
+                <textarea id="summary" class="col-sm-12" rows="10" ng-disabled="true;" ng-model="vm.variationSummary.variationSummary"></textarea>
+            </div>
+        </div>
+    </uib-accordion>
+</div>

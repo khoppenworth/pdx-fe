@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="col-lg-6 no-padding">
+                   Fast Tracking Items
+                </div>
+                <div ibox-tools="" class="pull-right">
+                    <a class=" btn btn-primary  btn-outline btn-sm" type="button" ng-click="vm.openFTModal(null)" title="Add Fast Tracking Item"><i class="fa fa-plus"></i></a>
+                </div>
+
+
+            </div>
+
+            <div class="ibox-content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="no-borders">
+                            <th class="text-center" width="5%">No.</th>
+                            <th>Therapeutic Group</th>
+                            <th>INN</th>
+                            <th>Medicine Indication</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="item in vm.fastTrackings | orderBy : ['-isActive','therapeuticGroup.name','inn.name']">
+                            <td class="text-center">{{$index+ 1}}</td>
+                            <td> {{item.therapeuticGroup.name}}</td>
+                            <td> {{item.inn.name}}</td>
+                            <td> {{item.medicineIndication}}</td>
+                            <td>{{item.isActive ? 'Active': 'Inactive'}}</td>
+                            <td> <a ng-if="item.isActive" class=" btn  btn-outline btn-xs" type="button" ng-click="vm.openFTModal(item)" title="Edit Item"><i class="fa fa-edit"></i></a>
+                                <a ng-if="item.isActive" class=" btn   btn-outline btn-xs " type="button" ng-click="vm.removeFT(item,false)" title="Deactivate Item"><i class="fa fa-remove" style="color:red"></i></a>
+                              <a ng-if="!item.isActive" class=" btn   btn-outline btn-xs " type="button" ng-click="vm.removeFT(item,true)" title="Activate Item"><i class="fa fa-check" style="color:green"></i></a>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

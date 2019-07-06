@@ -1,0 +1,130 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.deviceAccessories" ng-disabled="vm.isInputDisabled('ProductComposition')">
+    <!-- Row Materials -->
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Raw materials</h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addDeviceAccessory(vm.CONSTANT.ACCESSORY_TYPE.ROW_MATERIALS)"><i class="fa fa-plus"></i></button>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px">Name</th>
+                        <th>Model</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="da in vm.deviceAccessories | filter: {accessoryType : {accessoryTypeCode: vm.CONSTANT.ACCESSORY_TYPE.ROW_MATERIALS}}" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td>{{da.name}}</td>
+                        <td>{{da.model}}</td>
+                        <td>{{da.description}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editDeviceAccessory(da)"><i
+              class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeDeviceAccessory(da)"><i
+              class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Standard Accessory -->
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Standard Accessory</h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addDeviceAccessory(vm.CONSTANT.ACCESSORY_TYPE.STANDARD)"><i class="fa fa-plus"></i></button>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px">Name</th>
+                        <th>Model</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="da in vm.deviceAccessories | filter: {accessoryType : {accessoryTypeCode: vm.CONSTANT.ACCESSORY_TYPE.STANDARD}}" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td>{{da.name}}</td>
+                        <td>{{da.model}}</td>
+                        <td>{{da.description}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editDeviceAccessory(da)"><i
+                  class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeDeviceAccessory(da)"><i
+                  class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Spare Part -->
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Spare Part</h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addDeviceAccessory(vm.CONSTANT.ACCESSORY_TYPE.SPARE_PART)"><i class="fa fa-plus"></i></button>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px">Name</th>
+                        <th>Model</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="da in vm.deviceAccessories | filter: {accessoryType : {accessoryTypeCode: vm.CONSTANT.ACCESSORY_TYPE.SPARE_PART}}" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td>{{da.name}}</td>
+                        <td>{{da.model}}</td>
+                        <td>{{da.description}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editDeviceAccessory(da)"><i
+                      class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeDeviceAccessory(da)"><i
+                      class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ng-click="vm.backToProductContinued()" class="btn btn-default">Previous</a>
+            <a ng-click="vm.compositionToManufacturers()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>

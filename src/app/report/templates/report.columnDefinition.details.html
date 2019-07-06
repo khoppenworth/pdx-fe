@@ -1,0 +1,75 @@
+<div class="row form-horizontal" ng-validate-form="vm.reportModalValidationColDef">
+  <div class="col-md-6">
+      <div class="form-group">
+        <div class=" col-xs-12">
+          <label>Field Name <span class="text-danger">*</span></label>
+          <div>
+            <input ng-model="vm.reportModelColDef.FieldName" name="name" type="text" class="form-control"
+                   ng-validate="vm.reportModalValidationColDef.fieldName">
+          </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationColDef.fieldName && vm.reportModalValidationColDef.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Title <span class="text-danger">*</span></label>
+          <div>
+            <input ng-model="vm.reportModelColDef.Title" name="title" type="text" class="form-control"
+                   ng-validate="vm.reportModalValidationColDef.title">
+          </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationColDef.title && vm.reportModalValidationColDef.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Data Type <span class="text-danger">*</span></label>
+          <ui-select ng-model="vm.reportModelColDef.DDataType" theme="bootstrap"
+                     ng-validate="vm.reportModalValidationColDef.dataType">
+            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat=" item in vm.colDefDataTypes | filter: $select.search |orderBy:'name'">
+              <div ng-bind-html="item.name | highlight: $select.search "></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationColDef.dataType && vm.reportModalValidationColDef.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Column Index  <span class="text-danger">*</span></label>
+          <div>
+            <input ng-model="vm.reportModelColDef.ColumnIndex" name="ColumnIndex" type="number"  min="0" class="form-control"
+                   ng-validate="vm.reportModalValidationColDef.columnIndex">
+          </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationColDef.columnIndex && vm.reportModalValidationColDef.$showError">
+          <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Is Visible </label>
+          <div>
+            <input icheck  type="checkbox" ng-model="vm.reportModelColDef.IsVisible" name="IsVisible" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label>Is Sortable </label>
+          <div>
+            <input icheck  type="checkbox" ng-model="vm.reportModelColDef.IsSortable" name="IsSortable" class="form-control">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+

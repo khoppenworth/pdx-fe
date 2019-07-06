@@ -1,0 +1,165 @@
+<div ng-if="!vm.isLegacyData()" class="row">
+
+    <uib-accordion close-others="false" class="panel-group payments-method">
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}" is-open="true">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Basic
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('BrandName')}">Trade Name:</dt>
+                            <dd>{{vm.maregistration.product.brandName | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('GenericName')}">Generic Name</dt>
+                            <dd>{{vm.maregistration.product.genericName | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductCategory')}">Device Category:</dt>
+                            <dd>{{vm.maregistration.product.productCategory.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProposedIndication')}" title="Indication for Use">Indication for Use:</dt>
+                            <dd>{{vm.maregistration.product.indication | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ShelfLife')}">Shelf Life (in Months):</dt>
+                            <dd>{{vm.maregistration.product.shelfLifeObj.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductType')}">Product Type:</dt>
+                            <dd>{{vm.maregistration.product.productType.name | filterNull}}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductDescription')}" title="Product Description and Physical Appearance">Product Description and Physical Appearance:</dt>
+                            <dd>{{vm.maregistration.product.description | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('DeviceGroup')}">Device Group:</dt>
+                            <dd>{{vm.maregistration.product.productMD.mdGrouping.name | filterNull}}</dd>
+                            <dt ng-if="vm.maregistration.product.productMD.mdGrouping.mdGroupingCode ==='FAML'">Family Name:</dt>
+                            <dd ng-if="vm.maregistration.product.productMD.mdGrouping.mdGroupingCode ==='FAML'">{{vm.maregistration.product.productMD.familyName | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('DeviceClass')}">Device Class:</dt>
+                            <dd>{{vm.maregistration.product.productMD.deviceClass.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ClassificationRule')}" title="Pharmacological Classification">Classification Rule:</dt>
+                            <dd>{{vm.maregistration.product.productMD.classificationRule | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('UsePeriod')}" title="Packaging/container and Closure with Type">Use Period:</dt>
+                            <dd>{{vm.maregistration.product.productMD.usePeriod | filterNull}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Device Accessories <i style="font-size:14px;" ng-if="vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductComposition')" class="fa text-warning fa-exclamation-circle"></i>
+                </h5>
+            </uib-accordion-heading>
+            <div>
+
+                <div class="row">
+                    <h4>Raw materials</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">Name</th>
+                                    <th>Model</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="da in vm.maregistration.product.deviceAccessories | filter: {accessoryType : {accessoryTypeCode: vm.CONSTANT.ACCESSORY_TYPE.ROW_MATERIALS}}" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td>{{da.name}}</td>
+                                    <td>{{da.model}}</td>
+                                    <td>{{da.description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Standard Accessory</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">Name</th>
+                                    <th>Model</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="da in vm.maregistration.product.deviceAccessories | filter: {accessoryType : {accessoryTypeCode: vm.CONSTANT.ACCESSORY_TYPE.STANDARD}}" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td>{{da.name}}</td>
+                                    <td>{{da.model}}</td>
+                                    <td>{{da.description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Spare Part</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">Name</th>
+                                    <th>Model</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="da in vm.maregistration.product.deviceAccessories | filter: {accessoryType : {accessoryTypeCode: vm.CONSTANT.ACCESSORY_TYPE.SPARE_PART}}" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td>{{da.name}}</td>
+                                    <td>{{da.model}}</td>
+                                    <td>{{da.description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Detail
+                </h5>
+            </uib-accordion-heading>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+
+                            <th>No</th>
+                            <th>Product Name</th>
+                            <th>Model</th>
+                            <th>Size</th>
+                            <th>Description</th>
+                            <th>Pack Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="md in vm.maregistration.product.mdModelSizes" track by $index>
+                            <td>{{$index+1}}</td>
+                            <td>{{vm.maregistration.product.genericName}}</td>
+                            <td>{{md.model| filterNull}}</td>
+                            <td>{{md.size| filterNull}}</td>
+                            <td>{{md.description | filterNull}}</td>
+                            <td>{{md.presentation| filterNull}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+            </div>
+        </div>
+    </uib-accordion>
+</div>
+
+<div ng-if="vm.isLegacyData()" ng-include="'app/registration/list/detail/templates/mdProductsForLegacyData.template.html'"></div>

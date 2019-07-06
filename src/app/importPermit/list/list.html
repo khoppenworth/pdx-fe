@@ -1,0 +1,51 @@
+<div class="ibox-title">
+  <div class="col-lg-6 no-padding">
+    <!--<input class="form-control" placeholder="Search ...."></input>-->
+  </div>
+  <div ibox-tools class="pull-right">
+    <a class="btn btn-primary btn-outline btn-sm" type="button" ui-sref="ipermit.new"
+       permission="permissions.ImportPermit.Create" title="Add Import Permit"><i class="fa fa-plus"></i></a>
+  </div>
+</div>
+<div class="ibox-content">
+  <div class="table-responsive">
+    <table id="ipermitTableList" class="table table-striped" datatable="" dt-options="vm.dtOptions"
+           dt-columns="vm.dtColumns" dt-instance="vm.dtInstance"></table>
+  </div>
+  <hr style="border-top: 2px solid #bbb"/>
+  <div ng-if="vm.wips.length > 0" class="table-responsive">
+    <h4><b>Incomplete Import Permits</b></h4>
+    <table class="table table-hovered table-striped" style="width:100%; table-layout:fixed; ">
+      <thead>
+      <th style="width:3%;"></th>
+      <th>Application No.</th>
+      <th>License Holder</th>
+      <th>Application Date</th>
+      <th>Products</th>
+      <th>Documents</th>
+      <th>Last Active</th>
+      <th style="width:4%"></th>
+      </thead>
+      <tbody>
+      <tr ng-repeat="wip in vm.wips | orderBy: '-wipNumber'">
+        <td>{{$index+1}}</td>
+        <td>
+          <a href="" title="{{wip.wipNumber  | filterNull}}" ui-sref="ipermit.wip({ipermitId:wip.id})">
+            {{wip.wipNumber | filterNull}}
+          </a>
+        </td>
+        <td class="TableOverflow_2">{{wip.contentObject.importPermit.supplier.name | filterNull}}</td>
+        <td>{{wip.contentObject.importPermit.createdDate| date:'MMM d, y hh:mm a' | filterNull}}</td>
+        <td>{{wip.contentObject.importPermit.importPermitDetails.length | filterNull}}</td>
+        <td>{{wip.contentObject.documents.length | filterNull}}</td>
+        <td>{{vm.displayWipActiveDate(wip)}}</td>
+        <td>
+          <button class="btn btn-danger btn-outline btn-xs" ng-click="vm.discardDraft(wip)" title="Discard Draft">
+            <i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <ng-include src="'app/common/templates/layout/wip_warning.html'"></ng-include>
+  </div>
+</div>

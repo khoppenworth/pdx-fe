@@ -1,0 +1,31 @@
+    <div ng-if="bind.isGeneric" class="col-xs-12">
+      <label for="{{fieldConfig.model}}">{{fieldConfig.label}}<span ng-if="fieldConfig.required"
+          class="text-danger">*</span></label>
+      <input ng-if="fieldConfig.type != 'checkbox'" type="{{fieldConfig.type}}" class="form-control"
+        id="{{fieldConfig.model}}" name="{{fieldConfig.model}}" ng-model="fieldValue[fieldConfig.model]"
+        ng-required="fieldConfig.required" ng-disabled="bind.disabled">
+      <input icheck ng-if="fieldConfig.type == 'checkbox'" type="{{fieldConfig.type}}" class="form-control"
+        id="{{fieldConfig.model}}" name="{{fieldConfig.model}}" ng-model="fieldValue[fieldConfig.model]"
+        ng-required="fieldConfig.required" ng-disabled="bind.disabled">
+    </div>
+    <div ng-if="!bind.isGeneric" class="col-xs-12">
+      <label for="{{fieldConfig.model}}">
+        {{fieldConfig.label}}
+        <span ng-if="fieldConfig.required" class="text-danger">*</span>
+      </label>
+      <div ng-if="fieldConfig.type === 'select'">
+        <ui-select ng-model="fieldValue[fieldConfig.model]" name="{{fieldConfig.model}}" ng-disabled="bind.disabled"
+          ng-required="fieldConfig.required" id="{{fieldConfig.model}}" theme="bootstrap">
+          <ui-select-match placeholder="{{fieldConfig.placeholder}}">{{$select.selected.label}}</ui-select-match>
+          <ui-select-choices repeat=" item in fieldConfig.options">
+            <div ng-bind-html="item.label" ></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <p ng-if="fieldConfig.type === 'date'" class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="" datepicker-options="bind.dateOptions" ng-model="fieldValue[fieldConfig.model]" is-open="bind.popup[id].opened" datepicker-options="{}" ng-required="true" close-text="Close"  />
+        <span class="input-group-btn">
+           <button type="button" class="btn btn-default" ng-click="bind.openPopup(id)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>

@@ -1,0 +1,172 @@
+<fieldset ng-validate-form="vm.importPermitValidation.header" class="form-horizontal">
+    <div class="">
+        <div class="col-lg-6">
+            <div style="padding-right: 10px">
+                <div class="form-group">
+                    <div>
+                        <label>Medical Products <span class="text-danger">*</span></label>
+                        <!--<div>
+                <button-group ng-model="vm.importPermit.importPermit.commoditytypeid" lookups="vm.commodityTypes" ng-validate="vm.importPermitValidation.header.commoditytypeid" ng-change="vm.onCommodityTypeSelected()"></button-group>
+            </div>-->
+                        <ui-select ng-model="vm.commodityType.selected" theme="bootstrap" on-select="vm.getDocuments()" ng-validate="vm.importPermitValidation.header.commoditytypeid" ng-disabled="true">
+                            <ui-select-match placeholder="Select CommodityType">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat=" item in vm.commodityTypes | filter: $select.search |orderBy:'name'">
+                                <div ng-bind-html="item.name | highlight: $select.search "></div>
+                                <!--<small ng-bind-html="item.paymentCode | highlight: $select.search "></small>-->
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class=" text-error-table" ng-if="!vm.importPermitValidation.header.commoditytypeid && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div ng-if="!vm.user.isAgent">
+                        <label>Applicant <span class="text-danger">*</span></label>
+                        <ui-select ng-model="vm.agent.selected" theme="bootstrap" on-select="vm.onAgentSelected()" ng-validate="vm.importPermitValidation.header.agent">
+                            <ui-select-match placeholder="Select an agent">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat=" item in vm.agents | filter: $select.search |orderBy:'name'">
+                                <div ng-bind-html="item.name | highlight: $select.search "></div>
+                                <!--<small ng-bind-html="item.paymentCode | highlight: $select.search "></small>-->
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div ng-if="vm.user.isAgent">
+                        <label>Applicant </label>
+                        <p>{{vm.agent.selected.name}}</p>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.user.isAgent && !vm.importPermitValidation.header.agent && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>License Holder <span class="text-danger">*</span></label>
+                    <div>
+                        <ui-select ng-model="vm.supplier.selected" theme="bootstrap" on-select="vm.onSupplierSelected()" ng-validate="vm.importPermitValidation.header.supplier">
+                            <ui-select-match placeholder="Select license holder">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat=" item in vm.suppliers | filter: $select.search |orderBy:'name'">
+                                <div ng-bind-html="item.name | highlight: $select.search "></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.importPermitValidation.header.supplier && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Shipping Method <span class="text-danger">*</span></label>
+                        <div>
+                            <button-group ng-model="vm.importPermit.importPermit.shippingMethodID" lookups="vm.shippingmethods" ng-validate="vm.importPermitValidation.header.shippingmethodid" ng-change="vm.onShippingMethodSelected()"></button-group>
+                        </div>
+                    </div>
+                    <div class=" text-error-table" ng-if="!vm.importPermitValidation.header.shippingmethodid && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Port Of Entry <span class="text-danger">*</span></label>
+                        <ui-select ng-model="vm.importPermit.importPermit.portOfEntry" theme="bootstrap" ng-validate="vm.importPermitValidation.header.portid">
+                            <ui-select-match>{{$select.selected.shortName||$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in vm.ports | filter: $select.search | orderBy:['shortName','name']">
+                                <div ng-bind-html="item.shortName||item.name | highlight: $select.search"></div>
+                                <!--<small ng-bind-html="item.portCode | highlight: $select.search"></small>-->
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.importPermitValidation.header.portid && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Remark </label>
+                    <textarea id="remark" ng-model="vm.importPermit.importPermit.remark" name="remark" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div style="padding-left: 10px">
+                <div class="form-group">
+                    <div>
+                        <label>Currency <span class="text-danger">*</span></label>
+                        <ui-select ng-model="vm.importPermit.importPermit.currency" theme="bootstrap" ng-validate="vm.importPermitValidation.header.currencyid">
+                            <ui-select-match>{{$select.selected.shortName||$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in vm.currencies | filter: $select.search |orderBy:['shortName', 'name']">
+                                <div ng-bind-html="item.shortName||item.name | highlight: $select.search"></div>
+                                <!--<small ng-bind-html="item.paymentCode | highlight: $select.search"></small>-->
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.importPermitValidation.header.currencyid && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label>Payment Mode <span class="text-danger">*</span></label>
+                        <ui-select ng-model="vm.importPermit.importPermit.paymentMode" theme="bootstrap" ng-validate="vm.importPermitValidation.header.paymentmodeid">
+                            <ui-select-match>{{$select.selected.shortName||$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in vm.paymentmodes | filter: $select.search |orderBy:['shortName', 'name']">
+                                <div ng-bind-html="item.shortName||item.name | highlight: $select.search"></div>
+                                <!--<small ng-bind-html="item.paymentCode | highlight: $select.search"></small>-->
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.importPermitValidation.header.paymentmodeid && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Delivery Time<span class="text-danger">*</span></label>
+                        <ui-select ng-model="vm.importPermit.importPermit.deliverySelected" theme="bootstrap" on-select="vm.onDeliverySelected($item)">
+                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in vm.importPermitDeliveries | filter: $select.search |orderBy: 'name' ">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                        <br>
+                        <textarea ng-show="vm.importPermit.importPermit.deliverySelected" id="delivery" ng-model="vm.importPermit.importPermit.delivery" name="delivery" type="text" class="form-control" ng-validate="vm.importPermitValidation.header.delivery">
+                    </textarea>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.importPermitValidation.header.delivery && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Proforma Invoice Number <span class="text-danger">*</span> </label>
+                        <input id="invoiceNumber" ng-model="vm.importPermit.importPermit.performaInvoiceNumber" name="invoice" type="text" class="form-control" ng-validate="vm.importPermitValidation.header.performaInvoiceNumber" ng-blur="vm.CheckDuplicates()">
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.importPermitValidation.header.performaInvoiceNumber && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Freight Cost <span class="text-danger">*</span> </label>
+                        <input id="freightcost" ng-model="vm.importPermit.importPermit.freightCost" name="freightcost" type="number" min="0" class="form-control" ng-validate="vm.importPermitValidation.header.freightCost">
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.importPermitValidation.header.freightCost && vm.importPermitValidation.header.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div title="{{vm.showDetailDiscount?'Product discount is selected.You can\'t have both product and total discount at the same time.'+
+                    'If you want to have total discount please uncheck product discount from the detail\'s section!':'Total Discount'}}">
+                        <input icheck type="checkbox" ng-disabled="vm.showDetailDiscount" id="discountCheckBox" ng-model="vm.showHeaderDiscount" name="discount" ng-change="vm.onHeaderDiscount()">
+
+                        <label>Total Discount </label>
+                        <input id="discount" ng-if="vm.showHeaderDiscount" ng-model="vm.importPermit.importPermit.discount" name="discount" type="number" min="0" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</fieldset>
+<a ng-click="vm.SaveDraft()" class="btn btn-default">Save</a>
+<a ng-click="vm.headerToDetail()" class="btn btn-primary">Next</a>

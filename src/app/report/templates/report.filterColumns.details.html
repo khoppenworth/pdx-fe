@@ -1,0 +1,80 @@
+<div class="form-horizontal" ng-validate-form="vm.reportModalValidationFilCol">
+    <div class="form-group">
+        <div class=" col-xs-12">
+            <label>Name <span class="text-danger">*</span></label>
+            <div>
+                <input ng-model="vm.reportModelFilCol.FieldName" name="name" type="text" class="form-control" ng-validate="vm.reportModalValidationFilCol.name">
+            </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationFilCol.name && vm.reportModalValidationFilCol.$showError">
+            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <label>Type <span class="text-danger">*</span></label>
+            <ui-select ng-model="vm.reportModelFilCol.DType" theme="bootstrap" ng-validate="vm.reportModalValidationFilCol.type">
+                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat=" item in vm.colFilterTypes | filter: $select.search |orderBy:'name'">
+                    <div ng-bind-html="item.name | highlight: $select.search "></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationFilCol.type && vm.reportModalValidationFilCol.$showError">
+            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <label>Title <span class="text-danger">*</span></label>
+            <div>
+                <input ng-model="vm.reportModelFilCol.Title" name="title" type="text" class="form-control" ng-validate="vm.reportModalValidationFilCol.title">
+            </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationFilCol.title && vm.reportModalValidationFilCol.$showError">
+            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <label>Query</label>
+            <div>
+                <textarea rows="5" ng-model="vm.reportModelFilCol.Query" name="query" type="text" class="form-control"></textarea>
+
+            </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.reportModalValidationFilCol.query && vm.reportModalValidationFilCol.$showError">
+            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <label>Inner Filter</label>
+            <div>
+                <input icheck type="checkbox" ng-model="vm.reportModelFilCol.IsInnerFilter" name="isInnerFilter" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-if="vm.reportModelFilCol.IsInnerFilter">
+        <div class="col-xs-12">
+            <label>Alias</label>
+            <div>
+                <input ng-model="vm.reportModelFilCol.Alias" name="alias" type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <label>Field Name</label>
+            <div>
+                <input ng-model="vm.reportModelFilCol.OverridingFieldName" name="overridingFieldName" type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <label>Parameter</label>
+            <div>
+                <input ng-model="vm.reportModelFilCol.ParameterName" name="parameterName" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>

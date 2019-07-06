@@ -1,0 +1,90 @@
+<fieldset>
+    <div class="row">
+        <form class="form-inline" role="form">
+            <div class="form-group col-lg-6">
+                <label for="productselect" class="sr-only">Product *</label>
+                <div class="input-group">
+                    <ui-select ng-model="vm.product.selected" theme="bootstrap" id="productselect" reset-search-input="false" on-select="vm.onProductSelected()">
+                        <ui-select-match placeholder="Search by name [3 characters] ...">{{$select.selected.brandName + ' - ' + $select.selected.genericName + ' - ' + $select.selected.dosageStrength + ' ' + $select.selected.dosageUnit +' - ' + $select.selected.dosageForm }}</ui-select-match>
+                        <ui-select-choices repeat="item in vm.products | filter: $select.search|orderBy:'name'" refresh="vm.searchProducts($select.search)" refresh-delay="500" minimum-input-length="3">
+                            <div><span ng-bind-html="item.brandName | highlight: $select.search"></span></div>
+                            <small><span ng-bind-html="item.genericName | highlight: $select.search"></span> &nbsp;-&nbsp;<span ng-bind-html="item.dosageStrength ">&nbsp;</span>
+                                      <span ng-bind-html="item.dosageUnit"></span>&nbsp;-&nbsp;<span ng-bind-html="item.dosageForm"></span>&nbsp;</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                                      <button style="padding:7px 12px" title="Add New Product"
+                                              ng-click="vm.addNewProduct()"
+                                              class="btn btn-primary btn-sm btn-outline"><i class="fa fa fa-plus"></i></button>
+                                    </span>
+                </div>
+            </div>
+            <div class="form-group col-lg-2"></div>
+            <div class="form-group col-lg-4 pull-right">
+                <div title="{{vm.showHeaderDiscount?'Total discount is selected.You can\'t have both total and product discount at the same time.'+
+                     'If you want to have product discount please uncheck total discount from the General Requirement\'s section':' Product Discount'}}" class="pull-right">
+                    <input id="discountCheckBox" ng-disabled="vm.showHeaderDiscount" ng-change="vm.onDetailDiscount()" ng-model="vm.showDetailDiscount" name="discount" icheck type="checkbox">
+                    <label>Discount </label>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+
+                    <th></th>
+                    <th>Product Name</th>
+                    <th>MA Expiry Date</th>
+                    <th>Pack Size</th>
+                    <th>Manufacturer</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th ng-if="vm.showDetailDiscount">Discount</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-validate-form="vm.importPermitValidation.detail" ng-repeat="pod in vm.importPermitDetail" track by $index ng-class="{'redClass': pod.product.productStatus == 'Not Registered'}">
+                    <td>{{$index+1}}</td>
+                    <td><a ng-click="vm.openProductModal(pod.product)">{{pod.product.brandName}}<br/><small>{{pod.product.genericName + ' - ' + pod.product.dosageStrength+' ' + pod.product.dosageUnit+' - ' + pod.product.dosageForm }}</small></a>
+                        <!--<small>This is example of project</small>-->
+                    </td>
+                    <td>{{pod.product.expiryDate|date:'MMM d,y'}}</td>
+                    <td>{{pod.product.presentation}}</td>
+                    <td>
+                        <ui-select ng-model="pod.product.manufacturer" theme="bootstrap" ng-validate="vm.importPermitValidation.detail[$index].manufacturer" style="width: 200px;">
+                            <ui-select-match>{{$select.selected.manufacturer.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in pod.manufacturers | filter: $select.search">
+                                <div ng-bind-html="item.manufacturer.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </td>
+                    <td>
+                        <input type="number" min="0" class="form-control" ng-model="pod.quantity" ng-validate="vm.importPermitValidation.detail[$index].quantity" />
+                        <small ng-if="!vm.importPermitValidation.detail[$index].quantity && vm.importPermitValidation.detail.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+                    </td>
+                    <td>
+                        <input type="number" min="0" class="form-control" ng-model="pod.unitPrice" ng-validate="vm.importPermitValidation.detail[$index].unitprice" />
+                        <small ng-if="!vm.importPermitValidation.detail[$index].unitprice && vm.importPermitValidation.detail.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+                    </td>
+                    <td ng-if="vm.showDetailDiscount">
+                        <input type="number" min=0 max="{{pod.quantity* pod.unitPrice}}" class="form-control" ng-model="pod.discount" ng-disabled="vm.showHeaderDiscount" name="{{'eachProductDiscount'+$index}}" />
+                        <small ng-if="!ipForm['eachProductDiscount'+$index].$valid"><span class="text-danger">Discount cannot be greater than total product price. So discount is discarded.</span></small>
+                    </td>
+                    <td>{{vm.showDetailDiscount? (pod.quantity * pod.unitPrice) - pod.discount : (pod.quantity * pod.unitPrice) |number }}</td>
+                    <td>
+                        <a href="" ng-click="vm.RemoveProductFromList($index)"><i class="fa fa-trash fa-lg text-danger"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <a ng-click="vm.SaveDraft()" class="btn btn-default">Save</a>
+    <a ng-click="vm.backToHeader()" class="btn btn-default">Previous</a>
+    <a ng-click="vm.detailToAttachment()" class="btn btn-primary">Next</a>
+</fieldset>

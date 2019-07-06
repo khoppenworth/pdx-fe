@@ -1,0 +1,183 @@
+<div class="ibox-title">
+    <div class="row">
+
+    </div>
+</div>
+<div class="ibox-content">
+    <fieldset ng-validate-form="vm.previousApplication" class="form-horizontal">
+        <!--Shown only for new variation-->
+        <div class="col-lg-6">
+            <div style="padding-right: 10px">
+                <div class="form-group">
+                    <div>
+                        <label>Registered Product<span class="text-danger">*</span></label>
+                        <ui-select ng-model="vm.selectedApp" theme="bootstrap" on-select="vm.onApplicationSelected()" ng-validate="vm.registrationRenewal.previousApplication.ma" ng-disabled="vm.editMode">
+                            <ui-select-match placeholder="Select Product">{{($select.selected.brandName ? $select.selected.brandName : $select.selected.product.fullItemName)}}</ui-select-match>
+                            <ui-select-choices repeat=" item in vm.previousApps| filter: $select.search |orderBy:'maNumber'">
+                                <div ng-bind-html=" '<b>' + item.brandName + '<b>' | highlight: $select.search "></div>
+                                <!--<small ng-bind-html="item.ma.maNumber + ' - ' +  (item.ma.expiryDate |date)"></small>-->
+                                <div ng-bind-html="item.supplier.name"></div>
+                                <small ng-bind-html="item.ma.certificateNumber + ' - ' +  (item.ma.expiryDate |date)"></small>
+                            </ui-select-choices>
+                            <ui-select-no-choice>No application is currently available for variation</ui-select-no-choice>
+                        </ui-select>
+
+                    </div>
+
+                </div>
+                <div class=" text-error-table" ng-if=" !vm.registrationRenewal.previousApplication.ma && vm.registrationRenewal.previousApplication.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+
+            </div>
+        </div>
+        <div ng-if="vm.selectedApp" class="col-lg-6">
+            <div style="padding-top:10px;">
+                <div>
+                    <label for="applicationType">Application Type: </label>
+                    <span style="padding-left:20px;" id="applicationType"><strong>{{vm.applicationType() | filterNull}}</strong></span>
+                </div>
+                <div>
+                    <label for="majorCount">Major Count:  </label>
+                    <span style="padding-left:20px;" id="majorCount"><strong>{{vm.variationCount.major}}</strong></span>
+                </div>
+                <div>
+                    <label for="majorCount">Minor Count: </label>
+                    <span style="padding-left:20px;" id="minorCount"><strong>{{vm.variationCount.minor}}</strong></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" ng-if="vm.selectedApp">
+            <div class="col-lg-12">
+                <div class="ibox-content">
+                    <div class="col-lg-6">
+                        <dl class="dl-horizontal">
+
+                            <dt>Previous Application:</dt>
+                            <dd><a ng-click="vm.gotoOriginalMA(vm.maVariation.ma.id)">{{vm.maVariation.ma.certificateNumber |
+                filterNull }}</a></dd>
+                            <dt>Expiry Date:</dt>
+                            <dd>{{vm.maVariation.ma.expiryDate | filterNull| date}}</dd>
+                            <dt>Status:</dt>
+                            <dd>{{vm.maVariation.ma.maStatus.displayName | filterNull}}</dd>
+                            <dt>Applicant:</dt>
+                            <dd>{{vm.maVariation.ma.agent.name | filterNull}}</dd>
+                            <dt>License Holder:</dt>
+                            <dd>{{vm.maVariation.ma.supplier.name | filterNull}}</dd>
+
+                        </dl>
+                    </div>
+                    <div class="col-lg-6">
+                        <dl class="dl-horizontal">
+                            <div>
+                                <dt>Product Name:</dt>
+                                <dd>{{vm.maVariation.product.brandName | filterNull}}</dd>
+                                <dt>Generic Name:</dt>
+                                <dd>{{vm.maVariation.product.genericName | filterNull}}</dd>
+                                <dt>Dosage Form:</dt>
+                                <dd>{{vm.maVariation.product.dosageFormObj.name | filterNull}}</dd>
+                            </div>
+                            <div ng-if="vm.maVariation.submoduleTypeCode === vm.CONSTANT.SUB_MODULE_TYPE.MEDICINE">
+                                <dt>Category:</dt>
+                                <dd>{{vm.maVariation.product.productCategory.name | filterNull}}</dd>
+                                <dt>Age Group:</dt>
+                                <dd>{{vm.maVariation.product.ageGroup.name | filterNull}}</dd>
+                                <dt>Pharmacological Classification:</dt>
+                                <dd>{{vm.maVariation.product.pharmacologicalClassification.name | filterNull}}</dd>
+                                <dt>Dosage Unit:</dt>
+                                <dd>{{vm.maVariation.product.dosageUnitObj.name | filterNull}}</dd>
+                            </div>
+                            <div ng-if="vm.maVariation.submoduleTypeCode === vm.CONSTANT.SUB_MODULE_TYPE.FOOD">
+                                <dt>Product Type:</dt>
+                                <dd>{{vm.maVariation.product.productTypeStr | filterNull}}</dd>
+                                <dt>Use Category:</dt>
+                                <dd>{{vm.maVariation.product.useCategoryStr | filterNull}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <a ng-if="vm.showButtons.variation" ng-click="vm.showVariations()" class="btn btn-primary">Variations</a>
+                <a ng-if="vm.showButtons.fee" ng-click="vm.calculateFee()" class="btn btn-white">Calculate Fee</a>
+                <a ng-if="vm.showButtons.proceed && !vm.allowEditLegacyData()" ng-click="vm.proceedToApplication()" class="btn btn-primary">Next</a>
+                <a ng-if="vm.allowEditLegacyData()" ng-click="vm.editLegacyData()" title="This is legacy data, please edit it before you can apply variation." class="btn btn-primary">Edit</a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="vm.showCalculateFeeResult" class="row" style="padding-left:15px">
+        <hr/>
+        <h4>Required Payments</h4>
+        <div style="margin-right:20px;">
+            <table class="table table-hovered table-striped detailTable" ng-init="vm.totalFee=0">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th class="numberInTable">Quantity</th>
+                        <th class="numberInTable">Unit Price</th>
+                        <th class="numberInTable">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fee in vm.submoduleFeeType | filter: {isActive:true} track by fee.id">
+                        <td>{{fee.feeType.name}}</td>
+                        <td class="numberInTable">{{fee.quantity}}</td>
+                        <td class="numberInTable">{{fee.feeType.currency.symbol}} {{fee.fee | number}}</td>
+                        <td class="numberInTable">{{fee.feeType.currency.symbol}} {{fee.subTotal | number}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2" class="text-right"><b><strong>Grand Total</strong></b></td>
+                        <td class="text-right text-danger font-bold">{{vm.submoduleFeeType[0].feeType.currency.symbol}} {{vm.submoduleFeeGrandTotal | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <h4>Required Documents</h4>
+        <div ng-include src="'checklist-body'" class="col-lg-12">
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template " id="checklist-body">
+    <tr ng-repeat-start="checklist in vm.submoduleCheckList  | orderBy:'priority'" ng-init="checklist.rowExpanded=true;" class="col-lg-12" style="padding-left:0">
+        <td class="col-lg-12">
+            {{checklist.label}} &nbsp; {{checklist.name}}
+            <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+            <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+        </td>
+    </tr>
+    <hr/>
+    <tr ng-if="checklist.rowExpanded==true" ng-repeat-end class="col-lg-12" style="padding-left:0">
+        <td ng-include src="'checklist-children'" class="col-lg-12"></td>
+    </tr>
+
+</script>
+
+<script type="text/ng-template " id="checklist-children">
+    <table class="table table-hovered table-striped">
+        <tr ng-repeat-start="checklist in checklist.children | orderBy:'priority' track by checklist.id" ng-init="checklist.rowExpanded=false;" class="col-lg-12">
+            <td class="col-lg-12">
+                {{checklist.label}} &nbsp; {{checklist.name}}
+                <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+                <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+            </td>
+        </tr>
+        <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+            <td>
+                <ng-include src="'checklist-children'"></ng-include>
+            </td>
+        </tr>
+    </table>
+</script>

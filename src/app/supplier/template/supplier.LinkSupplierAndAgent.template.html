@@ -1,0 +1,105 @@
+<div class="row form-horizontal" ng-validate-form="vm.linkSupplierAndAgentValidation">
+  <form name="linkSupplierAndAgentForm">
+      <div class="col-md-12">
+
+    <div class="form-group col-md-12" >
+      <div class="col-xs-12">
+        <label>Applicant *</label>
+        <div>
+          <ui-select autofocus ng-model="vm.selectedSupplierAgent.agent" theme="bootstrap" style="min-width:100%;"
+                     title="Choose agent" ng-validate="vm.linkSupplierAndAgentValidation.agent">
+            <ui-select-match placeholder="Search by name">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices group-by="vm.firstLetterGroupFn" repeat="agent in vm.agentList |
+                  filter: {name: $select.search}">
+              <!--<div  ng-bind-html="'First Name: '+user.firstName | highlight: $select.search"></div>-->
+              <!--<div style="margin-left:20px;">-->
+                <!--<b>First Name </b>:&nbsp&nbsp&nbsp <span ng-bind-html="''+user.firstName | highlight: $select.search"></span><br/>-->
+                <!--<b>Last Name </b>:&nbsp&nbsp&nbsp <span ng-bind-html="''+user.lastName | highlight: $select.search"></span><br/>-->
+                <!--<b>Username &nbsp</b>:&nbsp&nbsp&nbsp <span ng-bind-html="''+user.username | highlight: $select.search"></span><br/>-->
+                <!--&lt;!&ndash;Email: <span ng-bind-html="''+user.email | highlight: $select.search"></span><br/>&ndash;&gt;-->
+              <!--</div>-->
+              <div style="margin-left:20px;" ng-bind-html="''+agent.name
+               | highlight: $select.search"></div>
+              <!--<small style="margin-left:20px;">-->
+                  <!--<span ng-bind-html="agent.email +'   ['+agent.licenseNumber+']' | highlight:$select.search"></span>-->
+              <!--</small>-->
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.linkSupplierAndAgentValidation.agent && vm.linkSupplierAndAgentValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+
+    <div class="form-group col-md-12" >
+      <div class="col-xs-12">
+        <label>Applicant Type *</label>
+        <div>
+          <ui-select autofocus ng-model="vm.selectedSupplierAgent.agentType" theme="bootstrap" style="min-width:100%;"
+                     title="Choose agent type" ng-validate="vm.linkSupplierAndAgentValidation.agentType">
+            <ui-select-match placeholder="Search by name">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices  repeat="agentType in vm.agentTypeList | filter:{name:$select.search}">
+              <div ng-bind-html="''+agentType.name
+               | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.linkSupplierAndAgentValidation.agentType && vm.linkSupplierAndAgentValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+
+    <div class="form-group col-md-12" >
+      <div class="col-xs-12">
+        <label>Start Date *</label>
+        <div>
+          <p class="input-group">
+            <input type="text"  name="startDate" class="form-control" ng-model="vm.selectedSupplierAgent.startDate.date" uib-datepicker-popup="" datepicker-options="vm.datePickerOptionsStartDate"
+                   is-open="vm.selectedSupplierAgent.startDate.isOpened"  close-text="Close" ng-validate="vm.linkSupplierAndAgentValidation.startDate" ng-change="vm.datePickerOptionsEndDate.minDate=vm.selectedSupplierAgent.startDate.date" readonly/>
+            <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="vm.selectedSupplierAgent.startDate.isOpened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+
+      </div>
+      <div class="col-xs-12 ">
+        <span  class="text-danger" ng-if="!vm.linkSupplierAndAgentDateRangeValidation">Start date must be before End Date</span>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.linkSupplierAndAgentValidation.startDate && vm.linkSupplierAndAgentValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+
+    <div class="form-group col-md-12" >
+      <div class="col-xs-12">
+        <label>Expiry Date *</label>
+        <div>
+          <p class="input-group">
+              <input type="text"  ng-model="vm.selectedSupplierAgent.endDate.date"   name="endDate" class="form-control"  uib-datepicker-popup=""
+                     ng-disabled="!vm.selectedSupplierAgent.startDate.date"
+                     is-open="vm.selectedSupplierAgent.endDate.isOpened"  datepicker-options="vm.datePickerOptionsEndDate"
+                     close-text="Close" ng-validate="vm.linkSupplierAndAgentValidation.endDate" readonly/>
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="vm.selectedSupplierAgent.endDate.isOpened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+
+      </div>
+      <div class="col-xs-12 ">
+        <span  class="text-danger" ng-if="!vm.linkSupplierAndAgentDateRangeValidation">Expiry date must be after Start Date</span>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.linkSupplierAndAgentValidation.endDate && vm.linkSupplierAndAgentValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>

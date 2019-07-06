@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox-content">
+            <div class="col-lg-6">
+                <dl class="dl-horizontal">
+                    <dt>Name:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.name||"-"}}</dd>
+                    <dt>Description:</dt>
+                    <dd> {{vm.maregistration.ma.supplier.description||"-"}}</dd>
+                    <dt>Status:</dt>
+                    <dd> {{vm.maregistration.ma.supplier.isActive?'Active':'Inactive'}}</dd>
+                    <dt>Phone:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.phone||"-"}}</dd>
+                    <dt>Email:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.email||"-"}}</dd>
+                </dl>
+            </div>
+            <div class="col-lg-6" id="cluster_info">
+                <dl class="dl-horizontal">
+                    <dt>Street Name:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.address.streetName||"-"}}</dd>
+                    <dt>Postal Code:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.address.zipCode||"-"}}</dd>
+                    <dt>City:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.address.city||"-"}}</dd>
+                    <dt>Country:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.address.country.name||"-"}}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

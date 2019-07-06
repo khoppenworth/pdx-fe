@@ -1,0 +1,165 @@
+<div>
+    <form name="createSupplier">
+        <div class="modal-header"> {{vm.title}}
+            <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+            <div class="clearfix"></div>
+        </div>
+        <div class="modal-body">
+            <div class="row form-horizontal" ng-validate-form="vm.supplierValidation">
+                <div class="col-md-6">
+                    <b>Basic</b>
+                    <hr/>
+                    <div class="form-group">
+                        <div class=" col-xs-12">
+                            <label>Name *</label>
+                            <div>
+                                <input ng-model="vm.supplier.name" name="name" type="text" class="form-control" ng-validate="vm.supplierValidation.name">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.supplierValidation.name && vm.supplierValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Primary Phone *</label>
+                            <span ng-if="vm.morePhones.length<2" class="pull-right btn-primary btn-outline fa fa-plus" title="More phone" ng-click="vm.addMorePhone()"></span>
+                            <div>
+                                <input type="text" class="form-control" name="phone" ng-model="vm.supplier.phone" ng-intl-tel-input data-initial-country="et" ng-validate="vm.supplierValidation.phone" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 ">
+                            <span class="text-danger" ng-if="(vm.supplierValidation.$showError && createSupplier.phone.$invalid) || (createSupplier.phone.$invalid && createSupplier.phone.$touched)">Invalid phone format</span>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.supplierValidation.phone && vm.supplierValidation.$showError && !createSupplier.phone.$invalid">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div ng-repeat="extra in vm.morePhones" class="form-group">
+                        <div class="col-xs-12">
+                            <label>Phone {{$index+2}} </label>
+                            <span class="pull-right btn-primary btn-danger fa fa-remove" title="Remove" ng-click="vm.removeAdditionalPhone(extra)"></span>
+                            <div>
+                                <input type="text" class="form-control" name="phone{{$index}}" ng-model="extra.phoneNumber" ng-intl-tel-input data-initial-country="et" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 ">
+                            <span class="text-danger" ng-if="(vm.supplierValidation.$showError && createSupplier['phone'+$index].$invalid) || ( createSupplier['phone'+$index].$invalid && createSupplier['phone'+$index].$touched)">Invalid phone format</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Email *</label>
+                            <div>
+                                <input ng-model="vm.supplier.email" name="email" type="email" class="form-control" ng-validate="vm.supplierValidation.email">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.supplierValidation.email && vm.supplierValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Fax </label>
+                            <div>
+                                <input ng-model="vm.supplier.fax" name="fax" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Website </label>
+                            <div>
+                                <input ng-model="vm.supplier.website" name="websit" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Description</label>
+                            <div>
+                                <textarea cols="40" rows="1" ng-model="vm.supplier.description" name="description" type="text" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <b>Address</b>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Country *</label>
+                            <ui-select ng-model="vm.countryModel" theme="bootstrap" ng-validate="vm.supplierValidation.Country">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="country in vm.countryList | filter: $select.search">
+                                    <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                    <!--<small ng-bind-html="item.portCode | highlight: $select.search"></small>-->
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-xs-12 " ng-if="!vm.supplierValidation.Country && vm.supplierValidation.$showError">
+                            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>City</label>
+                            <div>
+                                <input ng-model="vm.supplier.address.city" name="city" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Street Name</label>
+                            <div>
+                                <input ng-model="vm.supplier.address.streetName" name="streetName" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Postal Code </label>
+                            <div>
+                                <input ng-model="vm.supplier.address.zipCode" name="zipCode" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Address line 1 </label>
+                            <div>
+                                <input ng-model="vm.supplier.address.line1" name="line1" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label>Address line 2 </label>
+                            <div>
+                                <input ng-model="vm.supplier.address.line2" name="line2" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="buttons">
+                <button type="submit" ng-if="vm.title.toLowerCase().indexOf('update')>-1" class="btn btn-primary btn-outline" ng-click="vm.updateSupplier()">
+          Update
+        </button>
+                <button type="submit" ng-if="vm.title.toLowerCase().indexOf('create')>-1" class="btn btn-primary btn-outline" ng-click="vm.createSupplier()">
+          Create
+        </button>
+                <button type="button" class="btn btn-default btn-outline" ng-click="$dismiss()">
+          Cancel
+        </button>
+            </div>
+        </div>
+    </form>
+</div>

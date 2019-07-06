@@ -1,0 +1,125 @@
+<div id="inSlider" class="carousel slide carousel-fade" data-ride="carousel" ng-non-bindable>
+    <ol class="carousel-indicators">
+        <li data-target="#inSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#inSlider" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1><span style="color:#1AB394">Vision</span> <br/>Quality health <br/> services and products<br/> to all citizens.<br/>
+                    </h1>
+                    <!--<p>Lorem Ipsum is simply dummy text of the printing.</p>-->
+                    <!--<p>
+            <a class="btn btn-lg btn-primary" role="button">READ MORE</a>
+            <a class="caption-link"  role="button">Inspinia Theme</a>
+          </p>-->
+                </div>
+                <div class="carousel-image wow zoomIn">
+                    <!--<img src="../../../assets/images/galleria6.jpg" alt="medicine"/>-->
+                </div>
+            </div>
+            <!-- Set background for slide in css -->
+            <div class="header-back one"></div>
+
+        </div>
+        <div class="item">
+            <div class="container">
+                <div class="carousel-caption blank">
+                    <h1>We protect the <br/> health of consumers</h1>
+                    <!--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>-->
+                    <p><a class="btn btn-lg btn-primary" href="http://www.fmhaca.gov.et" role="button">Learn more</a></p>
+                </div>
+            </div>
+            <!-- Set background for slide in css -->
+            <div class="header-back two"></div>
+        </div>
+    </div>
+    <a class="left carousel-control" data-target="#inSlider" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" data-target="#inSlider" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<section class="container">
+    <div class="row text-capitalize font-extra-bold">
+        <div class="col-sm-4">
+            <h2>iLicense</h2>
+            <p>iLicense is an online application that allows importers, exporters, wholesalers and manufacturers to apply for the certificate of competency and EFDA staff to manage these applications online.</p>
+            <p><a class="btn btn-primary" href="{{vm.iLicense_url}}" role="button">LOGIN</a></p>
+        </div>
+        <div class="col-sm-4">
+            <h2>iRegister</h2>
+            <p>iRegister is an online application which allows importers to apply for and receive medicine registration certificate to import medicines online and EFDA staff to manage these applications online.</p>
+            <p><a class="btn btn-primary" ui-sref="login" role="button">LOGIN</a></p>
+        </div>
+        <div class="col-sm-4">
+            <h2>iImport</h2>
+            <p>iImport is an online application which allows importers to apply for and receive permits to import medicines online and EFDA staff to manage these applications online. Increased efficiency -> Increased transparency</p>
+            <p><a class="btn btn-primary" ui-sref="login" role="button">LOGIN</a></p>
+        </div>
+    </div>
+</section>
+
+<section class="features white-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1>EFDA</h1>
+                <!--<p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-1 features-text">
+                <h2>Organization</h2>
+                <i class="fa fa-bar-chart big-icon pull-right"></i>
+                <p>
+                    The Ethiopian Food and Drug Authority (EFDA) is the National Regulatory Body of Ethiopia which is under the Ministry of Health. The Authority is responsible to ensure the quality, safety and/or efficacy of medicines, food, cosmetics and medical devices,
+                    the standards of health and health related institutions, the healthcare practice, and competence and ethics of Health professionals.
+                </p>
+            </div>
+            <div class="col-lg-5 features-text">
+                <h2>Establishment</h2>
+                <i class="fa fa-bolt big-icon pull-right"></i>
+                <p>
+                    EFDA was established under the Ethiopian Food and Drug Authority establishment council of Ministers Regulation No. 189/2010. After repealing the drug administration and control proclamation 176/1999, EFDA became operational as of July 17, 2010. Its budget
+                    is from the Ethiopian government. It is mandated by the Food,Medicines and Health care Administration and Control proclamation 661/2009.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-1 features-text">
+                <h2>Objectives </h2>
+                <i class="fa fa-clock-o big-icon pull-right"></i>
+                <p>
+                    To protect the health of consumers by ensuring:-
+                    <ul>
+                        <li>Food safety and quality</li>
+                        <li>Safety, efficacy, quality and proper use of medicines</li>
+                        <li>Competence and ethics of health professionals</li>
+                        <li>The standards of health institution and</li>
+                        <li>The hygiene and environmental health protection suitability for individuals and community health</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="col-lg-5 features-text">
+                <h2>Mission </h2>
+                <i class="fa fa-users big-icon pull-right"></i>
+                <p>
+                    To promote and protect the public health by ensuring safety, efficacy and quality of health and health related products and services through product quality assessment and registration; licensing and inspection of health professionals, health institutions,
+                    pharmaceutical and food establishments, and provision of up-to-date regulatory information while promoting proper use of health and health related products and services including proper use of medicines.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function() {
+        $('.navbar-default').removeClass('navbar-scroll')
+    });
+</script>

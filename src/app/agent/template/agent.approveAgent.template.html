@@ -1,0 +1,28 @@
+<div class="row form-horizontal" ng-validate-form="vm.linkAgentAndUserValidation">
+  <div class="col-md-12">
+    <div class="form-group col-md-12" >
+      <div class="col-xs-12">
+        <label>User *</label>
+        <div>
+          <ui-select autofocus ng-model="vm.selectedAgentUser" theme="bootstrap" style="min-width:100%;"
+                     title="Choose a user" ng-validate="vm.linkAgentAndUserValidation.agentUser">
+            <ui-select-match placeholder="Search by First Name, Last Name, Username">
+              {{$select.selected.firstName +' '+ $select.selected.lastName}}
+            </ui-select-match>
+            <ui-select-choices group-by="vm.firstLetterGroupFn" repeat="user in vm.userList |
+                  propsFilter: {firstName: $select.search, lastName: $select.search, username: $select.search}">
+              <div style="margin-left:20px;" ng-bind-html="''+user.firstName+' '+user.lastName
+               | highlight: $select.search"></div>
+              <small style="margin-left:20px;">
+                  <span ng-bind-html="user.username +'   ['+user.email+']' | highlight:$select.search"></span>
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.linkAgentAndUserValidation.agentUser && vm.linkAgentAndUserValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+  </div>
+</div>

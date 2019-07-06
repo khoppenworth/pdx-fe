@@ -1,0 +1,177 @@
+<div class="row">
+  <uib-accordion close-others="false" class="panel-group payments-method">
+    <div uib-accordion-group ng-class="{currentslide: is-open==true}" is-open="true">
+      <uib-accordion-heading>
+        <h5 class="panel-title">
+          Basic
+        </h5>
+      </uib-accordion-heading>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>Trade Name:</dt>
+              <dd>{{vm.product.brandName}}</dd>
+              <dt>Generic Name</dt>
+              <dd>{{vm.product.genericName}}</dd>
+              <dt>Product Category:</dt>
+              <dd>{{vm.product.productCategory.name}}</dd>
+              <dt>Dosage Strength:</dt>
+              <dd>{{vm.product.dosageStrengthObj.name}}</dd>
+              <dt>Dosage Form:</dt>
+              <dd>{{vm.product.dosageFormObj.name}}</dd>
+              <dt>Dosage Unit:</dt>
+              <dd>{{vm.product.dosageUnitObj.name}}</dd>
+            </dl>
+          </div>
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>Standard Claimed:</dt>
+              <dd>{{vm.product.pharmacopoeiaStandard.name}}</dd>
+              <dt>Route of administration:</dt>
+              <dd>{{vm.product.adminRoute.name}}</dd>
+              <dt>Age Group:</dt>
+              <dd>{{vm.product.ageGroup.name}}</dd>
+              <dt title="Pharmacological Classification">Pharmacological Classification:</dt>
+              <dd>{{vm.product.pharmacologicalClassification.name}}</dd>
+              <dt>Packaging:</dt>
+              <dd>{{vm.product.presentation}}</dd>
+              <dt>Pack Size:</dt>
+              <dd>{{vm.product.presentationP}}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+      <uib-accordion-heading>
+        <h5 class="panel-title">
+          Detail
+        </h5>
+      </uib-accordion-heading>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt title="Statement of similarity and difference">Statement of similarity and difference:</dt>
+              <dd>{{vm.product.ingredientStatement}}</dd>
+              <dt title="Proposed Indication for Use">Proposed Indication for Use:</dt>
+              <dd>{{vm.product.indication}}</dd>
+              <dt title="Proposed Posology and Method of Administration">Proposed Posology and Method of
+                Administration:
+              </dt>
+              <dd>{{vm.product.posology}}</dd>
+              <dt>Shelf Life (in Months):</dt>
+              <dd>{{vm.product.shelfLifeObj.name}}</dd>
+              <dt>Product Type:</dt>
+              <dd>{{vm.product.roductType.name}}</dd>
+            </dl>
+          </div>
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+
+              <dt>Container/Closure Type:</dt>
+              <dd>{{vm.product.containerType.name}}</dd>
+              <dt title="Storage Conditions/Climate Zone">Storage Conditions/Climate Zone:</dt>
+              <dd>{{vm.product.storageCondition}}</dd>
+              <dt>Use Category:</dt>
+              <dd>{{vm.product.useCategory.name}}</dd>
+              <dt title="Product Description and Physical Appearance">Product Description and Physical Appearance:</dt>
+              <dd>{{vm.product.description}}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+      <uib-accordion-heading>
+        <h5 class="panel-title">
+          Composition
+        </h5>
+      </uib-accordion-heading>
+      <div>
+        <div class="row">
+          <h4>Active Ingredients (INN)</h4>
+          <hr/>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>INN Name</th>
+                  <th>Dosage Strength</th>
+                  <th>Dosage Unit</th>
+                  <th>Standard Claimed</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="pi in vm.productInns" track by $index>
+                  <td>{{$index + 1}}</td>
+                  <td>
+                    {{pi.inn.name}}
+                  </td>
+                  <td>{{pi.dosageStrengthObj.name}}</td>
+
+                  <td>{{pi.dosageUnit.name}}</td>
+                  <td>{{pi.pharmacopoeiaStandard.name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>InActive Ingredients (Excipient)</h4>
+          <hr/>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Excipient Name</th>
+                  <th>Dosage Strength</th>
+                  <th>Dosage Unit</th>
+                  <th>Function</th>
+                  <th>Standard Claimed</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="md in vm.productExcipeints" track by $index>
+                  <td>{{$index + 1}}</td>
+                  <td>
+                    {{md.excipient.name}}
+                  </td>
+                  <td>{{md.dosageStrengthObj.name}}</td>
+
+                  <td>{{md.dosageUnit.name}}</td>
+                  <td>{{md.function}}</td>
+                  <td>{{md.pharmacopoeiaStandard.name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>Pharmacotherapeutic group</h4>
+          <hr/>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>ATC Code</th>
+                  <th>ATC Name</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="md in vm.product.productATCs" track by $index>
+                  <td>{{$index + 1}}</td>
+
+                  <td>{{md.atc.atcCode}}</td>
+                  <td> {{md.atc.name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </uib-accordion>
+</div>

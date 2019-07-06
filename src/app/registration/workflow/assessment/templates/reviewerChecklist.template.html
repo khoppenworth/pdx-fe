@@ -1,0 +1,87 @@
+<fieldset>
+    <div class="row form-horizontal">
+        <div class="col-md-12">
+            <table class="table mainTable table-hovered" st-safe-src="vm.submoduleCheckList" st-table="displayed">
+                <thead>
+                    <tr>
+                        <th>Checklist</th>
+                        <!-- <th class="text-right"></th> -->
+                    </tr>
+                </thead>
+                <tbody ng-include src="'checklist-body'">
+                    <th st-sort="priority" st-sort-default="priority" class="no-borders"></th>
+                </tbody>
+                <tfoot>
+                    <tr class="no-borders">
+                        <td colspan="3" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="50"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <button ng-disabled="!vm.reviewViewStatus()" ng-click="vm.saveChecklistForAssessment('draft')" class="btn btn-default">Save
+        as draft</button>
+</fieldset>
+
+
+<script type="text/ng-template " id="checklist-body">
+    <tr class="no-borders" ng-repeat-start="checklist in displayed | orderBy:'priority' track by checklist.id " ng-init="vm.initChecklist(checklist);">
+        <td>
+            {{checklist.label}} &nbsp; {{checklist.name}}
+            <i ng-if="vm.canShowPrimaryAnswer(checklist)" class="fa fa-info-circle" ng-click="vm.showPrimaryAnswer(checklist)" title="Show primary assessor answer" style="color:#68bcd0;"></i>
+
+            <i class="fa" ng-if="vm.checklistAnswerChanged(checklist) || true" ng-class="{'txt-color-green fa-check': checklist.answered}"></i>
+            <span ng-if="vm.canExpand(checklist)" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+            <span ng-if="vm.canCollapse(checklist)" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+            <i ng-if="!checklist.children.length>0 && !checklist.showFirFlag" class="pull-right fa fa-flag" style="color: orange" ng-click="vm.flagChecklistFIR(checklist)"></i>
+            <br/><br/>
+            <div class="text-left">
+                <button-group ng-change="vm.changeNotify(checklist)" ng-disabled="!vm.reviewViewStatus()" group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" ng-model="checklist.optionID" lookups="checklist.optionGroup.possibleOptions"></button-group>
+                <textarea ng-change="vm.changeNotify(checklist)" class="autogrow" ng-disabled="!vm.reviewViewStatus()" cols="120" ng-model="checklist.answer" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'"></textarea>
+
+            </div>
+        </td>
+    </tr>
+    <tr class="no-borders" ng-if="checklist.rowExpanded==true" ng-repeat-end>
+        <td style="padding-right:0;" colspan="2" ng-include src="'checklist-children'"></td>
+    </tr>
+
+</script>
+
+<script type="text/ng-template " id="checklist-children">
+    <table class="table table-hovered detailTable">
+        <!-- <th st-sort="priority" st-sort-default="priority" class="no-borders"></th> -->
+        <tr class="no-borders" ng-repeat-start="checklist in checklist.pagedChildren | orderBy:'priority' track by checklist.id" ng-init="vm.initChecklist(checklist);">
+            <td>
+                {{checklist.label}} &nbsp; {{checklist.name}}
+                <i ng-if="vm.canShowPrimaryAnswer(checklist)" class="fa fa-info-circle" ng-click="vm.showPrimaryAnswer(checklist)" title="Show primary assessor answer" style="color:#68bcd0;"></i>
+                <i class="fa" ng-if="vm.checklistAnswerChanged(checklist) || true" ng-class="{'txt-color-green fa-check': checklist.answered}"></i>
+                <span ng-if="vm.canExpand(checklist)" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+                <span ng-if="vm.canCollapse(checklist)" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+                <i ng-if="!checklist.children.length>0 && !checklist.showFirFlag" class="pull-right fa fa-flag" style="color: orange" ng-click="vm.flagChecklistFIR(checklist)"></i>
+                <br/><br/>
+                <div class="text-left">
+                    <button-group ng-change="vm.changeNotify(checklist)" ng-disabled="!vm.reviewViewStatus()" group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" group-style="checklist.style" ng-model="checklist.optionID"
+                        lookups="checklist.optionGroup.possibleOptions"></button-group>
+                    <textarea ng-change="vm.changeNotify(checklist)" class="autogrow" cols="120" ng-disabled="!vm.reviewViewStatus()" ng-model="checklist.answer" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'"></textarea>
+                </div>
+
+            </td>
+        </tr>
+        <tr class="no-borders" ng-if="checklist.rowExpanded==true" ng-repeat-end>
+            <td>
+                <ng-include src="'checklist-children'"></ng-include>
+            </td>
+        </tr>
+        <tfoot>
+            <tr class="no-borders">
+                <td colspan="3" class="text-center" ng-if="checklist.children.length>3">
+                    <ul uib-pagination direction-links="false" total-items="checklist.children.length" ng-model="checklist.currentPage" class="pagination-sm" items-per-page="3" ng-change="vm.pageChanged(checklist.currentPage,checklist)">
+                    </ul>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</script>

@@ -1,0 +1,22 @@
+<table class="table table-child">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Manufacturer</th>
+            <th>Country</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="detail in ipermit.importPermitDetails">
+            <td>{{detail.product.brandName}}<br><small>{{detail.product.genericName + ' - ' + detail.product.dosageStrength+' ' + detail.product.dosageUnit+' - ' + detail.product.dosageForm }}</small></td>
+            <td>{{detail.manufacturer.name}}</td>
+            <td>{{detail.manufacturer.country.name}}</td>
+            <td>{{detail.quantity|number:1}}</td>
+            <td>{{ipermit.currency.symbol + ' '}}{{detail.unitPrice|number:1}}</td>
+            <td>{{ipermit.currency.symbol + ' '}}{{detail.unitPrice * detail.quantity|number:1}}</td>
+        </tr>
+    </tbody>
+</table>

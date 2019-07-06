@@ -1,0 +1,36 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="ibox">
+    <div class="ibox">
+        <div class="ibox-content">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="resource in vm.resources | orderBy: 'id'">
+                <td>{{$index + 1}}</td>
+                <td>
+                  {{resource.name}}
+                </td>
+                <td>
+                  {{resource.description}}
+                </td>
+                <td>
+                    <a  target="_blank" ng-href="{{resource.resourceURL}}" download="{{resource.downloadName}}" class="btn btn-xs btn-primary btn-outline">
+                      <i class="fa fa-download"></i>
+                    </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

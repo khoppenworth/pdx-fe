@@ -1,0 +1,22 @@
+<table class="table table-child">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Item</th>
+            <th>Description</th>
+            <th>Model</th>
+            <th>Device Size</th>
+            <th>Pack Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in MADetail.product.mdModelSizes">
+            <td>{{MADetail.product.brandName}}</td>
+            <td>{{MADetail.product.fullItemName}}</td>
+            <td>{{MADetail.product.description}}</td>
+            <td>{{item.model}}</td>
+            <td>{{item.size}}</td>
+            <td>{{item.presentation}}</td>
+        </tr>
+    </tbody>
+</table>

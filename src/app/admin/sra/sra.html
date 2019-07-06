@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="col-lg-6 no-padding">
+                    SRA List
+                </div>
+                <div ibox-tools="" class="pull-right">
+                    <a class=" btn btn-primary  btn-outline btn-sm" type="button" ng-click="vm.openSRAModal(null)" title="Add SRA"><i class="fa fa-plus"></i></a>
+                </div>
+
+
+            </div>
+
+            <div class="ibox-content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="no-borders">
+                            <th class="text-center" width="5%">No.</th>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="sra in vm.sras | orderBy:'name'">
+                            <td class="text-center">{{$index+ 1}}</td>
+                            <td> {{sra.name}}</td>
+                            <td> {{sra.sraCode}}</td>
+                            <td> {{sra.sraType.name}}</td>
+                            <td> <a class=" btn  btn-outline btn-xs" type="button" ng-click="vm.openSRAModal(sra)" title="Edit SRA"><i class="fa fa-edit"></i></a>
+                                <a class=" btn   btn-outline btn-xs " type="button" ng-click="vm.removeSRA(sra)" title="Delete SRA"><i class="fa fa-trash" style="color:red"></i></a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

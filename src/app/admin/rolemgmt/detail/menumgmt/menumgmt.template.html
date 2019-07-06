@@ -1,0 +1,50 @@
+<div ng-controller="MenuMgmtController as vm">
+      <table id="mainMenus" class="table table-hovered">
+        <thead>
+          <tr>
+            <th>Menu</th>
+            <th>Active to role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat-start="menu in vm.allMenuList | orderBy:'name'">
+            <td  ng-init="menu.rowExpanded=menu.Children.length>0?false:undefined">
+              <i class="{{menu.icon}}" ></i>
+              <span >{{menu.name}}</span>
+              <span ng-if="menu.Children.length>0 &&  menu.rowExpanded==false" ng-click="menu.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+              <span ng-if="menu.Children.length>0 && menu.rowExpanded==true " ng-click="menu.rowExpanded=false"   class="btn-sm glyphicon glyphicon-menu-up"></span>
+            </td>
+            <td>
+              <!--<switch ng-model="menu.isActiveToRole" arial-label="assigned role" ng-change="vm.notify(menu)"></switch>-->
+              <input icheck  type="checkbox" ng-model="menu.isActiveToRole" ng-change="vm.notify(menu)">
+            </td>
+          </tr>
+          <tr ng-if="menu.Children.length>0 && menu.rowExpanded==true" ng-repeat-end>
+            <td colspan="2">
+              <table id="detailMenus" class="table table-hovered">
+                <tr ng-repeat="submenu in menu.Children | orderBy:'name'">
+                  <td>
+                    <i class="{{submenu.icon}}"></i>
+                    <span>{{submenu.name}}</span>
+                  </td>
+                  <td>
+                   <!-- <switch disabled="!menu.isActiveToRole"  ng-model="submenu.isActiveToRole" title="{{menu.isActiveToRole?'':'Disabled until parent is active'}}"
+                            arial-label="assigned role" ng-change="vm.notify(submenu)" >
+                    </switch>-->
+                    <input icheck  type="checkbox" ng-model="submenu.isActiveToRole" ng-change="vm.notify(submenu)">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div ng-if="vm.showButtons" class="pull-right col-md-5">
+        <button  ng-click="vm.updateMenuRole()" class="btn btn-primary">Save</button>
+        <button class="btn btn-default">Canel</button>
+
+      </div>
+
+</div>

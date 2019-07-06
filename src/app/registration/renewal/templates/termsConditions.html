@@ -1,0 +1,64 @@
+<fieldset ng-validate-form="vm.registrationRenewal.terms">
+    <p>
+       reneal I the undersigned certify that all the information in the accompanying documentation concerning an application for a marketing authorization for:
+    </p>
+    <div class="col-xs-12 text-left">
+        <div class="col-xs-6">
+            <p>
+                <b>Product Name</b> : {{vm.marenewal.previousAppDetail.product.brandName}}
+                <br><b>Dosage Form </b> : {{vm.marenewal.previousAppDetail.product.dosageFormObj.name}}
+                <br><b>Dosage Unit </b> : {{vm.marenewal.previousAppDetail.product.dosageUnitObj.name}}
+                <br><b>Local Agent </b> : {{vm.marenewal.previousAppDetail.ma.agent.name}}
+            </p>
+        </div>
+        <div class="col-xs-6">
+            <p><b>Generic Name </b> : {{vm.marenewal.previousAppDetail.product.inn.name}}
+                <br> <b>Product Strength </b>: {{vm.marenewal.previousAppDetail.product.dosageStrengthObj.name}}
+                <br><b>Product Description </b> : {{vm.marenewal.previousAppDetail.product.description}}
+                <br><b>Manufacturer Name</b>  <span> : {{vm.finishedProductManufacturer.manufacturerAddress.manufacturer.name}}</span>
+                <br></p>
+        </div>
+    </div>
+    <p>is correct and true, and reflects the total information available. I further certify that I have examined the following statements and I attest to their accuracy.
+    </p>
+    <ol>
+        <li>The current edition of the WHO guideline on “Good manufacturing practices for pharmaceutical products” Guideline, is applied in full in all premises involved in the manufacture of this product.
+        </li>
+        <li>The formulation per dosage form correlates with the master formula and with the batch manufacturing record forms.
+        </li>
+        <li>The manufacturing procedure is exactly as specified in the master formula and batch manufacturing record forms.
+        </li>
+        <li>Each batch of all starting materials is either tested or certified against the full specifications in the accompanying documentation and comply fully with those specifications before it is released for manufacturing purposes
+        </li>
+        <li>All batches of active pharmaceutical ingredient(s) are obtained from the source(s) specified in the accompanying documentation.
+        </li>
+        <li>No batch of active pharmaceutical ingredient will be used unless a copy of the batch certificate established by the active ingredient manufacturer is available.
+        </li>
+        <li>Each batch of the container/closure system is tested or certified against the full specifications in the accompanying documentation and complies fully with those specifications before it is released for manufacturing purposes.
+        </li>
+        <li>Each batch of the finished product is either tested, or certified, against the full specifications in the accompanying documentation and complies fully with the release specifications before it is released for sale.
+        </li>
+        <li>The person releasing the product for sale is an authorized person as defined by the WHO guideline “Good manufacturing practices: Authorized person - the role, functions and training”.
+        </li>
+        <li>The procedures for control of the finished product have been validated for this formulation.</li>
+        <li>The market authorization holder has a standard operating procedure for handling adverse reaction reports on its products.
+        </li>
+        <li>The market authorization holder has a standard operating procedure for handling batch recalls of its products.
+        </li>
+        <li>All the documentation referred to in this certificate is available for review during a GMP inspection.</li>
+        <li>Any clinical trials including BE study were conducted according to WHO’s “Guidelines for good clinical practice (GCP) for trials on pharmaceutical products
+        </li>
+    </ol>
+    <input icheck id="acceptTerms" name="acceptTerms" type="checkbox" ng-model="vm.marenewal.ma.terms" class="required" ng-validate="vm.registrationRenewal.terms.term" ng-change="vm.marenewal.ma.terms=vm.marenewal.ma.terms===false?undefined:true">
+    <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+    <small ng-if="!vm.registrationRenewal.terms.term && vm.registrationRenewal.terms.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.firOrRta" class="btn btn-default">Save</a>
+            <a ui-sref="{{vm.states.checklist}}" class="btn btn-default">Previous</a>
+            <a ng-click="vm.SubmitNewApplication()" class="btn btn-primary">Submit</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<div>
+    <hr/><b>Suggested Status</b> : <span data-ng-class="vm.getStatusColor('{{vm.teamLeaderReviewResult.maReview.suggestedStatus.maStatusCode}}')">{{vm.teamLeaderReviewResult.maReview.suggestedStatus.name}}</span></br>
+    </br>
+    <b>Review Comment</b></br>
+    <pre ng-bind-html="vm.teamLeaderReviewResult.maReview.comment"></pre>
+</div>

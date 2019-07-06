@@ -1,0 +1,26 @@
+<div class="wrapper wrapper-content animated fadeInRight container">
+  <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="navy-line"></div>
+        <a title="back" ui-sref="products" class="btn btn-primary btn-outline pull-left btn-xs"><i class="fa fa-arrow-left" ></i></a>
+        <span class="detailTitle">Product Detail</span>
+      </div>
+
+    <div class="ibox-content">
+        <uib-tabset id="agentDetail" active="vm.activeTab" justified="false">
+          <uib-tab index="0" heading="Product Detail" select="vm.tabChanged(0)">
+            <div ng-include="'app/public/view/templates/product.detail.template.html'"></div>
+          </uib-tab>
+          <uib-tab index="1" heading="Manufacturer" select="vm.tabChanged(1)">
+            <div ng-include="'app/public/view/templates/product.manufacturers.html'"></div>
+          </uib-tab>
+          <uib-tab index="2" heading="Attachments" select="vm.tabChanged(2)">
+            <div ng-include="'app/public/view/templates/attachment.template.html'"></div>
+          </uib-tab>
+          <uib-tab index="3" heading="Applicants" select="vm.tabChanged(3)">
+            <div ng-include="'app/public/view/templates/applicant.template.html'"></div>
+          </uib-tab>
+        </uib-tabset>
+      </div>
+  </div>
+</div>

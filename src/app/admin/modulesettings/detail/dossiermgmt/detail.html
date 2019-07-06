@@ -1,0 +1,82 @@
+<div id="dossier" ng-controller="DossierDetailController as vm">
+  <table class="table table-hovered">
+    <thead>
+      <tr>
+        <th class="documentTop">Document</th>
+        <th class="isActive">Active</th>
+        <th class="isRequired" >Required</th>
+        <th class="sra" ng-if="vm.sraAvailable==true">SRA</th>
+      </tr>
+    </thead>
+    <tbody ng-include="'data-body'"></tbody>
+  </table>
+
+  <div ng-if="vm.showButtons" class="pull-right col-md-4">
+    <button  ng-click="vm.updateDocuments()" class="btn  btn-primary">Save</button>
+    <button class="btn btn-default" ng-click="vm.showButtons=false;">Canel</button>
+  </div>
+</div>
+
+<script type="text/ng-template " id="data-body">
+  <tr ng-repeat-start="data in vm.allDocuments track by data.id "
+      ng-init="data.rowExpanded=true; iterationDepth=1;" style="padding-left:0">
+      <td>
+        <span ng-if="data.rowExpanded==false" ng-click="data.rowExpanded=true"
+              class="btn-sm glyphicon glyphicon-menu-down"></span>
+        <span ng-if="data.rowExpanded==true" ng-click="data.rowExpanded=false"
+              class="btn-sm glyphicon glyphicon-menu-up"></span>
+        <span>{{data.name}}</span>
+      </td>
+      <td>
+        <input icheck  type="checkbox" ng-model="data.subModuleDocuments.isActive"
+               ng-change="vm.notify(data)">
+      </td>
+      <td>
+        <input icheck  type="checkbox" ng-model="data.subModuleDocuments.isRequired"
+               title="{{data.subModuleDocuments.isActive?'':'Document is inactive (doesn\'t exist) for this module! You can\'t change required field!'}}"
+               ng-change="vm.notify(data)">
+      </td>
+      <td ng-if="vm.sraAvailable==true">
+        <button-group group-style="'min-width:35px  !important; '" ng-model="data.subModuleDocuments.isSra"
+                      lookups="data.sraOptions" ng-change="vm.notify(data)"></button-group>
+      </td>
+  </tr>
+  <tr ng-if="data.rowExpanded==true" ng-repeat-end>
+    <td colspan="{{vm.sraAvailable ==true ? 4 : 3}}" ng-include src="'data-children'" style="padding:0;"></td>
+  </tr>
+
+</script>
+
+<script type="text/ng-template " id="data-children">
+  <table class="table table-hovered table-striped detailTable">
+    <tbody>
+        <tr ng-repeat-start="data in data.children track by data.id"
+            ng-init="data.rowExpanded=false; data.depth = iterationDepth;">
+          <td class="document" ng-style="{'padding-left': data.depth*35+'px'}">
+            <span ng-if="data.rowExpanded==false && data.children.length>0" ng-click="data.rowExpanded=true"
+                  class="btn-sm glyphicon glyphicon-menu-down"></span>
+            <span ng-if="data.rowExpanded==true && data.children.length>0" ng-click="data.rowExpanded=false"
+                  class="btn-sm glyphicon glyphicon-menu-up"></span>
+            <span>{{data.name}}</span>
+          </td>
+          <td class="isActive">
+            <input icheck  type="checkbox" ng-model="data.subModuleDocuments.isActive"
+                   ng-change="vm.notify(data)">
+          </td>
+          <td class="isRequired">
+            <input icheck  type="checkbox" ng-model="data.subModuleDocuments.isRequired"
+                   title="{{data.subModuleDocuments.isActive?'':'Document is inactive (doesn\'t exist) for this module! You can\'t change required field!'}}"
+                   ng-change="vm.notify(data)">
+          </td>
+          <td class="sra" ng-if="vm.sraAvailable==true">
+            <button-group group-style="'min-width:35px  !important; '" ng-model="data.subModuleDocuments.isSra"
+                          lookups="data.sraOptions" ng-change="vm.notify(data)"></button-group>
+          </td>
+        </tr>
+        <tr ng-if="data.rowExpanded==true" ng-repeat-end>
+          <td colspan="{{vm.sraAvailable ==true ? 4 : 3}}" ng-include src="'data-children'" data-onload="iterationDepth = iterationDepth +1" style="padding: 0;"></td>
+        </tr>
+    </tbody>
+  </table>
+</script>
+

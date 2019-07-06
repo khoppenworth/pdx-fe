@@ -1,0 +1,67 @@
+<div class="ibox-title">
+    <div class="col-lg-2">
+        <select class="form-control" ng-model="vm.filterObject.submoduleType" ng-change="vm.filterChecklist()" ng-options="item as item.name for item in vm.submoduleTypes|orderBy:'name' track by item.id">
+            <option value="">Application Type</option>
+        </select>
+    </div>
+    <div class="col-lg-2">
+        <select class="form-control" ng-model="vm.filterObject.checklistType" ng-change="vm.filterChecklist()" ng-options="item as item.name for item in vm.checklistTypes|orderBy:'name' track by item.id">
+            <option value="">Checklist Type</option>
+        </select>
+    </div>
+    <div class="col-lg-3">
+        <input class="form-control" type="text" ng-model="vm.filterObject.search" placeholder="search">
+    </div>
+    <div ibox-tools class="pull-right">
+        <a class=" btn btn-primary btn-sm btn-outline" ng-click="vm.newSubItem()"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
+<div class="ibox-content">
+    <div class="row">
+        <div ui-tree id="tree-root">
+            <ol ui-tree-nodes ng-model="vm.list" collapsed="true">
+                <li ng-repeat="node in vm.list | filter:vm.filterObject.search" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+            </ol>
+            <p ng-if="vm.list.length==0" class="text-center">No Checklists Available</p>
+        </div>
+        <hr/>
+        <button class="btn btn-primary pull-right" ng-click="vm.saveChecklists()">Save</button>
+    </div>
+</div>
+<script type="text/ng-template" id="myPopoverTemplate.html">
+    <form>
+        <div class="form-group" data-nodrag>
+            <select class="form-control" ng-model="vm.subModuleChecklist.submoduleID" ng-options="item.id as item.name for item in vm.subModules track by item.id">
+           <option value="">Select SubModule</option>
+       </select>
+        </div>
+        <div class="form-group" data-nodrag>
+            <button type="submit" class="btn btn-primary btn-md btn-outline pull-right" ng-click="vm.mapChecklistWithSubModule(node)" data-nodrag>Map</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle class="tree-node tree-node-content" style="padding:5px;">
+        <a class="pull-right btn btn-success btn-outline btn-xs" style="margin-left:5px;" data-nodrag uib-popover-template="vm.dynamicPopover.templateUrl" popover-placement="left" type="buttom-left" popover-title="Map Checklist" popover-elem>
+            <span class="fa fa-external-link"></span></a>
+        <div class="btn-group pull-right " uib-dropdown data-nodrag>
+            <button type="button" class="btn btn-primary btn-xs btn-outline" uib-dropdown-toggle>
+                                                <i class="fa fa-bars"></i>
+                                            </button>
+            <ul role="menu" uib-dropdown-menu="" class="dropdown-menu-right" data-nodrag>
+                <li><a href="" ng-disabled="node.depth>=2" ng-click="vm.newSubItem(this)">Add</a></li>
+                <li><a href="" ng-click="vm.editItem(this)">Edit</a></li>
+                <li><a href="" ng-click="vm.remove(this)">Delete</a></li>
+            </ul>
+        </div>
+
+        <a class="btn btn-primary btn-xs" data-nodrag ng-click="toggle(this)">
+            <i class="fa" ng-class="{'fa-angle-down': collapsed, 'fa-angle-right': !collapsed}"></i></a>
+        <span style="padding:10px;">{{node.label}}. {{node.name}}</span>
+
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.children" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.children" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>

@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox-content">
+            <div class="col-lg-6">
+                <dl class="dl-horizontal">
+                    <dt>Name:</dt>
+                    <dd>{{vm.maregistration.ma.agent.name||"-"}}</dd>
+                    <dt>Description:</dt>
+                    <dd> {{vm.maregistration.ma.agent.description||"-"}}</dd>
+                    <dt>Contact:</dt>
+                    <dd>{{vm.maregistration.ma.agent.contactPerson||"-"}}</dd>
+                    <dt>License:</dt>
+                    <dd>{{vm.maregistration.ma.agent.licenseNumber||"-"}}</dd>
+                </dl>
+            </div>
+            <div class="col-lg-6" id="cluster_info">
+                <dl class="dl-horizontal">
+
+                    <dt>Phone:</dt>
+                    <dd>{{vm.maregistration.ma.agent.phone||"-"}}</dd>
+                    <dt>Email:</dt>
+                    <dd>{{vm.maregistration.ma.agent.email||"-"}}</dd>
+                    <dt>WebSite:</dt>
+                    <dd>{{vm.maregistration.ma.agent.website||"-"}}</dd>
+                    <dt>Agreement Expiry Date:</dt>
+                    <dd>{{vm.maregistration.ma.agentSupplier.endDate||"-"|date:'MMM d,y' }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

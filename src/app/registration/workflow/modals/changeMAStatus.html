@@ -1,0 +1,15 @@
+<div class="row form-horizontal" ng-validate-form="vm.updateStatusLogValidation">
+    <div class="col-md-12">
+        <div class="form-group col-md-12">
+            <div class="col-xs-12">
+                <label>{{vm.commentTitle}} <span class="text-danger">*</span></label>
+                <div>
+                    <textarea ng-model="vm.maStatusModel.Comment" class="form-control" ng-validate="vm.updateStatusLogValidation.comment" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-12 " ng-if="!vm.updateStatusLogValidation.comment && vm.updateStatusLogValidation.$showError">
+                <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+            </div>
+        </div>
+    </div>
+</div>

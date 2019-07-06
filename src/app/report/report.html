@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><a ui-sref="reports" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px"><i class="fa fa-arrow-left" ></i></a>{{vm.reportData.report.title}}</h4>
+                    </div>
+
+                    <div class="pull-right" ng-init="$root.rightSidebar=false" ng-show="vm.reportData.filters.length > 0">
+                        <a ng-click="$root.rightSidebar = !$root.rightSidebar" style="padding: 15px;font-size: 20px;">
+                            <i class="fa fa-tasks"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div>
+                <div id="right-sidebar" ng-show="rightSidebar" class="sidebar-open">
+                    <div class="sidebar-container">
+                        <div class="sidebar-title">
+                            <h4 style="color: black"><i class="fa fa-filter"></i> Filters</h4>
+                        </div>
+                        <div>
+                            <div class="sidebar-list">
+                                <div class="setings-item" ng-repeat="filter in vm.reportData.filters">
+                                    <report-filter filter-data="filter"></report-filter>
+                                </div>
+                                <div style="padding: 15px 15px 15px;">
+                                    <div class="pull-left">
+                                        <button class="btn btn-default" ng-click="vm.reset()">Reset</button>
+                                    </div>
+                                    <div class="pull-right">
+                                        <button class="btn btn-primary" ng-click="vm.filterData()">Go</button>
+                                        <button class="btn btn-default" ng-click="vm.cancelFilter()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div ng-show="vm.showReportFilter" class="alert alert-info alert-dismissible">
+                    <span> Filtered by:  </span> <span ng-repeat="fl in vm.reportData.filters" ng-show="fl.value != null"> 
+                        <strong>{{fl.title}}:</strong> <em>{{fl.displayValue}} </em>   
+                    </span>
+                </div>
+
+                <table ng-if="vm.showReport" id="reports" class="table table-striped" datatable="" dt-options="vm.dtOptions" dt-columns="vm.dtColumns" dt-instance="vm.dtInstance"></table>
+            </div>
+        </div>
+    </div>
+</div>

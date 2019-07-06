@@ -1,0 +1,51 @@
+<div>
+    <form name="modal">
+        <div class="modal-header"> {{vm.title}}
+            <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+            <div class="clearfix"></div>
+        </div>
+        <div class="modal-body">
+            <div class="row form-horizontal" ng-validate-form="vm.deviceValidation">
+                <div class="form-group">
+                    <div class=" col-xs-12">
+                        <div>
+                            <label>Model</label>
+                            <input id="device_model" ng-model="vm.deviceModelSize.model" name="device_model" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class=" col-xs-12">
+                        <div>
+                            <label>Size</label>
+                            <input id="device_size" ng-model="vm.deviceModelSize.size" name="device_size" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label>Pack Size<span class="text-danger">*</span> </label>
+                        <ui-select style="min-height:33px;" name="packSizes" multiple ng-model="vm.devicePackSizes" theme="bootstrap_custom" user-input="LookUp.PackSize" ng-validate="vm.deviceValidation.mdDevicePresentation">
+                            <ui-select-match>{{$item.name}}</ui-select-match>
+                            <ui-select-choices-custom collection="vm.packSizes" refresh-callback="LookUp.PackSizeSearch"></ui-select-choices-custom>
+                        </ui-select>
+                    </div>
+                    <div class="col-xs-12 text-error-table" ng-if="!vm.deviceValidation.mdDevicePresentation && vm.deviceValidation.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary btn-outline" ng-click="vm.add()">
+                   {{vm.editMode? 'Update':'Add'}}
+            </button>
+                <button type="button" class="btn btn-default btn-outline" ng-click="$dismiss()">
+              Cancel
+            </button>
+            </div>
+        </div>
+    </form>
+</div>

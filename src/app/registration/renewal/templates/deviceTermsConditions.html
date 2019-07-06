@@ -1,0 +1,65 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.terms" class="m-xs">
+    <div class="col-xs-12">
+        <p>
+            I the undersigned certify that all the information in the accompanying documentation concerning an application for a marketing authorization for:
+        </p>
+    </div>
+
+    <div class="col-xs-11 p-xxs">
+        <div class="col-xs-6">
+            <ul class="list-group clear-list">
+                <li class="list-group-item fist-item">
+                    <b>Product Name</b>
+                    <span> : {{vm.marenewal.previousAppDetail.product.brandName}} </span>
+                </li>
+                <li class="list-group-item">
+                    <b>Local Agent </b>
+                    <span> : {{vm.marenewal.previousAppDetail.ma.agent.name}} </span>
+                </li>
+                <li class="list-group-item">
+                    <b>Manufacturer Name </b>
+                    <span> : {{vm.finishedProductManufacturer.manufacturerAddress.manufacturer.name}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-6">
+            <ul class="list-group clear-list">
+                <li class="list-group-item fist-item">
+                    <b>Generic Name</b>
+                    <span> : {{vm.marenewal.previousAppDetail.product.inn.name}} </span>
+                </li>
+                <li class="list-group-item">
+                    <b>Product Category </b>
+                    <span> : {{vm.marenewal.previousAppDetail.product.productCategory.name}} </span>
+                </li>
+                <li class="list-group-item">
+                    <b>Product Description </b>
+                    <span> : {{vm.marenewal.previousAppDetail.product.description}} </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <p>is correct and true, and reflects the total information available.</p>
+        <p>I further confirm that the information referred to in my application file is available for verification. I also agree that I am obliged to comply with the requirements of the Authority related to the Medical Device Registration at any time in
+            future.
+        </p>
+    </div>
+    <div class="col-xs-12">
+        <hr>
+        <input icheck id="acceptTerms" name="acceptTerms" type="checkbox" ng-model="vm.maregistration.ma.terms" class="required" ng-validate="vm.maregistrationValidation.terms.term" ng-change="vm.maregistration.ma.terms=vm.maregistration.ma.terms===false?undefined:true">
+        <label class="p-xs" for="acceptTerms">I agree with the Terms and Conditions.</label>
+        <small ng-if="!vm.maregistrationValidation.terms.term && vm.maregistrationValidation.terms.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+    </div>
+
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ui-sref="{{vm.states.checklist}}" class="btn btn-default">Previous</a>
+            <a ng-click="vm.SubmitNewApplication()" class="btn btn-primary">Submit</a>
+        </div>
+    </div>
+</div>

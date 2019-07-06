@@ -1,0 +1,64 @@
+<fieldset  ng-validate-form="vm.importPermitValidation.header">
+  <div class="row form-horizontal">
+    <div class="col-md-6" ng-init="vm.payment={date:{},bankName: undefined, receipt:undefined}">
+        <!--Screening Fee-->
+        <div class="form-group">
+          <div class="col-xs-12">
+            <label>Screening Fee</label>
+            <div>$20</div>
+          </div>
+        </div>
+
+        <!--Bank name-->
+        <div class="form-group">
+          <div class="col-xs-12">
+            <label>Name of the Bank <span class="text-danger">*</span></label>
+            <div>
+              <input ng-model="vm.payment.bankName" name="name" type="text" class="form-control" ng-validate="vm.agentValidation.name">
+            </div>
+            <div class="col-xs-12 " ng-if="!vm.agentValidation.name && vm.agentValidation.$showError">
+              <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+            </div>
+          </div>
+        </div>
+
+        <!--Receipt Number-->
+        <div class="form-group">
+          <div class="col-xs-12">
+            <label>Receipt Number <span class="text-danger">*</span></label>
+            <div>
+              <input ng-model="vm.payment.receipt" name="name" type="text" class="form-control" ng-validate="vm.agentValidation.name">
+            </div>
+            <div class="col-xs-12 " ng-if="!vm.agentValidation.name && vm.agentValidation.$showError">
+              <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+            </div>
+          </div>
+        </div>
+
+        <!--Fee Submission Date-->
+        <div class="form-group">
+          <div class="col-xs-12">
+            <label>Fee Submission Date <span class="text-danger">*</span></label>
+            <div>
+              <p class="input-group" >
+                <input type="text" name="date" class="form-control" uib-datepicker-popup="" ng-model="vm.payment.date"
+                       is-open="vm.payment.date.isOpened"  close-text="Close" ng-validate="vm.linkSupplierAndAgentValidation.endDate" readonly/>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="vm.payment.date.isOpened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </div>
+            <div class="col-xs-12 " ng-if="!vm.agentValidation.name && vm.agentValidation.$showError">
+                <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!--Action Buttons-->
+    <div class="col-md-12">
+      <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+      <a ui-sref="maregistration.newApplication.new.manufacturers" class="btn btn-default">Previous</a>
+      <a ng-click="vm.paymentToAttachment()" class="btn btn-primary">Next</a>
+    </div>
+  </div>
+</fieldset>

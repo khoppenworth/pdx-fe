@@ -1,0 +1,248 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <h4><a ui-sref="ipermit.list" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px"><i
+                                        class="fa fa-arrow-left"></i></a>{{vm.importPermit.importPermitNumber}}</h4>
+                        </div>
+                        <div class="col-lg-7 pull-right" style="padding:0px">
+
+                            <div class="pull-right">
+                                <button permission="permissions.ImportPermit.Void" type="button" class="btn btn-danger  btn-sm " hideon="vm.importPermit.importPermitStatus.importPermitStatusCode" buttonFunction='Void' ng-click="vm.VoidIPermit()" style="margin: 0px 4px">
+                                    Void
+                                </button>
+                            </div>
+                            <div class="pull-right" style="padding-right:2px" ng-if="vm.userInfo.isAgent">
+                                <button permission="permissions.ImportPermit.Edit" type="button" hideon="vm.importPermit.importPermitStatus.importPermitStatusCode" buttonFunction='Edit' class="btn btn-success btn-sm" ng-click="vm.editIPermit()" style="margin: 0px 4px">
+                                    Edit
+                                </button>
+                                <button permission="permissions.ImportPermit.Create" type="button" hideon="vm.importPermit.importPermitStatus.importPermitStatusCode" buttonFunction='Submit' class="btn btn-primary btn-sm" ng-click="vm.RequestIPermit()" style="margin: 0px 4px">
+                                    Submit
+                                </button>
+                                <button permission="permissions.ImportPermit.Withdraw" type="button" hideon="vm.importPermit.importPermitStatus.importPermitStatusCode" buttonFunction='Withdraw' class="btn btn-warning  btn-sm " ng-click="vm.WithdrawIPermit()" style="margin: 0px 4px">
+                                    Withdraw
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content  m-b-sm border-bottom">
+                    <div class="tabs-container">
+                        <uib-tabset active="2">
+                            <uib-tab index="0" heading="Basic">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox-content">
+                                            <div class="col-lg-6">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Application No.:</dt>
+                                                    <dd>{{vm.importPermit.importPermitNumber}}</dd>
+                                                    <dt>Application Date:</dt>
+                                                    <dd>{{vm.importPermit.requestedDate|date|filterNull}}</dd>
+                                                    <dt>Status:</dt>
+                                                    <dd ng-if="!vm.userInfo.isAgent">{{vm.importPermit.importPermitStatus.name}}</dd>
+                                                    <dd ng-if="vm.userInfo.isAgent">{{(vm.importPermit.importPermitStatus.displayName)||(vm.importPermit.importPermitStatus.name)}}</dd>
+                                                    <dt ng-if="!vm.userInfo.isAgent">Assignee:</dt>
+                                                    <dd ng-if="!vm.userInfo.isAgent">{{(vm.importPermit.assignedUser.firstName +' '+vm.importPermit.assignedUser.lastName)||'-'}}</dd>
+                                                    <dt>Amount:</dt>
+                                                    <dd>{{vm.importPermit.currency.symbol + ' '}}{{vm.importPermit.amount|number:1}}</dd>
+                                                    <dt>Freight Cost:</dt>
+                                                    <dd>{{vm.importPermit.currency.symbol + ' '}}{{vm.importPermit.freightCost}}</dd>
+                                                    <dt>Total Discount:</dt>
+                                                    <dd>{{vm.importPermit.currency.symbol + ' '}}{{vm.importPermit.discount||0}}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <dl class="dl-horizontal">
+
+                                                    <dt>Proforma Invoice:</dt>
+                                                    <dd>{{vm.importPermit.performaInvoiceNumber}}</dd>
+                                                    <dt>Payment:</dt>
+                                                    <dd>{{vm.importPermit.paymentMode.name}}</dd>
+                                                    <dt>Shipping:</dt>
+                                                    <dd>{{vm.importPermit.shippingMethod.name}}</dd>
+                                                    <dt>Port:</dt>
+                                                    <dd>{{vm.importPermit.portOfEntry.name}}</dd>
+                                                    <dt>Currency:</dt>
+                                                    <dd>{{vm.importPermit.currency.name}}</dd>
+                                                    <dt>Delivery:</dt>
+                                                    <dd>{{vm.importPermit.delivery}}</dd>
+                                                    <dt>Remark:</dt>
+                                                    <dd>{{vm.importPermit.remark}}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="1" heading="Products">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox">
+                                            <!--<div class="ibox-title">
+                                                <h4>Product Detail</h4>
+                                            </div>-->
+                                            <div ng-if="vm.importPermit.submodule.submoduleCode!='MDS'" ng-include src="'app/importPermit/list/detail/productDetail.html'"></div>
+                                            <div ng-if="vm.importPermit.submodule.submoduleCode=='MDS'" ng-include src="'app/importPermit/list/detail/mdProductDetail.html'"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="2" heading="Documents">
+                                <div class="ibox">
+                                    <!--<div class="ibox-title">
+                                        <h4>Documents</h4>
+                                    </div>-->
+                                    <div class="ibox-content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Attachment</th>
+                                                        <th>Source</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="md in vm.moduleDocuments | orderBy: '-createdDate'" track by $index>
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>
+                                                            {{md.moduleDocument.documentType.name}}
+                                                            <br>
+                                                            <small>{{md.moduleDocument.documentType.description}}</small>
+                                                        </td>
+                                                        <td>
+                                                            {{md.moduleDocument.documentType.isSystemGenerated|AttachmentSource}}
+                                                            <span ng-if="md.moduleDocument.documentType.documentTypeCode === 'POCR'"><i class="fa fa-check text-navy"></i></span>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-primary btn-outline" type="button" ng-click="vm.openFileModal(md)">
+                                                                <i class="fa fa-eye text-navy"></i>
+                                                            </button>
+                                                            <button class="btn btn-primary btn-outline" type="button" ng-click="vm.downloadAttachment(md)" ng-href="{{vm.fileURL}}" download="{{md.moduleDocument.documentType.name}}">
+                                                                <i class="fa fa-download text-navy"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="3" heading="Applicant">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox-content">
+                                            <div class="col-lg-6">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Name:</dt>
+                                                    <dd>{{vm.agent.name||"-"}}</dd>
+                                                    <dt>Description:</dt>
+                                                    <dd> {{vm.agent.description||"-"}}</dd>
+                                                    <dt>Contact:</dt>
+                                                    <dd>{{vm.agent.contactPerson||"-"}}</dd>
+                                                    <dt>License:</dt>
+                                                    <dd>{{vm.agent.licenseNumber||"-"}}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-lg-6" id="cluster_info">
+                                                <dl class="dl-horizontal">
+
+                                                    <dt>Phone:</dt>
+                                                    <dd>{{vm.agent.phone||"-"}}</dd>
+                                                    <dt>Email:</dt>
+                                                    <dd>{{vm.agent.email||"-"}}</dd>
+                                                    <dt>WebSite:</dt>
+                                                    <dd>{{vm.agent.website||"-"}}</dd>
+                                                    <dt>Agreement Expiry Date:</dt>
+                                                    <dd>{{vm.agentSupplier.endDate||"-"|date:'MMM d,y' }}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="4" heading="License Holder">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox-content">
+                                            <div class="col-lg-6">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Name:</dt>
+                                                    <dd>{{vm.supplier.name||"-"}}</dd>
+                                                    <dt>Description:</dt>
+                                                    <dd> {{vm.supplier.description||"-"}}</dd>
+                                                    <dt>Status:</dt>
+                                                    <dd> {{vm.supplier.isActive?'Active':'Inactive'}}</dd>
+                                                    <dt>Phone:</dt>
+                                                    <dd>{{vm.supplier.phone||"-"}}</dd>
+                                                    <dt>Email:</dt>
+                                                    <dd>{{vm.supplier.email||"-"}}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-lg-6" id="cluster_info">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Street Name:</dt>
+                                                    <dd>{{vm.supplier.address.streetName||"-"}}</dd>
+                                                    <dt>Postal Code:</dt>
+                                                    <dd>{{vm.supplier.address.zipCode||"-"}}</dd>
+                                                    <dt>City:</dt>
+                                                    <dd>{{vm.supplier.address.city||"-"}}</dd>
+                                                    <dt>Country:</dt>
+                                                    <dd>{{vm.supplier.address.country.name||"-"}}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <a class="btn btn-primary btn-outline" ng-click="vm.showHistoryTimeLine()">
+                                {{vm.showHistory === true ? "Hide " : "Show " }} {{vm.userInfo.isAgent === true ? "Comment" : "History" }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="vm.showHistory">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <h4 ng-show="!vm.ipermitHistory.length">No {{vm.userInfo.isAgent === true ? " comment " : " history " }} found</h4>
+                                <div class="ibox-content inspinia-timeline">
+                                    <div class="timeline-item" ng-repeat="history in vm.ipermitHistory">
+                                        <div class="row">
+                                            <div class="col-lg-2 date">
+                                                <i class="fa fa-file-text"></i>
+                                                <span>{{history.createdDate|date:'medium'}}</span>
+                                                <br/>
+                                                <small class="badge badge-info"><time am-time-ago="history.createdDate"></time></span></small>
+                                            </div>
+                                            <div class="col-lg-10 content no-top-border">
+                                                <p class="m-b-xs" ng-if="history.fromImportPermitStatus"><strong>From {{history.fromImportPermitStatus.name}}
+                                                        to {{history.toImportPermitStatus.name}}</strong></p>
+                                                <p class="m-b-xs" ng-if="!history.fromImportPermitStatus"><strong>{{history.toImportPermitStatus.name}}</strong></p>
+
+                                                <p>{{history.comment}}</p>
+                                                <small>changed By : {{history.modifiedByUser.firstName + ' ' + history.modifiedByUser.lastName}}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

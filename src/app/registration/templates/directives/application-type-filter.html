@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-lg-3 pull-right">
+        <div>
+            <ui-select ng-model="vm.selectedSubmoduleType" theme="bootstrap" ng-change="vm.onSubmoduleTypeSelected()">
+                <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat=" item in vm.applicationList | filter: $select.search |orderBy:'name'">
+                    <div ng-bind-html="item.name | highlight: $select.search "></div>
+                </ui-select-choices>
+                <ui-select-no-choice>Nothing found</ui-select-no-choice>
+            </ui-select>
+        </div>
+    </div>
+</div>

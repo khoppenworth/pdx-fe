@@ -1,0 +1,66 @@
+<div class="row form-horizontal">
+    <div class="col-md-12">
+        <table class="table mainTable table-hovered " style="table-layout:fixed;">
+            <thead>
+                <tr>
+                    <th class="text-center checklistDropDownArrow"></th>
+                    <th class="col-lg-6">Checklist</th>
+                    <th class="text-center col-lg-6">Answer</th>
+                </tr>
+            </thead>
+            <tbody ng-include src="'checklist-bodyp'">
+            </tbody>
+        </table>
+        <div>
+            <hr/><b>Suggested Status</b> : <span data-ng-class="vm.getStatusColor('{{vm.primaryReviewResult.maReview.suggestedStatus.maStatusCode}}')">{{vm.primaryReviewResult.maReview.suggestedStatus.name}}</span></br>
+            </br>
+            <b>Review Comment</b></br>
+            <pre ng-bind-html="vm.primaryReviewResult.maReview.comment"></pre>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template " id="checklist-bodyp">
+    <tr ng-repeat-start="checklist in vm.primaryReviewResult.reviewChecklists | orderBy:'priority' track by checklist.id " ng-init="checklist.rowExpanded=true;checklist.style = 'min-width:60px'">
+        <td class="checklistDropDownArrow">
+            <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+            <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+        </td>
+        <td colspan="{{checklist.maChecklists ==null ||checklist.maChecklists.length<=0 ?2:1}}">
+            <i class="fa" ng-if="vm.checklistAnswerChanged(checklist,'assessment') || true" ng-class="{'txt-color-green fa-check': checklist.answered}"></i>
+            {{checklist.label}} &nbsp; {{checklist.name}}
+        </td>
+        <td colspan="1" class="text-left" ng-repeat="maChecklist in checklist.maChecklists">
+            <button-group group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions" disabled></button-group>
+            <pre ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'" ng-bind-html="maChecklist.answer"></pre>
+
+        </td>
+    </tr>
+    <tr ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-repeat-end>
+        <td style="padding-right:0;" colspan="3" ng-include src="'checklist-childrenp'"></td>
+    </tr>
+</script>
+
+<script type="text/ng-template " id="checklist-childrenp">
+    <table class="table table-hovered detailTable" style="table-layout:fixed;">
+        <tr ng-repeat-start="checklist in checklist.children | orderBy:'priority' track by checklist.id" ng-init="checklist.rowExpanded=false;checklist.style = 'min-width:60px'">
+            <td ng-style="{'padding-left': checklist.depth*35+'px','width':checklist.depth*25+35+'px', 'padding-right':0}">
+                <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+                <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+            </td>
+            <td colspan="2">
+                <i class="fa" ng-if="vm.checklistAnswerChanged(checklist,'assessment') || true" ng-class="{'txt-color-green fa-check': checklist.answered}"></i>
+                {{checklist.label}} &nbsp; {{checklist.name}}
+            </td>
+            <td colspan="2" class="text-left" ng-repeat="maChecklist in checklist.maChecklists">
+                <button-group group-style="checklist.style" ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode !=='FTXT'" ng-model="maChecklist.optionID" lookups="checklist.optionGroup.possibleOptions" disabled></button-group>
+                <pre ng-if="!checklist.children.length>0 && checklist.answerType.answerTypeCode ==='FTXT'" ng-bind-html="maChecklist.answer"></pre>
+
+            </td>
+        </tr>
+        <tr ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-repeat-end>
+            <td colspan="3">
+                <ng-include src="'checklist-childrenp'"></ng-include>
+            </td>
+        </tr>
+    </table>
+</script>

@@ -1,0 +1,35 @@
+<div   ng-controller="FeeTypeDetailController as vm">
+  <table id="mainMenus" class="table table-hovered">
+    <thead>
+    <tr>
+      <th>Document</th>
+      <th>Active to Module</th>
+      <th>Currency</th>
+      <th>Fee</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="feeType in vm.allFeeTypes | orderBy:'name'">
+        <td>
+          <span >{{feeType.name}}</span>
+        </td>
+        <td>
+          <input icheck  type="checkbox" ng-model="feeType.submoduleFeeTypes.isActive" ng-change="vm.notify(feeType)">
+        </td>
+        <td>
+          {{feeType.currency.name}}
+        </td>
+        <td style="width:20%;">
+          <input style="width:80%" ng-disabled="!feeType.submoduleFeeTypes.isActive" type="number" min="0" ng-model="feeType.submoduleFeeTypes.fee" ng-change="vm.notify(feeType)">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div ng-if="vm.showButtons" class="pull-right col-md-5">
+    <button class="pull-right btn btn-default" ng-click="vm.showButtons=false;">Canel</button>
+    <button  ng-click="vm.updateSubmoduleFeeType()" class="btn pull-right btn-primary">Save</button>
+  </div>
+
+</div>

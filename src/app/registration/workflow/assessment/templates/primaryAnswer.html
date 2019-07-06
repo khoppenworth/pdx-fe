@@ -1,0 +1,6 @@
+<div> <br/>
+    <button-group disabled group-style="vm.primaryAnswerChecklist.style" ng-if="!vm.primaryAnswerChecklist.children.length>0 && vm.primaryAnswerChecklist.answerType.answerTypeCode !=='FTXT'" group-style="vm.primaryAnswerChecklist.style" ng-model="vm.primaryAnswerChecklist.primaryOptionID"
+        lookups="vm.primaryAnswerChecklist.optionGroup.possibleOptions"></button-group>
+    <textarea class="autogrow" cols="70" disabled ng-model="vm.primaryAnswerChecklist.primaryAnswer" ng-if="!vm.primaryAnswerChecklist.children.length>0 && vm.primaryAnswerChecklist.answerType.answerTypeCode ==='FTXT'"></textarea>
+
+</div>

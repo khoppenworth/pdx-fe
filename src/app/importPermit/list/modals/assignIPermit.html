@@ -1,0 +1,36 @@
+<div class="row form-horizontal" ng-validate-form="vm.AssignValidation">
+    <div class="col-md-12">
+        <div class="form-group col-md-12">
+            <div class="col-xs-12" style="padding:20px">
+                <label>Role <span class="text-danger">*</span></label>
+                <div>
+                    <ui-select ng-model="vm.roleSelected" theme="bootstrap" ng-validate="vm.AssignValidation.roleID" on-select="vm.onRoleSelected($item)">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in vm.roles | filter: $select.search">
+                            <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            <!--<small ng-bind-html="item.paymentCode | highlight: $select.search"></small>-->
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+
+            <div class="col-xs-12" style="padding:20px">
+                <label>Users <span class="text-danger">*</span></label>
+                <div>
+                    <ui-select ng-model="vm.ipermitAssigned.assignedUserID" theme="bootstrap" ng-validate="vm.AssignValidation.assignedUserID">
+                        <ui-select-match>{{$select.selected.firstName + ' '+$select.selected.lastName}}</ui-select-match>
+                        <ui-select-choices repeat="item in vm.users | filter: $select.search">
+                            <div><span ng-bind-html="item.firstName | highlight: $select.search"></span> &nbsp;<span ng-bind-html="item.lastName | highlight: $select.search"></span></div>
+                </div>
+
+                <!--<small ng-bind-html="item.paymentCode | highlight: $select.search"></small>-->
+                </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-xs-12 " ng-if="!vm.AssignValidation.assignedUserID && vm.AssignValidation.$showError">
+            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+    </div>
+</div>
+</div>

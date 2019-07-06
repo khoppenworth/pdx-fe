@@ -1,0 +1,91 @@
+<form name="createManufacturer">
+    <div class="modal-header"> Please Provide the status of product application in every other Regulatory authority
+        <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+        <div class="clearfix"></div>
+    </div>
+    <div class="modal-body">
+        <div class="row form-horizontal" ng-validate-form="vm.foreignApplicationStatusValidation">
+            <div class="form-group">
+                <div class=" col-xs-12">
+                    <label>Foreign Country Status Type <span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.foreignApplicationStatus.foreignApplicationStatus" theme="bootstrap" ng-validate="vm.foreignApplicationStatusValidation.statusTypeID">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat=" item in vm.foreignStatuses | filter: $select.search |orderBy:'name'">
+                            <div ng-bind-html="item.name | highlight: $select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.foreignApplicationStatusValidation.statusTypeID && vm.foreignApplicationStatusValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label>Country <span class="text-danger">*</span></label>
+                    <div>
+                        <ui-select ng-model="vm.foreignApplicationStatus.country" theme="bootstrap" ng-validate="vm.foreignApplicationStatusValidation.countryID">
+                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat=" item in vm.countries | filter: $select.search |orderBy:'name'">
+                                <div ng-bind-html="item.name | highlight: $select.search "></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.foreignApplicationStatusValidation.countryID && vm.foreignApplicationStatusValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label>Marketing Authorization Holder <span class="text-danger">*</span></label>
+                    <div>
+                        <input type="text" class="form-control" name="phone" ng-model="vm.foreignApplicationStatus.marketholder" ng-validate="vm.foreignApplicationStatusValidation.marketholder" />
+                    </div>
+                </div>
+                <div class="col-xs-12 " ng-if="!vm.foreignApplicationStatusValidation.marketholder && vm.foreignApplicationStatusValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label>Certificate Number</label>
+                    <div>
+                        <input type="text" class="form-control" name="phone" ng-model="vm.foreignApplicationStatus.certificateNumber" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label>Date of Decision <span class="text-danger">*</span></label>
+                    <div>
+                        <p class="input-group">
+                            <input type="text" name="date" class="form-control" uib-datepicker-popup=""
+                                   ng-model="vm.foreignApplicationStatus.decisionDate"
+                                   is-open="vm.foreignStatus.date.isOpened"
+                                   datepicker-options="vm.dateOptions"
+                                   close-text="Close"
+                                   readonly/>
+                            <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="vm.foreignStatus.date.isOpened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <button type="submit" ng-if="vm.title.toLowerCase().indexOf('edit')>-1" class="btn btn-primary btn-outline" ng-click="vm.addForeignApplicationStatus()">
+          Update
+        </button>
+            <button type="submit" ng-if="vm.title.toLowerCase().indexOf('new')>-1" class="btn btn-primary btn-outline" ng-click="vm.addForeignApplicationStatus()">
+          Add
+        </button>
+            <button type="button" class="btn btn-default btn-outline" ng-click="$dismiss()">
+          Cancel
+        </button>
+        </div>
+    </div>
+</form>
+</div>

@@ -1,0 +1,201 @@
+<div class="row">
+    <uib-accordion close-others="false" class="panel-group payments-method">
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}" is-open="true">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Basic
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('BrandName')}" >Trade Name:</dt>
+                            <dd>{{vm.maregistration.product.brandName | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('GenericName')}">Generic Name</dt>
+                            <dd>{{vm.maregistration.product.genericName | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductCategory')}">Product Category:</dt>
+                            <dd>{{vm.maregistration.product.productCategory.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('DosageStrength')}">Dosage Strength:</dt>
+                            <dd>{{vm.maregistration.product.dosageStrengthObj.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('DosageForm')}">Dosage Form:</dt>
+                            <dd>{{vm.maregistration.product.dosageFormObj.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('DosageUnit')}">Dosage Unit:</dt>
+                            <dd>{{vm.maregistration.product.dosageUnitObj.name | filterNull}}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('StandardClaimed')}">Standard Claimed:</dt>
+                            <dd>{{vm.maregistration.product.pharmacopoeiaStandard.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('RouteOfAdministration')}">Route of administration:</dt>
+                            <dd>{{vm.maregistration.product.adminRoute.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('AgeGroup')}">Age Group:</dt>
+                            <dd>{{vm.maregistration.product.ageGroup.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('PharmacologicalClassification')}" title="Pharmacological Classification">Pharmacological Classification:</dt>
+                            <dd>{{vm.maregistration.product.pharmacologicalClassification.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ContainerType')}" title="Packaging/container and Closure with Type">Packaging/container and Closure with Type:</dt>
+                            <dd>{{vm.maregistration.product.containerType | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('PackSize')}">Pack Size:</dt>
+                            <dd ng-bind-html="vm.maregistration.product.presentationP">{{vm.maregistration.product.presentationP | filterNull}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Detail
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ingredientStatement')}" title="Statement of similarity and difference of clinical, bio batch, stability, validation and commercial batch sizes">Statement of similarity and difference of clinical, bio batch, stability, validation and commercial batch sizes:</dt>
+                            <dd>{{vm.maregistration.product.ingredientStatement | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProposedIndication')}" title="Indication for Use">Indication for Use:</dt>
+                            <dd>{{vm.maregistration.product.indication | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('Posology')}" title="Proposed Posology and Method of Administration">Proposed Posology and Method of Administration:</dt>
+                            <dd>{{vm.maregistration.product.posology | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ShelfLife')}">Shelf Life (in Months):</dt>
+                            <dd>{{vm.maregistration.product.shelfLifeObj.name | filterNull}}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductType')}">Product Type:</dt>
+                            <dd>{{vm.maregistration.product.productType.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('StorageConditions')}"title="Storage Conditions">Storage Conditions:</dt>
+                            <dd>{{vm.maregistration.product.storageCondition | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('UseCategory')}">Use Category:</dt>
+                            <dd>{{vm.maregistration.product.useCategory.name | filterNull}}</dd>
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductDescription')}" title="Product Description and Physical Appearance">Product Description and Physical Appearance:</dt>
+                            <dd>{{vm.maregistration.product.description | filterNull}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Composition <i style="font-size:14px;" ng-if="vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductComposition')" class="fa text-warning fa-exclamation-circle"></i>
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <div class="row">
+                    <h4>Active Ingredients (INN)</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">INN Name</th>
+                                    <th>Dosage Strength</th>
+                                    <th>Dosage Unit</th>
+                                    <th>Standard Claimed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="pi in vm.productInns" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td style="width:250px">
+                                        {{pi.inn.name}}
+                                    </td>
+                                    <td>{{pi.dosageStrengthObj.name}}</td>
+
+                                    <td>{{pi.dosageUnit.name}}</td>
+                                    <td>{{pi.pharmacopoeiaStandard.name}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>InActive Ingredients (Expiant)</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">Expiant Name</th>
+                                    <th>Dosage Strength</th>
+                                    <th>Dosage Unit</th>
+                                    <th>Function</th>
+                                    <th>Standard Claimed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="md in vm.productExcipeints" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td style="width:250px">
+                                        {{md.excipient.name}}
+                                    </td>
+                                    <td>{{md.dosageStrengthObj.name}}</td>
+
+                                    <td>{{md.dosageUnit.name}}</td>
+                                    <td>{{md.function}} </td>
+                                    <td>{{md.pharmacopoeiaStandard.name}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Diluents for Reconstitution</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">Ingredient Name</th>
+                                    <th>Dosage Strength</th>
+                                    <th>Dosage Unit</th>
+                                    <th>Function</th>
+                                    <th>Standard Claimed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="md in vm.productDiluents" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td style="width:250px">
+                                        {{md.excipient.name}}
+                                    </td>
+                                    <td>{{md.dosageStrengthObj.name}}</td>
+
+                                    <td>{{md.dosageUnit.name}}</td>
+                                    <td>{{md.function}} </td>
+                                    <td>{{md.pharmacopoeiaStandard.name}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Pharmacotherapeutic group</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">ATC Code</th>
+                                    <th>ATC Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="md in vm.maregistration.product.productATCs" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+
+                                    <td style="width:250px">{{md.atc.atcCode}}</td>
+                                    <td> {{md.atc.name}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </uib-accordion>
+</div>

@@ -1,0 +1,33 @@
+<div ng-if="vm.lookupTable" >
+    <div class="ibox-title">
+        <h3 class="col-lg-6">{{vm.lookupTable.name}}</h3>
+        <div ibox-tools class="pull-right">
+            <a class="btn btn-primary btn-sm btn-outline" ng-click="vm.openAddModal({})" title="Add Lookup Element"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <table class="table table-striped ">
+        <thead>
+            <tr class="no-borders">
+            <th width="5%">No.</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Is Active</th>
+            <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="member in vm.lookupTable.data" >
+            <td>{{$index}}</td>
+            <td>{{member.name}}</td>
+            <td>{{member[vm.codePropName]}}</td>
+            <td>{{member.isActive ? 'Yes' : 'No'}}</td>
+            <td> 
+                <a class="btn btn-warning btn-xs" type="button" ng-click="vm.openAddModal(member)" title="Edit Lookup Instance"><i class="glyphicon glyphicon-edit"></i></a>
+                <a ng-if="vm.showRemove" class="btn btn-outline btn-xs text-danger " type="button" ng-click="vm.removeMember(member)" title="Delete Lookup Instance"><i class="fa fa-trash"></i></a>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>

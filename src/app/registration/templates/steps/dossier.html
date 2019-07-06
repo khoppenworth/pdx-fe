@@ -1,0 +1,108 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.dossier" ng-disabled="vm.isInputDisabled('Dossier')">
+  <div id="dossier" class="table-responsive">
+    <table class="table table-striped mainTable">
+      <thead>
+        <tr>
+          <th class="attachment">Attachement</th>
+          <th class="upload">Upload</th>
+          <th class="status">Status</th>
+          <th class="preview">Preview</th>
+        </tr>
+      </thead>
+      <tbody ng-include="'data-body'"></tbody>
+    </table>
+  </div>
+</fieldset>
+<div class="row">
+  <div class="col-md-12">
+    <div class="pull-right">
+      <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+      <a ui-sref="{{vm.states.attachment}}" class="btn btn-default">Previous</a>
+      <a ng-click="vm.dossierToChecklist()" class="btn btn-primary">Next</a>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template " id="data-body">
+  <tr ng-repeat-start="md in vm.dossierDocuments | orderBy:'documentType.name'  track by $index "
+      ng-init="md.rowExpanded=true; iterationDepth=1;">
+    <td colspan="{{(md.children && md.children.length > 0) ? 4 : 1}}">
+      <span ng-if="md.rowExpanded==false && md.children && md.children.length > 0" ng-click="md.rowExpanded=true"
+              class="btn-sm glyphicon glyphicon-menu-down"></span>
+      <span ng-if="md.rowExpanded==true && md.children && md.children.length > 0" ng-click="md.rowExpanded=false"
+            class="btn-sm glyphicon glyphicon-menu-up"></span>
+      <span>{{md.documentType.name}} <span class="text-danger" ng-if="md.isRequired">*</span></span>
+      <br>
+      <small class="pad-left-detail">{{md.documentType.description}}</small>
+    </td>
+    <td ng-if="!(md.children && md.children.length > 0)">
+      <file-uploader large-file="true" attachment-info="md.attachmentInfo"></file-uploader>
+      <small>{{md.attachmentInfo.fileName}}</small>
+      <small
+        ng-if="md.isRequired && !vm.maregistrationValidation.dossier[$index].document && vm.maregistrationValidation.dossier.$showError"
+        ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+    </td>
+    <td ng-if="!(md.children && md.children.length > 0)">
+      <a href="" ng-show="md.attachmentInfo.document">
+        <i class="fa fa-check text-navy"></i>
+      </a>
+      <input ng-if="md.isRequired" ng-model="md.attachmentInfo.document" class="hidden"
+             ng-validate="vm.maregistrationValidation.dossier[$index].document"
+             ng-change="vm.onChange('Dossier')"/>
+    </td>
+    <td ng-if="!(md.children && md.children.length > 0)">
+      <button class="btn btn-primary btn-outline" ng-show="md.attachmentInfo.document" type="button"
+              ng-click="vm.openFileModal(md)">
+        <i class="fa fa-eye text-navy"></i>
+      </button>
+    </td>
+  </tr>
+  <tr ng-if="md.rowExpanded==true" ng-repeat-end>
+    <td colspan="4" ng-include src="'data-children'"></td>
+  </tr>
+
+</script>
+
+<script type="text/ng-template " id="data-children">
+  <table class="table table-hovered table-striped detailTable">
+    <tbody>
+      <tr ng-repeat-start="md in md.children | orderBy:'documentType.name' track by $index"
+          ng-init="md.rowExpanded=false; md.depth=iterationDepth;">
+          <td class="attachment" ng-style="{'padding-left': md.depth*35 +'px'}"  colspan="{{(md.children && md.children.length > 0) ? 4 : 1}}">
+              <span ng-if="md.rowExpanded==false && md.children && md.children.length > 0" ng-click="md.rowExpanded=true"
+                  class="btn-sm glyphicon glyphicon-menu-down"></span>
+              <span ng-if="md.rowExpanded==true && md.children && md.children.length > 0" ng-click="md.rowExpanded=false"
+                    class="btn-sm glyphicon glyphicon-menu-up"></span>
+              <span>{{md.documentType.name}} <span class="text-danger" ng-if="md.isRequired">*</span></span>
+              <br>
+              <small>{{md.documentType.description}}</small>
+          </td>
+          <td class="upload" ng-if="!(md.children && md.children.length > 0)">
+            <file-uploader large-file="true" attachment-info="md.attachmentInfo"></file-uploader>
+            <small>{{md.attachmentInfo.fileName}}</small>
+            <small
+              ng-if="md.isRequired && !vm.maregistrationValidation.dossier[$index].document && vm.maregistrationValidation.dossier.$showError"
+              ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+          </td>
+          <td class="status"  ng-if="!(md.children && md.children.length > 0)">
+              <a  href="" ng-show="md.attachmentInfo.document">
+                <i class="fa fa-check text-navy"></i>
+              </a>
+            <input ng-if="md.isRequired" ng-model="md.attachmentInfo.document" class="hidden"
+                   ng-validate="vm.maregistrationValidation.dossier[$index].document"
+                   ng-change="vm.onChange('Dossier')"/>
+          </td>
+          <td  class="preview" ng-if="!(md.children && md.children.length > 0)"s>
+            <button class="btn btn-primary btn-outline" ng-show="md.attachmentInfo.document" type="button"
+                    ng-click="vm.openFileModal(md)">
+              <i class="fa fa-eye text-navy"></i>
+            </button>
+          </td>
+      </tr>
+      <tr ng-if="md.rowExpanded==true" ng-repeat-end>
+        <td colspan="4" ng-include src="'data-children'" data-onload="iterationDepth = iterationDepth + 1;" style="padding: 0;"></td>
+      </tr>
+    </tbody>
+  </table>
+</script>
+
+

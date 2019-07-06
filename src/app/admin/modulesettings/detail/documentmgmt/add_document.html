@@ -1,0 +1,28 @@
+<div class="row form-horizontal" ng-validate-form="vm.createNewDocumentValidation">
+  <div class="col-md-12">
+    <div class="form-group col-md-12" >
+      <div class="col-xs-12">
+        <label>Name *</label>
+        <div>
+          <input id="newdocumentName" ng-model="vm.documentToBeAdded.name" name="title" type="text"
+                 class="form-control" ng-validate="vm.createNewDocumentValidation.newDocumentTitle">
+        </div>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.createNewDocumentValidation.newDocumentTitle && vm.createNewDocumentValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+    <div class="form-group col-md-12">
+      <div class="col-xs-12">
+        <label>Description *</label>
+        <div>
+          <textarea rows="4" cols="50" id="newDocumentDescription" ng-model="vm.documentToBeAdded.description"
+                    name="description" type="text" class="form-control" ng-validate="vm.createNewDocumentValidation.newDocumentDescription"></textarea>
+        </div>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.createNewDocumentValidation.newDocumentDescription && vm.createNewDocumentValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+  </div>
+</div>

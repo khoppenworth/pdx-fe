@@ -1,0 +1,214 @@
+<fieldset ng-validate-form="vm.importPermitValidation.attachment" ng-disabled="vm.isInputDisabled('ProductComposition')">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Active Ingredients (INN) <span class="text-danger">*</span></h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addActiveSubstances()"><i class="fa fa-plus"></i></button>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px">INN Name</th>
+                        <th>Dosage Strength</th>
+                        <th>Dosage Unit</th>
+                        <th>Standard Claimed</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-validate-form="vm.maregistrationValidation.productInn" ng-repeat="pi in vm.productInns" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td style="width:250px" ng-validate="vm.maregistrationValidation.productInn[$index].inn" ng-model="pi.inn.name">
+                            {{pi.inn.name}}
+                        </td>
+                        <td>{{pi.dosageStrengthObj.name}}</td>
+
+                        <td>{{pi.dosageUnit.name}}</td>
+                        <td>{{pi.pharmacopoeiaStandard.name}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editActiveSubstances(pi)"><i
+              class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeActiveSubstance(pi)"><i
+              class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Inactive Ingredients (Expiant) <span class="text-danger"></span></h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addExceipientSubstances()"><i class="fa fa-plus"></i></button>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px">Expiant Name</th>
+                        <th>Dosage Strength</th>
+                        <th>Dosage Unit</th>
+                        <th>Function</th>
+                        <th>Standard Claimed</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="md in vm.productExcipeints" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td style="width:250px" ng-model="md.excipient.name">
+                            {{md.excipient.name}}
+                        </td>
+                        <td>{{md.dosageStrengthObj.name}}</td>
+
+                        <td>{{md.dosageUnit.name}}</td>
+                        <td>{{md.function}}</td>
+                        <td>{{md.pharmacopoeiaStandard.name}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editExceipientSubstances(md)"><i
+              class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeExceipientSubstances(md)"><i
+              class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Diluents for Reconstitution</h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addDiluentSubstances()"><i class="fa fa-plus"></i></button>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px">Ingredient Name</th>
+                        <th>Dosage Strength</th>
+                        <th>Dosage Unit</th>
+                        <th>Function</th>
+                        <th>Standard Claimed</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-validate-form="vm.maregistrationValidation.productExi" ng-repeat="md in vm.productDiluents" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+                        <td style="width:250px" ng-validate="vm.maregistrationValidation.productDil[$index].excipient" ng-model="md.excipient.name">
+                            {{md.excipient.name}}
+                        </td>
+                        <td>{{md.dosageStrengthObj.name}}</td>
+
+                        <td>{{md.dosageUnit.name}}</td>
+                        <td>{{md.function}}</td>
+                        <td>{{md.pharmacopoeiaStandard.name}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-success btn-xs btn-outline" ng-click="vm.editDiluentSubstances(md)"><i
+            class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeDiluentSubstances(md)"><i
+            class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Pharmacotherapeutic group</h4>
+            </div>
+            <div ibox-tools class="pull-right">
+                <button uib-popover-template="vm.dynamicPopover.templateUrl" popover-trigger="outsideClick" popover-is-open="vm.popoverIsOpen" popover-placement="left" popover-title="Add ATC" type="button" style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right">
+          <i class="fa fa-plus"></i>
+        </button>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="1" style="width:25px">No.</th>
+                        <th style="width:250px">ATC Code</th>
+                        <th>ATC Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="md in vm.maregistration.product.productATCs" track by $index>
+                        <td colspan="1" style="width:25px">{{$index + 1}}</td>
+
+                        <td style="width:250px">{{md.atc.atcCode}}</td>
+                        <td> {{md.atc.name}}</td>
+                        <td class="pull-right">
+                            <button class="btn btn-danger btn-xs btn-outline" ng-click="vm.removeAtcProduct(md)"><i
+              class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ui-sref="{{vm.states.productdetailContinued}}" class="btn btn-default">Previous</a>
+            <a ng-click="vm.compositionToManufacturers()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="myPopoverTemplate.html" ng-validate-form="vm.productAtcValidation">
+    <div class="form-group">
+        <div class="col-xs-12">
+            <label>ATC Name <span class="text-danger">*</span></label>
+            <ui-select ng-model="vm.productAtc.atc" theme="bootstrap" ng-validate="vm.productAtcValidation.atcID">
+                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices-custom collection="vm.atcs" refresh-callback="Commodity.ATCSearch"></ui-select-choices-custom>
+            </ui-select>
+        </div>
+        <div class="col-xs-12" ng-if="!vm.productAtcValidation.atcID && vm.addAtcProduct.$showError">
+            <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12" style="margin-top:3px">
+            <label>ATC Code</label>
+            <div>
+                <input ng-disabled="true" type="text" class="form-control" ng-model="vm.productAtc.atc.atcCode"></input>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-12 " style="margin-top:3px">
+            <button style="margin-left:5px;" class="btn btn-default   btn-md btn-outline pull-right" ng-click="vm.popoverIsOpen = false">Cancel
+      </button>
+            <button class="btn btn-primary btn-md btn-outline pull-right" ng-click="vm.addAtcProduct()">Add</button>
+        </div>
+    </div>
+</script>

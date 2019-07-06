@@ -1,0 +1,37 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>No.</th>
+        <th>Attachement</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="md in vm.productAttachments | orderBy: '-createdDate'" track by $index>
+        <td>{{$index + 1}}</td>
+        <td>
+          {{md.moduleDocument.documentType.name}}
+          <br>
+          <small>{{md.moduleDocument.documentType.description}}</small>
+        </td>
+        <td>
+          <button style="background-color:white !important;" class="btn btn-primary btn-outline" type="button" ng-click="vm.openFileModal(md)">
+            <i class="fa fa-eye text-navy"></i>
+          </button>
+          <button style="background-color:white !important;" class="btn btn-primary btn-outline" type="button"
+                  ng-click="vm.downloadAttachment(md)" ng-href="{{vm.fileURL}}" download="{{md.moduleDocument.documentType.name}}">
+            <i class="fa fa-download text-navy"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.navbar-default').addClass('navbar-scroll')
+    });
+</script>

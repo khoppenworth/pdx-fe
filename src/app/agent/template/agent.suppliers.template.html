@@ -1,0 +1,30 @@
+<div class="row">
+
+  <div ng-if="vm.agentSuppliers.length<=0" style="text-align:center; text-font:120%; color:red;">
+    No supplier is linked to this agent
+  </div>
+
+  <table ng-if="vm.agentSuppliers.length>0" class="table table-hovered table-striped">
+    <thead>
+    <th></th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Applicant Type</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Status</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="supplierAgent in vm.agentSuppliers" ng-class="{'redClass':supplierAgent.isActive==false}">
+      <td>{{$index+1}}</td>
+      <td>{{supplierAgent.supplier.name | filterNull}}</td>
+      <td>{{supplierAgent.supplier.phone | filterNull}}</td>
+      <td>{{supplierAgent.agentLevel.name | filterNull}}</td>
+      <td>{{supplierAgent.startDate | date | filterNull}}</td>
+      <td>{{supplierAgent.endDate | date | filterNull}}</td>
+      <td>{{supplierAgent.isActive==true ? 'Active': 'Inactive'}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

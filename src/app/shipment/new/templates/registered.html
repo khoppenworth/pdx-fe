@@ -1,0 +1,117 @@
+<fieldset ng-validate-form="vm.shipmentValidation.registeredApplication" class="form-horizontal">
+    <div>
+        <div class="col-lg-6">
+            <div style="padding-right: 10px">
+                <div class="form-group" style="margin: 15px;">
+                    <div>
+                        <label>Registered Import Permits<span class="text-danger">*</span></label>
+
+                        <ui-select ng-model="vm.selectedApp" theme="bootstrap" id="registeredSelect" reset-search-input="false" on-select="vm.onApplicationSelected()" ng-validate="vm.shipmentValidation.registeredApplication.importpermit">
+                            <ui-select-match placeholder="Search by import permit number [2 characters] ...">{{$select.selected.importPermitNumber}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="reg in vm.previousApps | filter: $select.search|orderBy:['name']" refresh="vm.searchRegistered($select.search)" refresh-delay="300" minimum-input-length="0">
+                                <div><span ng-bind-html="reg.importPermitNumber | highlight: $select.search"></span></div>
+                                <small><span ng-bind-html="reg.performaInvoiceNumber | highlight: $select.search"></span></small>
+                                <span><br/></span>
+                                <small><span ng-bind-html="reg.portOfEntry.name | highlight: $select.search"></span></small>
+                                <div ng-if="$index == $select.items.length-1">
+                                    <button class="btn btn-xs btn-primary" style="width: 100%; margin-top: 5px;" ng-click="vm.searchRegistered($select.search, $event);" ng-disabled="loading">Load more...
+                                    </button>
+                                </div>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+
+                </div>
+                <div class=" text-error-table" ng-if="!vm.shipmentValidation.registeredApplication.importpermit && vm.shipmentValidation.registeredApplication.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row" ng-if="vm.selectedApp">
+            <div class="col-lg-12">
+                <div class="ibox-content">
+                    <div class="col-lg-6">
+                        <dl class="dl-horizontal">
+                            <dt>Application No.:</dt>
+                            <dd>{{vm.importPermit.importPermitNumber}}</dd>
+                            <dt>Application Date:</dt>
+                            <dd>{{vm.importPermit.requestedDate|date|filterNull}}</dd>
+                            <dt>Amount:</dt>
+                            <dd>{{vm.importPermit.currency.symbol + ' '}}{{vm.importPermit.amount|number:1}}</dd>
+                            <dt>Freight Cost:</dt>
+                            <dd>{{vm.importPermit.currency.symbol + ' '}}{{vm.importPermit.freightCost}}</dd>
+                            <dt>Total Discount:</dt>
+                            <dd>{{vm.importPermit.currency.symbol + ' '}}{{vm.importPermit.discount||0}}</dd>
+                            <dt>Proforma Invoice:</dt>
+                            <dd>{{vm.importPermit.performaInvoiceNumber}}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-lg-6">
+                        <dl class="dl-horizontal">
+
+                            <dt>Payment:</dt>
+                            <dd>{{vm.importPermit.paymentMode.name}}</dd>
+                            <dt>Shipping:</dt>
+                            <dd>{{vm.importPermit.shippingMethod.name}}</dd>
+                            <dt>Port:</dt>
+                            <dd>{{vm.importPermit.portOfEntry.name}}</dd>
+                            <dt>Currency:</dt>
+                            <dd>{{vm.importPermit.currency.name}}</dd>
+                            <dt>Delivery:</dt>
+                            <dd>{{vm.importPermit.delivery}}</dd>
+                            <dt>Remark:</dt>
+                            <dd>{{vm.importPermit.remark}}</dd>
+                        </dl>
+                    </div>
+
+                </div>
+            </div>
+            <hr/>
+            <div class="col-lg-11" style="margin: 30px;">
+                <hr/>
+                <table class="table table-child">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Item</th>
+                            <th>Pack Size</th>
+                            <th>Manufacturer</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="detail in vm.importPermit.importPermitDetails" track by $index>
+                            <td>{{$index+1}}</td>
+                            <td>{{detail.product.brandName}}
+                                <br/><small>{{detail.product.genericName + ' - ' + detail.product.dosageStrength+' ' + detail.product.dosageUnit+' - ' + detail.product.dosageForm }}</small>
+                            </td>
+                            <td>{{detail.product.presentation}}</td>
+                            <td><span title="{{detail.manufacturerAddress.manufacturer.name + ' - ' + detail.manufacturerAddress.address.country.name}}">{{detail.manufacturerAddress.manufacturer.name|limitTo:13}}</span></td>
+                            <td>{{detail.quantity|number:1}}</td>
+                            <td>{{vm.importPermit.currency.symbol + ' '}}{{detail.unitPrice|number}}</td>
+                            <td>{{vm.importPermit.currency.symbol + ' '}}{{detail.discount||0|number}}</td>
+                            <td>{{vm.importPermit.currency.symbol + ' '}}{{(detail.unitPrice * detail.quantity) - detail.discount |number:1}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right" style="padding:10px;">
+            <a ng-click="vm.registredIPsToGeneral()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>

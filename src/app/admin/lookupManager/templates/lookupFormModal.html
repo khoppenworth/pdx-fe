@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <div class="modal-title">
+    <h3>{{vm.editMode ? "Edit Lookup Element ":"Add Lookup Element"}}
+      <button ng-click="$close()" class="close pull-right" aria-hidden="true">&times;</button>
+    </h3>
+  </div>
+</div>
+
+<div class="modal-body">
+  <form name="vm.addLookupForm" class="form-horizontal row" novalidate>
+    <div class="form-group" ng-repeat="field in vm.formFields">
+      <dynamic-field  edit-mode="vm.editMode" id= "$index" field-config="field" field-value="vm.lookupElement"></dynamic-field>
+      <div class="col-xs-12 " ng-if="(vm.addLookupForm[field.model].$touched || vm.addLookupForm.$submitted) && vm.addLookupForm[field.model].$error.required">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-6"></div>
+      <div class="col-xs-6">
+        <div class="buttons pull-right">
+          <button type="submit" class="btn btn-primary btn-outline" ng-click="vm.saveLookup()">Save</button>
+          <button type="button" class="btn btn-primary btn-outline" ng-click="$close()">Cancel </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

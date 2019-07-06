@@ -1,0 +1,38 @@
+<div class="ibox-title">
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="" ui-sref="pip.list" class="btn btn-primary btn-outline  btn-xs pull-left" style="margin:7px;clear:left"><i class="fa fa-arrow-left" ></i></a>
+        </div>
+    </div>
+    <div ibox-tools class="pull-right">
+    </div>
+</div>
+<div class="ibox-content wizard ">
+    <div class="steps clearfix ">
+        <ul>
+            <li ui-sref-active="current">
+                <a ui-sref=".header " class="btn-default "><span>1.</span> General Requirement</a>
+            </li>
+            <li ui-sref-active="current" ng-class="{current: $state.is('pip.new.detail')}">
+                <a ng-click="vm.headerToDetail()" ng-disabled="!vm.importPermitValidation.header.$isValid" class="btn-default "><span>2.</span> Product Detail</a>
+            </li>
+            <li ui-sref-active="current" ng-class="{current: $state.is('pip.new.attachments')}">
+                <a ng-click="vm.detailToAttachment()" ng-disabled="!vm.importPermitValidation.detail.$isValid" class="btn-default "><span>3.</span> File Attachments</a>
+            </li>
+            <li ui-sref-active="current" ng-class="{current: $state.is('pip.new.terms')}">
+                <a ng-click="vm.attachmentToTerms()" ng-disabled="!vm.importPermitValidation.attachment.$isValid" class="btn-default "><span>4.</span> Terms and Conditions</a>
+            </li>
+        </ul>
+    </div>
+    <div class="wizard ">
+        <div class="content ">
+
+            <form name="ipForm " ng-submit="processForm() " class="p-sm no-padding" ng-validate-form="vm.importPermitValidation">
+
+                <!-- our nested state views will be injected here -->
+                <div id="form-views " ui-view="ipSteps "></div>
+            </form>
+
+        </div>
+    </div>
+</div>

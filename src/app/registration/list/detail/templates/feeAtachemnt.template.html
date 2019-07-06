@@ -1,0 +1,51 @@
+<fieldset ng-validate-form="vm.feeUpload">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Attachement</th>
+                    <th>Upload</th>
+                    <th>Status</th>
+                    <th>Preview</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="md in vm.feeDocument |orderBy:'-isRequired'" track by $index>
+                    <td>{{$index + 1}}</td>
+                    <td>
+                        {{md.documentType.name}} <span class="text-danger">*</span>
+                        <br>
+                        <small>{{md.documentType.description}}</small>
+                    </td>
+                    <td>
+                        <file-uploader attachment-info="md.attachmentInfo"></file-uploader>
+                        <small>{{md.attachmentInfo.fileName}}</small>
+                        <small ng-if="!vm.feeUpload[$index].document && vm.feeUpload.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+                    </td>
+
+                    <td>
+                        <a href="" ng-show="md.attachmentInfo.document">
+                            <i class="fa fa-check text-navy"></i>
+                        </a>
+                        <input ng-model="md.attachmentInfo.document" class="hidden" ng-validate="vm.feeUpload[$index].document" />
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-outline" ng-show="md.attachmentInfo.document" type="button" ng-click="vm.openUploadedModal(md)">
+            <i class="fa fa-eye text-navy"></i>
+          </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</fieldset>
+<div class="row">
+  <div class="col-md-12">
+    <div class="pull-right">
+      <a ng-click="vm.savePaymentReceipt()" class="btn btn-primary">Submit</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div>
+    <div class="row" ng-controller="fieldsModalModifiedController as fvm">
+        <div class="form-horizontal col-sm-12">
+            <form ng-validate-form="vm.updateStatusLogValidation">
+                <div ui-tree id="tree-root">
+                    <ol ui-tree-nodes ng-model="vm.data" data-nodrop-enabled="true">
+                        <div class="form-group col-md-12">
+                            <li ng-repeat="node in vm.data  | filter:{'isActive':true}" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                        </div>
+                    </ol>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="row form-horizontal" ng-validate-form="vm.variationInformationValidation">
+        <div class="form-group col-md-12">
+            <div class="col-xs-6">
+                <label>Major Variation Count </label>
+                <div>
+                    <input id="firstName" ng-model="vm.variationCount.major" name="majorCount" type="number" min="0" class="form-control" ng-validate="vm.variationInformationValidation.majorCount">
+                </div>
+                <div class=" text-error-table" ng-if="!vm.variationInformationValidation.majorCount && vm.variationInformationValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <label>Minor Variation Count </label>
+                <div>
+                    <input id="lastName" ng-model="vm.variationCount.minor" name="minorCount" type="number" min="0" class="form-control" ng-validate="vm.variationInformationValidation.minorCount">
+                </div>
+                <div class=" text-error-table" ng-if="!vm.variationInformationValidation.minorCount && vm.variationInformationValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="col-xs-12">
+                <label>Variation Summary</label>
+                <div>
+                    <textarea rows="5" id="summaryInfo" ng-model="vm.variationSummary" name="summaryInfo" type="text" class="form-control" ng-validate="vm.variationInformationValidation.summary"></textarea>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.variationInformationValidation.summary && vm.variationInformationValidation.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+</div>
+
+
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div class="tree-node tree-node-content">
+        <div data-nodrag>
+            <label>
+        <input icheck type="checkbox"
+               ng-init="(vm.showButtons.variationIntialized===true)?node.isSelected=node.isSelected:node.isNonSelectable=fvm.nonSelectableVariation(node.field.fieldCode);"
+               ng-model="node.isSelected"  ng-change="fvm.notify(node)"/>
+      </label>
+            <label style="padding-left:10px;"> {{fvm.formatCamelCase(node.field.name)}}</label>
+
+            <a class="pull-right" ng-if="node.children && node.children.length > 0" data-nodrag ng-click="fvm.toggle(this)">
+                <span ng-class="{'btn-sm glyphicon glyphicon-menu-down': !collapsed, 'btn-sm glyphicon glyphicon-menu-up': collapsed}">
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div ng-show="collapsed">
+        <ol ui-tree-nodes="" ng-model="node.children" data-nodrop-enabled="true">
+            <li ng-repeat="node in node.children | filter:{'isActive':true}" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+        </ol>
+    </div>
+
+</script>

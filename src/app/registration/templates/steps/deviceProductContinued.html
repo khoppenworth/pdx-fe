@@ -1,0 +1,43 @@
+<fieldset>
+    <div class="row form-horizontal" ng-disabled="vm.isInputDisabled('DeviceModelSize')">
+
+        <div class="col-md-12 table-responsive">
+
+            <button style="margin-top:4px;" class="btn btn-primary btn-xs btn-outline pull-right" ng-click="vm.addDeviceModelSize()"><i class="fa fa-plus"></i></button>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Model</th>
+                        <th>Device Size</th>
+                        <th>Pack Size</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-validate-form="vm.maregistrationValidation.productdetailContinued" ng-repeat="ms in vm.deviceModelSizes" track by $index>
+                        <td>{{$index+1}}</td>
+                        <td>{{ms.model}}</td>
+                        <td>{{ms.size}}</td>
+                        <td>{{ms.presentation}}</td>
+                        <td>
+                            <p>
+                                <a class="btn btn-white btn-bitbucket btn-outline btn-xs btn-primary" ng-click="vm.editDeviceModelSize(ms)"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-white btn-bitbucket btn-outline btn-xs btn-danger" ng-click="vm.removeDeviceModelSize(ms)"><i class="fa fa-remove"></i></a>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ng-click="vm.backToProduct()" class="btn btn-default">Previous</a>
+            <a ng-click="vm.productContinuedToComposition()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>

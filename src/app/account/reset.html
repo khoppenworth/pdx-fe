@@ -1,0 +1,32 @@
+<div class="forgot text-center row clearfix ">
+    <div class="forgot-content col-md-3 col-lg-2  bs-reset">
+        <div class="heading">
+          <h1><strong>eRIS</strong></h1>
+        </div>
+        <h4>Reset Password</h4>
+        <form  name="resetForm" ng-show="!vm.showInvalidTokenPage" class="m-t" role="form"  ng-validate-form="vm.resetValidation" ng-submit="vm.resetPassword()">
+            <div class="form-group">
+                <input
+                  type="password" name="newPassword" class="form-control form-control-solid placeholder-no-fix form-group"
+                  placeholder="New password" ng-model="vm.resetModel.newPassword"
+                  ng-validate="vm.resetValidation.newPassword">
+                <p ng-if="!vm.resetValidation.newPassword && vm.resetValidation.$showError && vm.passwordConfirmed" class="help-block text-danger">New password is required</p>
+              <p ng-show="!vm.passwordConfirmed && resetForm.newPassword.$touched" class="help-block text-danger">New password doesn't match</p>
+            </div>
+            <div class="form-group">
+                <input type="password" name="Confirm" class="form-control form-control-solid placeholder-no-fix form-group"
+                       placeholder="Confirm new password" ng-model="vm.resetModel.Confirm" ng-validate="vm.resetValidation.confirm">
+                <p ng-show="!vm.resetValidation.confirm && vm.resetValidation.$showError && vm.passwordConfirmed"
+                   class="help-block text-danger">Confirmation is required</p>
+                <p  ng-show="!vm.passwordConfirmed && resetForm.Confirm.$touched"
+                   class="help-block text-danger">New password doesn't match</p>
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b">Submit</button>
+        </form>
+        <div ng-show="vm.showInvalidTokenPage">
+          <p style="font-size:150%; padding-top:30px;" class="help-block text-danger">Your reset password request has expired or is invalid! Please contact administrators.</p>
+        </div>
+        <a ui-sref="login"><small>Back to login</small></a>
+        <!--<p class="m-t"> <small>{{vm.company}} &copy; {{vm.year}}</small> </p>-->
+    </div>
+</div>

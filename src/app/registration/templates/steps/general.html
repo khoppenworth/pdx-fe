@@ -1,0 +1,143 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.generalInfo" class="form-horizontal">
+
+    <div class="col-lg-6">
+        <div style="padding-right: 10px">
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('Application')}">
+                <div>
+                    <label>Applications <span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.maregistration.application" theme="bootstrap" ng-validate="vm.maregistrationValidation.generalInfo.applicationID" ng-change="vm.onChange('Application')" ng-disabled="vm.isInputDisabled('Application')">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat=" item in vm.applicationList | filter: $select.search |orderBy:'name'">
+                            <div ng-bind-html="item.name | highlight: $select.search "></div>
+                        </ui-select-choices>
+                        <ui-select-no-choice>Nothing found</ui-select-no-choice>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.generalInfo.applicationID && vm.maregistrationValidation.generalInfo.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Separator -->
+    <div class="col-lg-12 hidden-xs"></div>
+
+    <div class="col-lg-6">
+        <div style="padding-right: 10px">
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('MAType')}">
+                <div>
+                    <label>Application Types <span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.maregistration.ma.maType" theme="bootstrap" ng-validate="vm.maregistrationValidation.generalInfo.applicationtypeID" ng-disabled="vm.isInputDisabled('MAType')" ng-change="vm.onChange('MAType')">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat=" item in vm.applicationTypes | filter: $select.search |orderBy:'name'">
+                            <div ng-bind-html="item.name | highlight: $select.search "></div>
+                        </ui-select-choices>
+                        <ui-select-no-choice>Nothing found</ui-select-no-choice>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.generalInfo.applicationtypeID && vm.maregistrationValidation.generalInfo.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!--IsSRA-->
+            <div ng-show="vm.maregistration.application.submoduleTypeCode === 'MD' || vm.maregistration.application.submoduleTypeCode === 'MDCN'" class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('isSRA')}">
+                <div>
+                    <input icheck type="checkbox" id="isSRA" ng-model="vm.maregistration.ma.isSRA" name="isSRA" ng-disabled="vm.isInputDisabled('isSRA') " ng-change="vm.onChange('isSra')">
+                    <label> Is SRA?</span></label>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.maregistration.ma.isSRA" ng-class="{'{{vm.warning}}': vm.hasError('sra')}">
+                <div>
+                    <label>Select Stringent Regulatory authority or country</span></label>
+                    <ui-select multiple ng-model="vm.maregistration.ma.sralist" theme="bootstrap" ng-disabled="vm.isInputDisabled('sra') " ng-change="vm.onChange('sra')" ng-validate="vm.maregistrationValidation.generalInfo.sraList">
+                        <ui-select-match>{{$item.name}}</ui-select-match>
+                        <ui-select-choices repeat=" item in vm.sras | filter: $select.search |orderBy:'name'">
+                            <div ng-bind-html="item.name | highlight: $select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.generalInfo.sraList && vm.maregistrationValidation.generalInfo.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div style="padding-left: 10px">
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('Supplier')}">
+                <div>
+                    <label>License Holder <span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.maregistration.ma.supplier" theme="bootstrap" ng-validate="vm.maregistrationValidation.generalInfo.supplierID" ng-disabled="vm.isUpdateMode && vm.isInputDisabled('Supplier')" ng-change="vm.onChange('Supplier')">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat=" item in vm.suppliers | filter: $select.search |orderBy:'name'">
+                            <div ng-bind-html="item.name | highlight: $select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.generalInfo.supplierID && vm.maregistrationValidation.generalInfo.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ng-click="vm.generalToProduct()" class="btn btn-primary">Next</a>
+            <a ng-click="vm.calculateFee()" class="btn btn-white">Calculate Fee</a>
+        </div>
+    </div>
+</div>
+<div class="row" ng-if="vm.showCalculateFeeResult">
+    <div class="col-md-6">
+        <h4>Required Documents</h4>
+        <div ng-include src="'checklist-body'">
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4>Required Payments</h4>
+        <div>
+            <table class="table table-hovered table-striped detailTable">
+                <tr ng-repeat="fee in vm.submoduleFeeType | orderBy:'name' track by fee.id">
+                    <td>
+                        {{fee.feeType.name}} &nbsp; {{fee.feeType.currency.symbol}} &nbsp;{{fee.fee}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template " id="checklist-body">
+    <tr ng-repeat-start="checklist in vm.submoduleCheckList | orderBy:'priority' track by checklist.id " ng-init="checklist.rowExpanded=true;" class="col-lg-12" style="padding-left:0">
+        <td>
+            {{checklist.label}} &nbsp; {{checklist.name}}
+            <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+            <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+        </td>
+    </tr>
+    <tr ng-if="checklist.rowExpanded==true" ng-repeat-end class="col-lg-12" style="padding-left:0">
+        <td ng-include src="'checklist-children'" class="col-lg-12"></td>
+    </tr>
+
+</script>
+
+<script type="text/ng-template " id="checklist-children">
+    <table class="table table-hovered table-striped">
+        <tr ng-repeat-start="checklist in checklist.children | orderBy:'priority' track by checklist.id" ng-init="checklist.rowExpanded=false;">
+            <td class="col-lg-12">
+                {{checklist.label}} &nbsp; {{checklist.name}}
+                <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+                <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+            </td>
+        </tr>
+        <tr ng-if="checklist.rowExpanded==true" ng-repeat-end>
+            <td>
+                <ng-include src="'checklist-children'"></ng-include>
+            </td>
+        </tr>
+    </table>
+</script>

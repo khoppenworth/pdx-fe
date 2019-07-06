@@ -1,0 +1,99 @@
+<fieldset ng-validate-form="vm.maregistrationValidation.productdetailContinued" class="form-horizontal">
+    <div class="col-lg-6">
+        <div style="padding-right: 10px">
+            <!-- Product Type -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('ProductType')}">
+                <div>
+                    <label>Product Type<span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.maregistration.product.productType" theme="bootstrap_custom" ng-validate="vm.maregistrationValidation.productdetailContinued.productTypeID" user-input="Commodity.ProductType"  ng-disabled="vm.isInputDisabled('ProductType')" ng-change="vm.onChange('ProductType')">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices-custom collection="vm.productTypes" refresh-callback="Commodity.ProductTypeSearch">
+                        </ui-select-choices-custom>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.productdetailContinued.productTypeID && vm.maregistrationValidation.productdetailContinued.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Shelf Life -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('ShelfLife')}">
+                <div>
+                    <label>Shelf Life (in Months)<span class="text-danger">*</span></label>
+                    <ui-select ng-model="vm.maregistration.product.shelfLifeObj" theme="bootstrap" ng-validate="vm.maregistrationValidation.productdetailContinued.shelflifeID" ng-disabled="vm.isInputDisabled('ShelfLife')" ng-change="vm.onChange('ShelfLife')">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices-custom collection="vm.shelfLives" refresh-callback="Commodity.ShelfLifeSearch"></ui-select-choices-custom>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.productdetailContinued.shelflifeID && vm.maregistrationValidation.productdetailContinued.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Storage Conditions -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('StorageConditions')}">
+                <div>
+                    <label>Storage Conditions<span class="text-danger">*</span> </label>
+                    <input id="storageCondition" ng-model="vm.maregistration.product.storageCondition" name="storageCondition" type="text" class="form-control" ng-validate="vm.maregistrationValidation.productdetailContinued.storageCondition" ng-disabled="vm.isInputDisabled('StorageConditions')"
+                        ng-change="vm.onChange('StorageConditions')">
+                </div>
+                <div class="text-error-table" ng-if="!vm.maregistrationValidation.productdetailContinued.storageCondition && vm.maregistrationValidation.productdetailContinued.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+            <!-- Use Category -->
+            <div class="form-group" class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('UseCategory')}">
+                <div>
+                    <label>Use Category</span></label><span class="text-danger">*</span>
+                    <ui-select ng-model="vm.maregistration.product.useCategory" theme="bootstrap" ng-validate="vm.maregistrationValidation.productdetailContinued.useCategoryID" ng-disabled="vm.isInputDisabled('UseCategory')" <div>
+                        <a ng-click="vm.saveDraft()" class="btn btn-default">Save</a>
+                        <a ui-sref="{{vm.states.product}}" class="btn btn-default">Previous</a>
+                        <a ng-click="vm.productContinuedToComposition()" class="btn btn-primary">Next</a>
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat=" item in vm.useCategories | filter: $select.search |orderBy:'name'">
+                            <div ng-bind-html="item.name | highlight: $select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.productdetailContinued.useCategoryID && vm.maregistrationValidation.productdetailContinued.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-6">
+        <div style="padding-left: 10px">
+            <!-- Product Description and Physical Appearance -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('ProductDescription')}">
+                <div>
+                    <label>Product Description and Physical Appearance </label><span class="text-danger">*</span>
+                    <textarea rows="4" id="remarkProduct" ng-model="vm.maregistration.product.description" name="remark" class="form-control" ng-disabled="vm.isInputDisabled('ProductDescription')" ng-validate="vm.maregistrationValidation.productdetailContinued.description"
+                        ng-change="vm.onChange('ProductDescription')"></textarea>
+                </div>
+                <div class=" text-error-table" ng-if="!vm.maregistrationValidation.productdetailContinued.description && vm.maregistrationValidation.productdetailContinued.$showError">
+                    <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                </div>
+            </div>
+
+            <!-- Ingredient Lists -->
+            <div class="form-group" ng-class="{'{{vm.warning}}': vm.hasError('FoodIngredients')}">
+                    <div>
+                        <label>Ingredient Lists </label><span class="text-danger">*</span>
+                        <textarea rows="4" id="foodIngredients" ng-model="vm.maregistration.product.foodIngredients" name="foodIngredients" class="form-control" ng-disabled="vm.isInputDisabled('FoodIngredients')" ng-validate="vm.maregistrationValidation.productdetailContinued.foodIngredients"
+></textarea>
+                    </div>
+                    <div class=" text-error-table" ng-if="!vm.maregistrationValidation.productdetailContinued.foodIngredients && vm.maregistrationValidation.productdetailContinued.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>            
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a ng-click="vm.saveDraft()" ng-if="!vm.isLegacy && !vm.firOrRta" class="btn btn-default">Save</a>
+            <a ng-click="vm.backToProduct()" class="btn btn-default">Previous</a>
+            <a ng-click="vm.productContinuedToComposition()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>

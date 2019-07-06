@@ -1,0 +1,46 @@
+<div class="ibox-title">
+    <div class="col-lg-6 no-padding">
+        <h4><b>Reports</b></h4>
+    </div>
+    <div ibox-tools class="pull-right">
+        <a class="btn btn-primary btn-sm btn-outline" ui-sref="report.new" title="Add Report"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
+<div class="ibox-content">
+    <div ng-if="vm.reports && vm.reports.length > 0" class="table-responsive">
+        <table class="table table-hovered">
+            <thead>
+                <tr>
+                    <th style="width:3%;"></th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Mobile</th>
+                    <th>Priority</th>
+                </tr>
+                <tr>
+                    <th colspan="5">
+                        <input class="form-control" type="text" ng-model="vm.search" placeholder="Search reports" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="report in vm.reports | orderBy: 'priority' | filter: vm.search " ng-class="report.filterColumns.length>0?'active':''">
+                    <td>{{$index+1}}</td>
+                    <td><a ui-sref="report.detail({reportID:report.id})"> {{report.name | filterNull}} </a>
+                        <p class="label label-danger" ng-show="report.columnDefinitions.length == 0 && report.reportType.reportTypeCode === 'Tabular'">
+                            No Columns Defined
+                        </p>
+                    </td>
+                    <td>{{report.reportType.name | filterNull}}
+                        <span class="label label-default" ng-show="report.filterColumns.length>0"> {{report.filterColumns.length}} filters</span>
+                    </td>
+                    <td>{{report.isMobile ? 'Yes': 'No'}}</td>
+                    <td>{{report.priority | number:0 | filterNull}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="!vm.reports || vm.reports && vm.reports.length <= 0">
+        <p class="text-danger">No record found</p>
+    </div>
+</div>

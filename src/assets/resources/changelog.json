@@ -1,0 +1,105 @@
+[
+  {
+    "version":"Unreleased",
+    "versionNumber": 4,
+    "releaseType":"Unreleased",
+    "releaseTypeCode":3,
+    "releaseDate":"20/12/2017",
+    "summary":"Major breaking changes introduced",
+    "changeLogs":[
+      {
+        "priority":3,
+        "label":"fixed",
+        "logs":[
+          "fixed this bug",
+          "fixed this anotehr bug",
+          "fixed this another annoying bug"
+        ]
+      },{
+        "priority":2,
+        "label":"changed",
+        "logs":[
+          "Start using 'changelog' over 'change log' since it's the common usage.",
+          "Improve argument against commit logs.",
+          "Update year to match in every README example."
+        ]
+      },{
+        "priority":1,
+        "label":"added",
+        "logs":[
+          "Explanation of the recommended reverse chronological release ordering.",
+          "CNAME file to enable GitHub Pages custom domain",
+          "Good examples and basic guidelines, including proper date formatting."
+        ]
+      }, {
+        "priority":4,
+        "label":"Depricated",
+        "logs":[
+          "Will no longer support jquery date picker with in the next release",
+          "No longer be able to upload the same type of files in separate pages",
+          "No longer acces files sizes of more than 4MB"
+        ]
+      },{
+        "priority":5,
+        "label":"Security",
+        "logs":[
+          "Improved login security.",
+          "Password resets are sent directly to registered email of the user",
+          "Users cannot leave the application idle for more than 15 minutes. It will automatically log them out."
+        ]
+      }
+    ]
+  },
+
+  {
+    "version":"1.0.0",
+    "versionNumber": 3,
+    "releaseType":"Major",
+    "releaseTypeCode":1,
+    "releaseDate":"20/07/2017",
+    "summary":"First Release",
+    "changeLogs":[
+      {
+        "priority":3,
+        "label":"fixed",
+        "logs":[
+          "fixed this bug",
+          "fixed this anotehr bug",
+          "fixed this another annoying bug"
+        ]
+      },{
+        "priority":2,
+        "label":"changed",
+        "logs":[
+          "Start using 'changelog' over 'change log' since it's the common usage.",
+          "Improve argument against commit logs.",
+          "Update year to match in every README example."
+        ]
+      },{
+        "priority":1,
+        "label":"added",
+        "logs":[
+          "Explanation of the recommended reverse chronological release ordering.",
+          "CNAME file to enable GitHub Pages custom domain",
+          "Good examples and basic guidelines, including proper date formatting."
+        ]
+      }, {
+        "priority":4,
+        "label":"Depricated",
+        "logs":[
+          "Will no longer support jquery date picker with in the next release",
+          "No longer be able to upload the same type of files in separate pages",
+          "No longer acces files sizes of more than 4MB"
+        ]
+      },{
+        "priority":5,
+        "label":"Security",
+        "logs":[
+          "Improved login security.",
+          "Password resets are sent directly to registered email of the user",
+          "Users cannot leave the application idle for more than 15 minutes. It will automatically log them out."
+        ]
+      }
+    ]
+  }
+]

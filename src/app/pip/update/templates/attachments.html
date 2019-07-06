@@ -1,0 +1,51 @@
+<fieldset ng-validate-form="vm.importPermitValidation.attachment">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th style="width:50%">Attachement</th>
+                    <th>Upload</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="md in vm.moduleDocuments |orderBy:'-isRequired'" track by $index>
+                    <td>{{$index + 1}}</td>
+                    <td style="width:50%">
+                        {{md.documentType.name}} <span class="text-danger" ng-if="md.isRequired">*</span>
+                        <br>
+                        <small>{{md.documentType.description}}</small>
+                    </td>
+                    <td>
+                        <file-uploader attachment-info="md.attachmentInfo"></file-uploader>
+                        <small>{{md.attachmentInfo.fileName}}</small>
+                        <small ng-if="md.isRequired && !vm.importPermitValidation.attachment[$index].document && vm.importPermitValidation.attachment.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+                    </td>
+
+                    <td>
+                        <a href="" ng-show="md.attachmentInfo.document">
+                            <i class="fa fa-check text-navy"></i>
+                        </a>
+                        <input ng-if="md.isRequired" ng-model="md.attachmentInfo.document" class="hidden" ng-validate="vm.importPermitValidation.attachment[$index].document" />
+                    </td>
+                    <td>
+                        <button ng-if="md.attachmentInfo.document &&(!vm.user.isAgent || (md.documentType.documentTypeCode!=='POCR' && md.documentType.documentTypeCode!=='PORR'))" class="btn btn-primary btn-outline" type="button" ng-click="vm.openFileModal(md)">
+                                                                        <i class="fa fa-eye text-navy"></i>
+                                                                </button>
+                        <button ng-if="md.attachmentInfo.document &&(!vm.user.isAgent || (md.documentType.documentTypeCode!=='POCR' && md.documentType.documentTypeCode!=='PORR'))" class="btn btn-primary btn-outline " type="button " ng-click="vm.downloadAttachment(md)
+                            " ng-href="{{vm.fileURL}} " download="{{md.moduleDocument.documentType.name}} ">
+                                                                <i class="fa fa-download text-navy "></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a ui-sref="pip.update.detail " class="btn btn-default ">Previous</a>
+    <!--<a ng-click="vm.attachmentToTerms() " class="btn btn-primary ">Next</a>-->
+        <button type="submit " class="btn btn-primary btn-outline " ng-click="vm.UpdateImportPermit() ">Update</button>
+
+</fieldset>

@@ -1,0 +1,115 @@
+<fieldset ng-validate-form="vm.shipmentValidation.generalInformation" class="form-horizontal">
+    <div class="" style="margin: 15px;">
+        <div class="col-lg-6">
+            <div style="padding-right: 10px">
+                <div class="form-group">
+                    <div>
+                        <label>Release Number<span class="text-danger">*</span> </label>
+                        <input id="releaseNumber" ng-model="vm.shipment.shipment.releaseNumber" name="freightcost" type="text" class="form-control" ng-validate="vm.shipmentValidation.generalInformation.releaseNumber">
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.shipmentValidation.generalInformation.releaseNumber && vm.shipmentValidation.generalInformation.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Inspection End Date<span class="text-danger">*</span> </label>
+                        <div>
+                            <p class="input-group">
+                                <input id="inspectionEndDate" ng-model="vm.shipment.inspectionEndDate" name="inspectedDate" type="text" class="form-control" readonly datetime-picker="yyyy-MM-dd HH:mm" is-open="vm.inspectionEndDate.isOpened" close-text="Close" datepicker-options="vm.datePickerOptions" ng-validate="vm.shipmentValidation.generalInformation.inspectionEndDate"
+                                />
+                                <span class="input-group-btn">
+                                           <button type="button" class="btn btn-default" ng-click="vm.inspectionEndDate.isOpened=true"><i
+                                             class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.shipmentValidation.generalInformation.inspectedDate && vm.shipmentValidation.generalInformation.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Release Date<span class="text-danger">*</span> </label>
+                        <div>
+                            <p class="input-group">
+                                <input id="releasedDate" ng-model="vm.shipment.releasedDate" name="releasedDate" type="text" datetime-picker="yyyy-MM-dd HH:mm" class="form-control"  readonly is-open="vm.releasedDate.isOpened" close-text="Close" datepicker-options="vm.datePickerOptions" ng-validate="vm.shipmentValidation.generalInformation.releasedDate"
+                                />
+                                <span class="input-group-btn">
+                                               <button type="button" class="btn btn-default" ng-click="vm.releasedDate.isOpened=true"><i
+                                                 class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.shipmentValidation.generalInformation.releasedDate && vm.shipmentValidation.generalInformation.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div style="padding-left: 10px">
+                <div class="form-group">
+                    <div>
+                        <label>Inspection Start Date<span class="text-danger">*</span> </label>
+                        <div>
+                            <p class="input-group">
+                                <input id="inspectionStartDate" ng-model="vm.shipment.inspectionStartDate" name="inspectedDate" type="text" datetime-picker="yyyy-MM-dd HH:mm" class="form-control" readonly  is-open="vm.inspectedDate.isOpened" close-text="Close" datepicker-options="vm.datePickerOptions" ng-validate="vm.shipmentValidation.generalInformation.inspectedDate"
+                                />
+                                <span class="input-group-btn">
+                                           <button type="button" class="btn btn-default" ng-click="vm.inspectedDate.isOpened=true"><i
+                                             class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.shipmentValidation.generalInformation.inspectedDate && vm.shipmentValidation.generalInformation.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Application Date<span class="text-danger">*</span> </label>
+                        <div>
+                            <p class="input-group">
+                                <input id="applicationDate" ng-model="vm.shipment.applicationDate" name="ApplicationDate" type="text" class="form-control" datetime-picker="yyyy-MM-dd" enable-time="false" readonly is-open="vm.applicationDate.isOpened" close-text="Close" datepicker-options="vm.datePickerOptions"
+                                    ng-validate="vm.shipmentValidation.generalInformation.applicationDate" />
+                                <span class="input-group-btn">
+                                   <button type="button" class="btn btn-default" ng-click="vm.applicationDate.isOpened=true"><i
+                                     class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-error-table" ng-if="!vm.shipmentValidation.generalInformation.applicationDate && vm.shipmentValidation.generalInformation.$showError">
+                        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Inspectors<span class="text-danger">*</span> </label> <i class="fa fa-plus fa-sm text-success pull-right" ng-click="vm.AddRemoveInspectors('add')" ></i>
+                        <div ng-repeat="inspector in vm.shipment.shipment.inspectors">
+                            <input id="releaseNumber" ng-model="inspector.name" name="inspector" type="text" class="form-control" ng-validate="vm.shipmentValidation.generalInformation.inspectors[$index].name">
+                            <div class="text-error-table" ng-if="!vm.shipmentValidation.generalInformation.inspectors[$index].name && vm.shipmentValidation.generalInformation.$showError">
+                                <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+                            </div>
+                            <i class="fa fa-trash fa-sm text-danger pull-right" ng-click="vm.AddRemoveInspectors('remove',$index)" ></i>
+                            <br/>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right" style="padding:10px;">
+            <a ng-click="vm.generalToDetail()" class="btn btn-primary">Next</a>
+        </div>
+    </div>
+</div>

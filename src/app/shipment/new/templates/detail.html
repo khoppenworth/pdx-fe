@@ -1,0 +1,78 @@
+<fieldset>
+    <div style="margin: 15px;">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+
+                        <th></th>
+                        <th>Product Name</th>
+                        <th>Pack Size</th>
+                        <th>Manufacturer</th>
+                        <th>IP Q.</th>
+                        <th>IP A.</th>
+                        <th>Expiry Date</th>
+                        <th>Batch Number</th>
+                        <th>Unit Q.</th>
+                        <th>Total</th>
+                        <th>Prev Q.</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-validate-form="vm.shipmentValidation.detailInformation" ng-repeat="pod in vm.importPermit.importPermitDetails track by $index" track by $index>
+                        <td>{{$index+1}}</td>
+                        <td><a ng-click="vm.openProductModal(pod.product)">{{pod.product.brandName}}<br/><small>{{pod.product.genericName + ' - ' + pod.product.dosageStrength+' ' + pod.product.dosageUnit+' - ' + pod.product.dosageForm }}</small></a>
+                            <!--<small>This is example of project</small>-->
+                        </td>
+                        <td>{{pod.product.presentation}}</td>
+                        <td>
+                            {{pod.manufacturerAddress.manufacturer.name}}
+                        </td>
+                        <td>{{pod.quantity|number}}</td>
+                        <td>{{pod.amount|number}}</td>
+                        <td>
+                            <div>
+                                <p class="input-group">
+                                    <input id="expiryDate" ng-model="pod.expiryDate" name="expiryDate" type="text" class="form-control" uib-datepicker-popup="" is-open="vm.expiryDate[$index].isOpened" readonly close-text="Close" datepicker-options="vm.datePickerOptions" ng-validate="vm.shipmentValidation.detailInformation[$index].expiryDate"
+                                    />
+                                    <span class="input-group-btn">
+                                                           <button type="button" class="btn btn-default" ng-click="vm.expiryDate[$index].isOpened=true"><i
+                                                             class="glyphicon glyphicon-calendar"></i></button>
+                                                        </span>
+                                </p>
+                            </div>
+                            <small ng-if="!vm.shipmentValidation.detailInformation[$index].expiryDate && vm.shipmentValidation.detailInformation.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="pod.batchNumber" ng-validate="vm.shipmentValidation.detailInformation[$index].batchNumber" />
+                            <small ng-if="!vm.shipmentValidation.detailInformation[$index].batchNumber && vm.shipmentValidation.detailInformation.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+                        </td>
+                        <td>
+                            <input type="number" min=0 class="form-control" ng-model="pod.unitQuantity" ng-validate="vm.shipmentValidation.detailInformation[$index].unitQuantity" />
+                            <small ng-if="!vm.shipmentValidation.detailInformation[$index].unitQuantity && vm.shipmentValidation.detailInformation.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+                        </td>
+                        <td>
+                            <input type="number" min=0 class="form-control" ng-model="pod.totalQuantity" ng-validate="vm.shipmentValidation.detailInformation[$index].totalQuantity" />
+                            <small ng-if="!vm.shipmentValidation.detailInformation[$index].totalQuantity && vm.shipmentValidation.detailInformation.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+                        </td>
+                        <td>{{pod.received}}</td>
+                        <td>
+                            <a href="" ng-click="vm.RemoveProductFromList($index)"><i class="fa fa-trash fa-sm text-danger"></i></a>
+                            <a href="" ng-click="vm.Split($index)"><i class="fa fa-plus fa-sm text-success"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right" style="padding:10px;">
+            <a ng-click="vm.saveShipment()" class="btn btn-primary">Submit</a>
+        </div>
+    </div>
+</div>

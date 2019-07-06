@@ -1,0 +1,43 @@
+<div ng-controller="ReportMgmtController as vm">
+      <table id="mainMenus" class="table table-hovered">
+          <thead>
+              <tr>
+                <th style="width:25%">Report Type</th>
+                <th style="width:45%">Report</th>
+                <th style="width:30%">Active to role</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat-start="menuGroup in vm.allReportsGrouped | orderBy:'groupName'">
+              <td colspan="3" ng-init="menuGroup.expandedRowList=false">
+                <span>{{menuGroup.groupName}}</span>
+                <span ng-if="menuGroup.expandedRowList===false" ng-click="menuGroup.expandedRowList=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+                <span ng-if="menuGroup.expandedRowList===true" ng-click="menuGroup.expandedRowList=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+              </td>
+            </tr>
+            <tr ng-if="menuGroup.expandedRowList" ng-repeat-end>
+              <td colspan="3">
+                <table  style="margin-left:18%; width:84%" class="table table-hovered groupedRoleTable">
+                  <tbody>
+                      <tr  ng-repeat="report in menuGroup.reports | orderBy:'name'">
+                        <td style="width:68%">
+                          <span >{{report.name}}</span>
+                        </td>
+                        <td style="width:32%">
+                          <!--<switch ng-model="report.isActiveToRole" arial-label="assigned role" ng-change="vm.notify(report)"></switch>-->
+                          <input icheck  type="checkbox" ng-model="report.isActiveToRole" ng-change="vm.notify(report)">
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+              </td>
+            </tr>
+      </table>
+
+
+      <div ng-if="vm.showButtons" class="pull-right col-md-5">
+        <button  ng-click="vm.updateRoleReport()" class="btn btn-primary">Save</button>
+        <button class="btn btn-default" ng-click="vm.showButtons=false">Canel</button>
+      </div>
+
+</div>

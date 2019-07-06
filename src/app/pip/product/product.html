@@ -1,0 +1,15 @@
+<div class="ibox-title">
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="" ng-click="vm.cancel()" class="btn btn-primary btn-outline  btn-xs pull-left" style="margin:7px;clear:left"><i class="fa fa-arrow-left" ></i></a>
+        </div>
+    </div>
+    <div ibox-tools class="pull-right">
+    </div>
+</div>
+<div class="ibox-content">
+    <div class="row" ng-if="vm.productTypeCode == 'MDS'" ng-include="'app/pip/product/templates/product.medicalDevice.html'">
+    </div>
+    <div class="row" ng-if="vm.productTypeCode == 'MED'" ng-include="'app/pip/product/templates/product.pharm.html'">
+    </div>
+</div>

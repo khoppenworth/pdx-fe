@@ -1,0 +1,28 @@
+<table class="table table-child">
+  <thead>
+  <tr>
+    <th>Brand</th>
+    <th>Item</th>
+    <th>Product Type</th>
+    <th>Dosage Strength</th>
+    <th>Dosage Form</th>
+    <th>Dosage Unit</th>
+    <th>Shelf Life</th>
+
+
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>{{MADetail.product.brandName}}</td>
+    <td>{{MADetail.product.fullItemName}}</td>
+    <td>{{MADetail.product.productType.name}}</td>
+    <td>{{MADetail.product.dosageStrengthObj.name}}</td>
+    <td>{{MADetail.product.dosageFormObj.name}}</td>
+    <td>{{MADetail.product.dosageUnitObj.name}}</td>
+    <td>{{MADetail.product.shelfLifeObj.name}}</td>
+
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,12 @@
+<div class="form-horizontal" ng-validate-form="$select.newLookUpValidation">
+  <div class="form-group">
+    <div class=" col-xs-12">
+      <label>Name <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" name="name" ng-model="$select.newLookUp.name" ng-validate="$select.newLookUpValidation.name"/>
+    </div>
+    <div class="col-xs-12 text-center " ng-if="!$select.newLookUpValidation.name && $select.newLookUpValidation.$showError">
+      <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+    </div>
+  </div>
+</div>
+

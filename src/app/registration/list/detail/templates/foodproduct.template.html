@@ -1,0 +1,137 @@
+<div class="row">
+    <uib-accordion close-others="false" class="panel-group payments-method">
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}" is-open="true">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Basic
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('BrandName')}">Trade Name:</dt>
+                            <dd>{{vm.maregistration.product.brandName | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('GenericName')}">Generic Name</dt>
+                            <dd>{{vm.maregistration.product.genericName | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('DosageStrength')}">Dosage Strength:</dt>
+                            <dd>{{vm.maregistration.product.dosageStrengthObj.name | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('DosageForm')}">Dosage Form:</dt>
+                            <dd>{{vm.maregistration.product.dosageFormObj.name | filterNull}}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ContainerType')}" title="Packaging/container and Closure with Type">Packaging/container and Closure with Type:</dt>
+                            <dd>{{vm.maregistration.product.containerType | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('PackSize')}">Pack Size:</dt>
+                            <dd ng-bind-html="vm.maregistration.product.presentationP">{{vm.maregistration.product.presentationP | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('TypeOfTechnology')}">Type of Technology:</dt>
+                            <dd ng-bind-html="vm.maregistration.product.typeOfTechnology">{{vm.maregistration.product.typeOfTechnology | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('FoodIngredients')}">Ingredient List:</dt>
+                            <dd ng-bind-html="vm.maregistration.product.foodIngredients">{{vm.maregistration.product.foodIngredients | filterNull}}</dd>                            
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Detail
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductType')}">Product Type:</dt>
+                            <dd>{{vm.maregistration.product.productType.name | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ShelfLife')}">Shelf Life (in Months):</dt>
+                            <dd>{{vm.maregistration.product.shelfLifeObj.name | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('StorageConditions')}" title="Storage Conditions">Storage Conditions:</dt>
+                            <dd>{{vm.maregistration.product.storageCondition | filterNull}}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('UseCategory')}">Use Category:</dt>
+                            <dd>{{vm.maregistration.product.useCategory.name | filterNull}}</dd>
+
+                            <dt ng-class="{'isLegacyEdited': vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('ProductDescription')}" title="Product Description and Physical Appearance">Product Description and Physical Appearance:</dt>
+                            <dd>{{vm.maregistration.product.description | filterNull}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div uib-accordion-group ng-class="{currentslide: is-open==true}">
+            <uib-accordion-heading>
+                <h5 class="panel-title">
+                    Food Composition <i style="font-size:14px;" ng-if="vm.isLegacyEdited && vm.fieldEditedInLegacyUpdate('FoodCompositions')" class="fa text-warning fa-exclamation-circle"></i>
+                </h5>
+            </uib-accordion-heading>
+            <div>
+                <!-- Composition -->
+                <div class="row">
+                    <h4>Composition</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">Name</th>
+                                    <th>Quantity</th>
+                                    <th>SI Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="fc in vm.maregistration.product.foodCompositions | filter: {compositionType : vm.CONSTANT.FOOD_COMPOSITION_TYPE.COMPOSITION.CODE}" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td style="width:250px">{{fc.name}}</td>
+                                    <td>{{fc.amount}}</td>
+                                    <td>{{fc.unitFunction}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Nutrition Facts -->
+                <div class="row">
+                    <h4>Nutrition Facts</h4>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:25px">No.</th>
+                                    <th style="width:250px">Name</th>
+                                    <th>Quantity</th>
+                                    <th>SI Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="fc in vm.maregistration.product.foodCompositions | filter: {compositionType : vm.CONSTANT.FOOD_COMPOSITION_TYPE.NUTRITIONAL_FACT.CODE}" track by $index>
+                                    <td style="width:25px">{{$index + 1}}</td>
+                                    <td style="width:250px">{{fc.name}}</td>
+                                    <td>{{fc.amount}}</td>
+                                    <td>{{fc.unitFunction}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-accordion>
+</div>

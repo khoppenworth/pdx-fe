@@ -1,0 +1,69 @@
+<div class="ibox-title">
+  <div class="row">
+    <div class="col-lg-12">
+      <a href="" ui-sref="changelog.list"  class="btn btn-primary btn-outline  btn-xs pull-left" style="margin:7px;clear:left"><i class="fa fa-arrow-left" ></i></a>
+      <button title="Add New Tag" class="btn btn-sm btn-primary btn-outline pull-right" style="margin:4px 0;" ng-click="vm.addNewTag()">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+    <div>
+      <div class="col-md-3">
+        <label>Type</label>
+        <ui-select ng-model="vm.changeLog.releaseType" theme="bootstrap">
+          <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat=" type in vm.releaseTypes | filter: $select.search |orderBy:'code'">
+            <div ng-bind-html="type.name | highlight: $select.search "></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class="col-md-3">
+        <label>Version</label>
+        <input type="text" ng-model="vm.changeLog.version" placeholder="[ x . y . z]" class="form-control">
+      </div>
+      <div class="col-md-3">
+        <label>Version Number</label>
+        <input type="number" min="1" ng-model="vm.changeLog.versionNumber" placeholder="+1 from previous" class="form-control">
+      </div>
+      <div class="col-md-3">
+        <label>Date</label>
+        <input ng-model="vm.changeLog.releaseDate" type="date" placeholder="" class="form-control">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ibox-content">
+  <div class="row">
+    <div class="col-md-12"  ng-repeat="changelog in vm.changeLog.changeLogs | orderBy:'priority'">
+        <div class="well" style="padding:5px; margin-bottom:5px;">
+              <div ng-init="changelog.showDetail=true;" style="padding-bottom:36px;">
+                <buttn class="btn primary btn-sm btn-outline pull-right">
+                  <i title="minimize" ng-if="changelog.showDetail" ng-click="changelog.showDetail=false;" class="fa fa-chevron-up"></i>
+                  <i title="maximize" ng-if="!changelog.showDetail" ng-click="changelog.showDetail=true;" class="fa fa-chevron-down"></i>
+                </buttn>
+                <button title="Add new log" class="btn btn-sm btn-outline btn-primary pull-right" ng-click="changelog.logs.push({})">
+                  <i class="fa fa-plus"></i>
+                </button>
+                <div class="col-md-4 pull-right">
+                  <ui-select ng-model="changelog.label" theme="bootstrap">
+                    <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat=" type in vm.Tags | filter: $select.search |orderBy:'code'">
+                      <div ng-bind-html="type.name | highlight: $select.search "></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+              </div>
+              <div ng-show="changelog.showDetail">
+                <div ng-repeat="log in changelog.logs | orderBy:'priority'" class="form-group" style="margin-bottom: 2px;">
+                  <div>
+                    <textarea  id="log" ng-model="log.name" name="log" type="text" class="form-control" ></textarea>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div  class="col-md-12">
+      <!--<button class=" pull-right btn btn-outline btn-warning" ng-click="vm.insertOrUpdate()">Cancel</button>-->
+      <button class=" pull-right btn btn-outline btn-primary" ng-click="vm.insertOrUpdate()">&nbspSave&nbsp</button>
+    </div>
+  </div>
+</div>

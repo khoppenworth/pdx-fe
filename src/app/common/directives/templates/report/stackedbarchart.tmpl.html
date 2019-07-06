@@ -1,0 +1,28 @@
+<div ng-class="colWidth">
+    <div class="ibox">
+        <!-- DATA LOADING -->
+        <div ng-if="!reportOptions.dataLoaded">
+            <div class="animated-background facebook"></div>
+        </div>
+        <!-- NO DATA AFTER LOADING -->
+        <div ng-if="!reportOptions.dataAvailable && reportOptions.dataLoaded">
+            <h5 class="report-title" title="{{reportOptions.description}}">{{reportOptions.title}}</h5>
+            <h3>No Data</h3>
+        </div>
+        <!-- DATA LOADED AND AVAILABLE -->
+        <div ng-if="reportOptions.dataLoaded && reportOptions.dataAvailable">
+
+            <div class="ibox-title-small">
+                <div class="caption font-green">
+                    <span class="caption-subject font-bold text-uppercase">{{reportOptions.title}}</span>
+                    <span class="caption-helper">{{reportOptions.description}}</span>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <canvas class="chart chart-bar" style="height:300px" chart-data="reportOptions.data" chart-labels="reportOptions.labels" chart-series="reportOptions.series" chart-options="reportOptions.options">
+              </canvas>
+            </div>
+        </div>
+
+    </div>
+</div>

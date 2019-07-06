@@ -1,0 +1,7 @@
+<label>{{filterData.title}}</label>
+<ui-select ng-model="filterData.ObjectValue" theme="bootstrap">
+    <ui-select-match placeholder="Select report">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat=" item in filterData.data | filter: $select.search |orderBy:'name'">
+        <div ng-bind-html="item.name | highlight: $select.search "></div>
+    </ui-select-choices>
+</ui-select>

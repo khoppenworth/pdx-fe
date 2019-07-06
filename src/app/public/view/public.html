@@ -1,0 +1,121 @@
+<div class="pace-done landing-page" id="page-top">
+    <div class="navbar-wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <ng-include src="'app/public/view/temp_banner.html'"></ng-include>
+            <div class="container">
+                <div class="navbar-header page-scroll" style="min-width:25%">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+                    <!--<a  ui-sref="dashboards.dashboard_1">WEBAPPLAYERS</a>-->
+                    <div id="fmhacaLogo" class="text-center">
+                        <img src="assets/images/FDRE.png" alt="logo" />
+                        <span lang="am">የኢትዮጵያ ምግብና መድኃኒት ባለስልጣን</span>
+                        <br/>
+                        <span>Ethiopian Food and Drug Authority</span>
+                    </div>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="page-scroll" page-scroll><a ui-sref="publicHome">Home</a></li>
+                        <li uib-dropdown>
+                            <a uib-dropdown-toggle>
+                  Products <span class="caret"></span>
+                </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li><a ui-sref="registration">Registration</a></li>
+                                <li><a ui-sref="products">Registered</a></li>
+                                <li><a ui-sref="suspended_products">Suspended</a></li>
+                                <li><a ui-sref="canceled_products">Cancelled</a></li>
+                            </ul>
+                        </li>
+                        <li class="page-scroll" page-scroll><a ui-sref="applicants">Applicants</a></li>
+                        <li class="page-scroll" page-scroll><a ui-sref="about">About us</a></li>
+                        <li class="page-scroll" page-scroll><a ui-sref="contactAs">Contact us</a></li>
+                        <li uib-dropdown><a uib-dropdown-toggle>Login <span class="caret"></span></a>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li><a ui-sref="login">iRegister</a></li>
+                                <li><a ui-sref="login">iImport</a></li>
+                                <li><a href="{{vm.iLicense_url}}">iLicense</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="page-wrapper" class="gray-bg">
+        <div style="padding-bottom:20px;" id="view" ui-view="publicView"></div>
+        <!--<div class="gray-bg" ng-include="'app/public/view/templates/footer.html'"></div>-->
+    </div>
+</div>
+
+<!-- Local script for menu handle -->
+<!-- It can be also directive -->
+
+<script>
+    $(document).ready(function() {
+        // Page scrolling feature
+        $('a.page-scroll').bind('click', function(event) {
+            var link = $(this);
+            $('html, body').stop().animate({
+                scrollTop: $(link.attr('href')).offset().top - 50
+            }, 500);
+            event.preventDefault();
+            if ($('body').hasClass('body-small')) {
+                $('#navbar').collapse('toggle');
+            }
+        });
+
+        // Activate WOW.js plugin for animation on scrol
+        new WOW().init();
+    });
+
+    var cbpAnimatedHeader = (function() {
+        var docElem = document.documentElement,
+            header = document.querySelector('.navbar-default'),
+            didScroll = false,
+            changeHeaderOn = 200,
+            view = document.querySelector('#view');
+
+        function init() {
+            window.addEventListener('scroll', function(event) {
+                if (!didScroll) {
+                    didScroll = true;
+                    setTimeout(scrollPage, 250);
+                }
+            }, false);
+            view.addEventListener('load', function(event) {
+                if (document.querySelector('#inSlider') === null) {
+                    $(header).addClass('navbar-scroll')
+                } else {
+                    $(header).removeClass('navbar-scroll')
+                }
+            }, false);
+        }
+
+        function scrollPage() {
+            var sy = scrollY();
+            if (sy >= changeHeaderOn) {
+                $(header).addClass('navbar-scroll')
+            } else {
+                $(header).removeClass('navbar-scroll')
+            }
+            didScroll = false;
+        }
+
+        function scrollY() {
+            if (document.querySelector('#inSlider') === null) {
+                return 800;
+            } else {
+                return window.pageYOffset || docElem.scrollTop
+            }
+        }
+        init();
+
+    })();
+</script>

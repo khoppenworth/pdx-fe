@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+
+                            <th>No</th>
+                            <th>Product Name</th>
+                            <th>Model</th>
+                            <th>Size</th>
+                            <th>Description</th>
+                            <th>Pack Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="prd in vm.maregistration.products | orderBy:'brandName'" track by $index>
+                            <td>{{$index+1}}</td>
+                            <td>{{prd.brandName}}</td>
+                            <td>{{prd.model| filterNull}}</td>
+                            <td>{{prd.size| filterNull}}</td>
+                            <td>{{prd.productDescription | filterNull}}</td>
+                            <td>{{prd.presentation| filterNull}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

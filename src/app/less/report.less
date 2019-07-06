@@ -1,0 +1,80 @@
+.report-container {
+  display:inline !important;
+}
+.report-name {
+  font-size: 12px;
+}
+.report-value {
+  font-size: 17px;
+  color: @theme-color;
+}
+.report-lg-value {
+  font-size: 18px; 
+  font-weight: 400;
+  color: @theme-color;
+}
+.report-title{
+  font-weight: 400;
+  text-transform: uppercase;
+  color: @theme-color;
+}
+
+.triple-value {
+  font-size: 17px; 
+  color: @theme-color;
+  font-weight: 400;
+}
+
+.triple-title {  
+  font-family: 'Open Sans', sans-serif; 
+  font-size: 12px;  
+}
+.triple-sub-title {    
+  // font-weight:bold; 
+}
+.triple-sub-value{
+  font-weight:@font-extra-bold; 
+  color: @theme-color;
+}
+
+@-webkit-keyframes placeHolderShimmer {
+    0% {
+      background-position: -468px 0
+    }
+    100% {
+      background-position: 468px 0
+    }
+  }
+  
+  @keyframes placeHolderShimmer {
+    0% {
+      background-position: -468px 0
+    }
+    100% {
+      background-position: 468px 0
+    }
+  }
+   
+   
+  
+  .animated-background {
+	  -webkit-animation-duration: 1.5s;
+	  animation-duration: 1.5s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: placeHolderShimmer;
+    animation-name: placeHolderShimmer;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: #eeeeee;
+    background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee));
+    background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    -webkit-background-size: 800px 104px;
+    background-size: 800px 104px;
+    height: 96px;
+    position: relative;
+  }

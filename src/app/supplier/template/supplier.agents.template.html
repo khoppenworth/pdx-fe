@@ -1,0 +1,84 @@
+<div class="row">
+  <div ng-if="vm.supplierAgent.length<=0" style="text-align:center; text-font:120%; color:red;">
+    No agent is linked to this Supplier
+  </div>
+  <table ng-if="vm.supplierAgent.length>0" class="table table-hovered table-striped">
+       <thead>
+         <th></th>
+         <th>Name</th>
+         <th>Applicant Type</th>
+         <th>Start Date</th>
+         <th>End Date</th>
+         <th>Created Date</th>
+         <th>Status</th>
+         <th colspan="2" class="text-center">Agency Agreement</th>
+         <th>History</th>
+         <th></th>
+       </thead>
+       <tbody>
+           <tr ng-repeat="data in vm.supplierAgent | orderBy:'-isActive'" ng-class="{'redClass':data.isActive==false}">
+             <td>{{$index+1}}</td>
+             <td>{{data.agent.name | filterNull}}</td>
+             <td>{{data.agentLevel.name | filterNull}}</td>
+             <td>{{data.startDate | date | filterNull}}</td>
+             <td>{{data.endDate | date | filterNull}}</td>
+             <td>{{data.createdDate | date | filterNull}}</td>
+             <td>{{data.isActive?"Active":"Inactive"}}</td>
+             <td>
+               <file-uploader ng-if="data.isActive" attachment-info="data.agencyAgreement.attachmentInfo"></file-uploader>
+               <small ng-if="data.isActive">{{data.agencyAgreement.attachmentInfo.fileName}}</small>
+             </td>
+             <td>
+               <button class="btn btn-primary btn-outline" ng-show="data.agencyAgreement.attachmentInfo.document" type="button"
+                       ng-click="vm.openFileModal(data.agencyAgreement.attachmentInfo.document)">
+                 <i class="fa fa-eye text-navy"></i>
+               </button>
+               <button class="btn btn-primary btn-outline" type="button" ng-show="data.agencyAgreement.attachmentInfo.document"
+                       ng-click="vm.downloadAttachment(data.agencyAgreement.attachmentInfo.document)" ng-href="{{vm.fileURL}}"
+                       download="{{data.agencyAgreement.moduleDocument.documentType.name}}">
+                 <i class="fa fa-download text-navy"></i>
+               </button>
+             </td>
+             <td ng-init="data.showAgentUnderSupplierHistory =false; data.agentUnderSupplierDataLoaded=false;">
+               <a class="btn btn-primary btn-outline btn-xs" ng-click="vm.showAgentUnderSupplierHistoryTimeLine(data);">
+                 {{"Show " }}
+               </a>
+             </td>
+             <td ng-if="data.isActive"><button class="btn btn-warning  btn-outline btn-xs"  title="Unlink agent from supplier" ng-click="vm.unlinkAgentFromSupplier(data)"><i class="glyphicon glyphicon-resize-full"></i></button></td>
+           </tr>
+       </tbody>
+   </table>
+</div>
+
+<div class="row" ng-show="vm.showAgentUnderSupplierHistory">
+  <div class="col-lg-4">
+    <a class="btn btn-primary btn-outline" ng-click="vm.showAgentUnderSupplierHistory=false;">
+      {{"Hide "}}
+    </a>
+  </div>
+</div>
+<div class="row" ng-if="vm.showAgentUnderSupplierHistory">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <h4 ng-show="!vm.agentUnderSupplierHistory.length">No history found</h4>
+      <div class="ibox-content inspinia-timeline">
+        <div class="timeline-item" ng-repeat="history in vm.agentUnderSupplierHistory">
+          <div class="row">
+            <div class="col-lg-2 date">
+              <i class="fa fa-file-text"></i>
+              <span>{{history.createdDate|date:'medium'}}</span>
+              <br/>
+              <small class="badge badge-info"><time  am-time-ago="history.createdDate" ></time></span></small>
+            </div>
+            <div class="col-lg-10 content no-top-border">
+              <p class="m-b-xs"><strong>{{history.newValue == "True"? 'Linked the Applicant to the License Holder' : 'Unlinked the applicant from the License Holder'}}</strong></p>
+              <p>{{history.comment}}</p>
+              <small>changed By : {{history.modifiedByUser.username}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

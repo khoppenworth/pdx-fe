@@ -1,0 +1,35 @@
+<div class="product wrapper wrapper-content animated fadeInRight container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1>Registered Products</h1>
+        </div>
+
+        <div class="ibox-title">
+            <div class="row">
+                <div class="col-lg-3 pull-right">
+                    <div>
+                        <ui-select ng-model="vm.selectedSubmoduleType" theme="bootstrap" ng-change="vm.onSubmoduleTypeSelected()">
+                            <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat=" item in vm.applicationList | filter: $select.search |orderBy:'name'">
+                                <div ng-bind-html="item.name | highlight: $select.search "></div>
+                            </ui-select-choices>
+                            <ui-select-no-choice>Nothing found</ui-select-no-choice>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table id="registeredProducts" class="table table-striped" datatable="" dt-options="vm.dtOptions" dt-columns="vm.dtColumns" dt-instance="vm.dtInstance"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.navbar-default').addClass('navbar-scroll')
+    });
+</script>

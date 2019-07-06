@@ -1,0 +1,116 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <h4>Active Ingredients (INN)</h4>
+    <hr/>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th style="width:25px">No.</th>
+          <th style="width:250px">INN Name</th>
+          <th>Dosage Strength</th>
+          <th>Dosage Unit</th>
+          <th>Standard Claimed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="pi in vm.productInns" track by $index>
+          <td style="width:25px">{{$index + 1}}</td>
+          <td style="width:250px">
+            {{pi.inn.name}}
+          </td>
+          <td>{{pi.dosageStrengthObj.name}}</td>
+
+          <td>{{pi.dosageUnit.name}}</td>
+          <td>{{pi.pharmacopoeiaStandard.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>InActive Ingredients (Expiant)</h4>
+    <hr/>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th style="width:25px">No.</th>
+          <th style="width:250px">Expiant Name</th>
+          <th>Dosage Strength</th>
+          <th>Dosage Unit</th>
+          <th>Function</th>
+          <th>Standard Claimed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="md in vm.productExcipeints" track by $index>
+          <td style="width:25px">{{$index + 1}}</td>
+          <td style="width:250px">
+            {{md.excipient.name}}
+          </td>
+          <td>{{md.dosageStrengthObj.name}}</td>
+
+          <td>{{md.dosageUnit.name}}</td>
+          <td>{{md.function}}</td>
+          <td>{{md.pharmacopoeiaStandard.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Diluents for Reconstitution</h4>
+    <hr/>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th style="width:25px">No.</th>
+          <th style="width:250px">Ingredient Name</th>
+          <th>Dosage Strength</th>
+          <th>Dosage Unit</th>
+          <th>Function</th>
+          <th>Standard Claimed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="md in vm.productDiluents" track by $index>
+          <td style="width:25px">{{$index + 1}}</td>
+          <td style="width:250px">
+            {{md.excipient.name}}
+          </td>
+          <td>{{md.dosageStrengthObj.name}}</td>
+
+          <td>{{md.dosageUnit.name}}</td>
+          <td>{{md.function}}</td>
+          <td>{{md.pharmacopoeiaStandard.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Pharmacotherapeutic group</h4>
+    <hr/>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th style="width:25px">No.</th>
+          <th style="width:250px">ATC Code</th>
+          <th>ATC Name</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="md in vm.product.productATCs" track by $index>
+          <td style="width:25px">{{$index + 1}}</td>
+
+          <td style="width:250px">{{md.atc.atcCode}}</td>
+          <td> {{md.atc.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('.navbar-default').addClass('navbar-scroll')
+  });
+</script>

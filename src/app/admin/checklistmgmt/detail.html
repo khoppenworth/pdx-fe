@@ -1,0 +1,85 @@
+<div ng-controller="ChecklistDetailController as vm">
+    <table class="table mainTable table-hovered">
+        <thead>
+            <tr>
+                <th align="center">Checklist</th>
+            </tr>
+        </thead>
+        <tbody ng-include src="'checklist-body'">
+        </tbody>
+    </table>
+    <label> SRA </label>
+    <table class="table mainTable table-hovered">
+      <thead>
+      <tr>
+        <th align="center">Checklist</th>
+      </tr>
+      </thead>
+      <tbody ng-include src="'checklist-body-sra'">
+      </tbody>
+    </table>
+</div>
+
+<script type="text/ng-template " id="checklist-body">
+    <tr ng-repeat-start="checklist in vm.submoduleCheckList | filter : {isSRA:false} | orderBy:'name'" ng-init="checklist.rowExpanded=false;" ng-hide="checklist.deleted">
+        <td>
+            {{checklist.label}} &nbsp; {{checklist.name}} <span ng-click="vm.deleteSubmodule(checklist)" class="pull-right"><i class="fa fa-trash"></i></span>
+            <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+            <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+        </td>
+    </tr>
+    <tr ng-if="checklist.rowExpanded==true" ng-repeat-end ng-hide="checklist.deleted">
+        <td ng-include src="'checklist-children'">
+        </td>
+    </tr>
+</script>
+
+<script type="text/ng-template " id="checklist-children">
+    <table class="table table-hovered detailTable">
+        <tr ng-repeat-start="checklist in checklist.children | filter : {isSRA:false} | orderBy:'name'" ng-init="checklist.rowExpanded=false;" ng-hide="checklist.deleted">
+            <td>
+                {{checklist.label}} &nbsp; {{checklist.name}} <span ng-click="vm.deleteSubmodule(checklist)" class="pull-right"><i class="fa fa-trash"></i></span>
+                <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+                <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+
+            </td>
+        </tr>
+        <tr ng-if="checklist.rowExpanded==true" ng-repeat-end ng-hide="checklist.deleted">
+            <td>
+                <ng-include src="'checklist-children'"></ng-include>
+            </td>
+        </tr>
+    </table>
+</script>
+
+<script type="text/ng-template " id="checklist-body-sra">
+  <tr ng-repeat-start="checklist in vm.submoduleCheckList | filter : {isSRA:true} | orderBy:'name' " ng-init="checklist.rowExpanded=false;" ng-hide="checklist.deleted">
+    <td>
+      {{checklist.label}} &nbsp; {{checklist.name}} <span ng-click="vm.deleteSubmodule(checklist)" class="pull-right"><i class="fa fa-trash"></i></span>
+      <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+      <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+    </td>
+  </tr>
+  <tr ng-if="checklist.rowExpanded==true" ng-repeat-end ng-hide="checklist.deleted">
+    <td ng-include src="'checklist-children-sra'">
+    </td>
+  </tr>
+</script>
+
+<script type="text/ng-template " id="checklist-children-sra">
+  <table class="table table-hovered detailTable">
+    <tr ng-repeat-start="checklist in checklist.children | filter : {isSRA:true} | orderBy:'name'" ng-init="checklist.rowExpanded=false;" ng-hide="checklist.deleted">
+      <td>
+        {{checklist.label}} &nbsp; {{checklist.name}} <span ng-click="vm.deleteSubmodule(checklist)" class="pull-right"><i class="fa fa-trash"></i></span>
+        <span ng-if="checklist.rowExpanded==false && checklist.children.length>0" ng-click="checklist.rowExpanded=true" class="btn-sm glyphicon glyphicon-menu-down"></span>
+        <span ng-if="checklist.rowExpanded==true && checklist.children.length>0" ng-click="checklist.rowExpanded=false" class="btn-sm glyphicon glyphicon-menu-up"></span>
+
+      </td>
+    </tr>
+    <tr ng-if="checklist.rowExpanded==true" ng-repeat-end ng-hide="checklist.deleted">
+      <td>
+        <ng-include src="'checklist-children'"></ng-include>
+      </td>
+    </tr>
+  </table>
+</script>

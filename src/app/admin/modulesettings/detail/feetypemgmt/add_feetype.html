@@ -1,0 +1,30 @@
+<div class="row form-horizontal" ng-validate-form="vm.createNewFeeTypeValidation">
+  <div class="col-md-12">
+    <div class="form-group col-md-12" >
+      <div class="col-xs-12">
+        <label>Name *</label>
+        <div>
+          <input id="name" ng-model="vm.feeTypeToBeAdded.name" type="text"
+                 class="form-control" ng-validate="vm.createNewFeeTypeValidation.name">
+        </div>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.createNewFeeTypeValidation.name && vm.createNewFeeTypeValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+    <div class="form-group col-md-12">
+      <div class="col-xs-12">
+        <label>Description *</label>
+        <ui-select name="currencyType" ng-model="vm.feeTypeToBeAdded.currencyType" theme="bootstrap" ng-validate="vm.createNewFeeTypeValidation.currency">
+          <ui-select-match>{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="type in vm.currency | orderBy:'name' | filter: $select.search">
+            <div ng-bind-html="type.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class="col-xs-12 " ng-if="!vm.createNewFeeTypeValidation.currency && vm.createNewDocumentValidation.$showError">
+        <span ng-include="'app/importPermit/new/templates/requiredField.html'"></span>
+      </div>
+    </div>
+  </div>
+</div>

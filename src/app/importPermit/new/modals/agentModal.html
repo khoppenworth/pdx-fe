@@ -1,0 +1,39 @@
+<div class="modal-image">
+    <div class="modal-header">
+        {{agent.name}}
+        <button ng-click="$dismiss()" class="close pull-right" aria-hidden="true">&times;</button>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <dl class="dl-horizontal">
+
+                    <dt>Name:</dt>
+                    <dd>{{agent.name||"-"}}</dd>
+                    <dt>Description:</dt>
+                    <dd> {{agent.description||"-"}}</dd>
+                    <dt>Contact:</dt>
+                    <dd>{{agent.contactPerson||"-"}}</dd>
+                    <dt>License:</dt>
+                    <dd>{{agent.licenseNumber||"-"}}</dd>
+                </dl>
+            </div>
+            <div class="col-lg-6" id="cluster_info">
+                <dl class="dl-horizontal">
+
+                    <dt>Phone:</dt>
+                    <dd>{{agent.phone||"-"}}</dd>
+                    <dt>Email:</dt>
+                    <dd>{{agent.email||"-"}}</dd>
+                    <dt>WebSite:</dt>
+                    <dd>{{agent.website||"-"}}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-outline" type="button" ng-click="$dismiss()">Cancel</button>
+    </div>
+</div>

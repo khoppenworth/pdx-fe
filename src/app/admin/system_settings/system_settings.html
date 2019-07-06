@@ -1,0 +1,44 @@
+<div class="ibox-title">
+  <!--{{vm.title}}-->
+</div>
+<div class="ibox-content">
+  <div class="row">
+    <form name="system_settings">
+      <div class="col-md-offset-1 col-md-10">
+          <table class="table table-hovered table-condensed">
+            <thead>
+                  <th>Option</th>
+                  <th>Value</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="setting in vm.systemSettings">
+              <td>
+                <span>{{setting.name}}</span>
+                <br/>
+                <small>{{setting.description}}</small>
+              </td>
+              <td>
+                <input ng-if="setting.inputType!='boolean' && setting.inputType!='date'" ng-change="vm.notify(setting)" ng-model="setting.valueObj" type="{{setting.inputType}}"
+                       min="0" class="form-control" style="width:20%; height:24px;"/>
+                <input icheck ng-if="setting.inputType=='boolean'"  type="checkbox" ng-model="setting.valueObj" ng-change="vm.notify(setting)"
+                       min="0" class="form-control" style="width:20%; height:24px;"/>
+
+                <input ng-if="setting.inputType=='date'" ng-change="vm.notify(setting)" ng-model="setting.valueObj" type="date"  style="width:40%; height:24px;"/>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+          <div ng-if="vm.showButtons" class="pull-right col-md-6">
+            <button  ng-click="vm.updateSystemSetting()" class="btn btn-primary">Save</button>
+            <button class="btn btn-default" ng-click="vm.cancelUpdate()">Canel</button>
+          </div>
+
+        <!-- type="{{setting.dataType=='Integer'?'number':'text'}}"-->
+      </div>
+    </form>
+  </div>
+  </form>
+</div>
+</div>
+

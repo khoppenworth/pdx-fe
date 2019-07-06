@@ -1,0 +1,32 @@
+<div class="ibox-title">
+    <div class="row">
+        <div class="col-lg-5">
+            <h4><a ui-sref="maregistration.list.info({maId:vm.maId})" class="btn btn-primary btn-outline  btn-xs" style="margin-right:10px"><i class="fa fa-arrow-left" ></i></a></h4>
+        </div>
+    </div>
+</div>
+<div class="ibox-content">
+    <!-- <div class="steps clearfix ">
+        <ul>
+            <li ui-sref-active="current" ui-sref="maregistration.prescreen.prescreen" ng-class="{current: $state.is('maregistration.prescreen.prescreen')}">
+                <a ng-click="vm.previousApp()" class="btn-default "><span>1.</span> Screen</a>
+            </li>
+            <li ui-sref-active="current" ng-disabled="true" ui-sref="maregistration.prescreen.verification" ng-class="{current: $state.is('maregistration.prescreen.verification')}">
+                <a ng-click="vm.previousAppToAttachement()" class="btn-default "><span>2.</span> Verification</a>
+            </li>
+        </ul>
+    </div> -->
+    <!--<div class="wizard ">
+        <div class="content ">
+
+            <form name="prescreenForm " ng-submit="processForm() " class="p-sm no-padding" ng-validate-form="vm.registrationRenewal">
+                <!-- our nested state views will be injected here -->
+    <!--<div id="form-views " ui-view="prescreenSteps"></div>
+            </form>
+
+        </div>
+    </div>
+    -->
+    <div ng-include="'app/registration/workflow/prescreen/checklist.html'"></div>
+
+</div>

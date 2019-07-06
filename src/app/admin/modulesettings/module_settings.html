@@ -1,0 +1,49 @@
+<div class="ibox-title">
+    <div class="col-lg-6 no-padding">
+        <!--{{vm.title}}-->
+    </div>
+    <div ibox-tools class="pull-right">
+        <a class=" btn btn-primary btn-sm btn-outline" type="button" ng-click="vm.add()" ng-if="vm.activeTab!==3" permission="vm.activeTab===0?permissions.Modules.AddDocumentType : (vm.activeTab===1?permissions.Modules.AddFeeType:permissions.Modules.AddChecklist)"
+            title="{{vm.activeTab===0?'Add New Document':(vm.activeTab===1?'Add New Feetype':'Add New Checklists')}}">
+            <i class="fa fa-plus"></i>
+        </a>
+
+    </div>
+</div>
+<div class="ibox-content">
+    <div class="row">
+        <div class="col-md-4 itemListWithVerticalBorder">
+            <table id="roleList" class="table  table-condensed table-hovered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Module</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat-start="module in vm.groupedList" ng-init="outerIndex=$index; module.rowExpanded=true;" ng-class="module.rowExpanded==true? 'active':''">
+                        <td>{{outerIndex+1}}</td>
+                        <td>
+                            <span>{{module[0].module.name}}</span>
+                            <span ng-if="module.rowExpanded==false" ng-click="module.rowExpanded=true" class="btn-sm fa fa-chevron-down"></span>
+                            <span ng-if="module.rowExpanded==true " ng-click="module.rowExpanded=false" class="btn-sm fa fa-chevron-up"></span>
+                        </td>
+                    </tr>
+                    <tr ng-if="module.rowExpanded==true" ng-repeat-end>
+                        <td colspan="2">
+                            <table id="detailMenus" class="table table-hovered">
+                                <tr ng-repeat="subModule in module | orderBy:'name'" ng-click="vm.subModuleChanged(subModule)" ng-class="{'btn-primary':(vm.selectedSubModuleID === subModule.id && vm.selectedModuleID===subModule.moduleID)}">
+                                    <td></td>
+                                    <td>{{subModule.name}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8">
+            <div id="modulesetting-detail" ng-include="'app/admin/modulesettings/detail/detail.html'"></div>
+        </div>
+    </div>
+</div>

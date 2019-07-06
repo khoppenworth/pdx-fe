@@ -1,0 +1,28 @@
+<div class="ibox-title">
+  <!--{{vm.title}}-->
+</div>
+<div class="ibox-content">
+  <div  class="row">
+      <div class="col-md-4 itemListWithVerticalBorder">
+          <table id="roleList" class="table  table-condensed table-hovered" style="height:50px;overflow-y:scroll">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="role in vm.roleList | orderBy:'name'" ng-click="vm.roleChanged(role.id)"
+                   ng-class="{'btn-primary': vm.selectedID === role.id}">
+                    <td>{{$index+1}}</td>
+                    <td>{{role.name}}</td>
+                </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="col-md-8">
+        <div id="role-detail" ng-include="'app/admin/rolemgmt/detail/detail.html'"
+             ng-controller="RoleDetailController as vm"></div>
+      </div>
+  </div>
+</div>

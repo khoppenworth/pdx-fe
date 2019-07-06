@@ -1,0 +1,38 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+
+          <th>No</th>
+          <th>Name</th>
+          <th>Country</th>
+          <th>Manufacturing Site Address</th>
+          <th>Type</th>
+          <th>GMP Inspection</th>
+          <th>Certificate Number</th>
+          <th>GMP Inspection Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="man in vm.product.productManufacturers" track by $index>
+          <td>{{$index+1}}</td>
+          <td>{{man.manufacturerAddress.manufacturer.name | filterNull}}</td>
+          <td>{{man.manufacturerAddress.address.country.name | filterNull}}</td>
+          <td>{{man.manufacturerAddress.manufacturer.site | filterNull}}</td>
+          <td>{{man.manufacturerType.name || man.manufacturer_type.name}}</td>
+          <td>{{man.manufacturerAddress.manufacturer.isGMPInspected? "Yes" : "No"}}</td>
+          <td>{{man.manufacturerAddress.manufacturer.gmpCertificateNumber | filterNull}}</td>
+          <td>{{man.manufacturerAddress.manufacturer.gmpInspectedDate | filterNull | date}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('.navbar-default').addClass('navbar-scroll')
+  });
+</script>

@@ -1,0 +1,24 @@
+<div class="forgot text-center row clearfix ">
+    <div class="forgot-content col-md-3 col-lg-2  bs-reset">
+      <div class="heading">
+        <h1><strong>eRIS</strong></h1>
+      </div>
+      <h4>Request password reset</h4>
+      <br/>
+      <br/>
+      <form  class="login-form" name="forgotForm "  role="form"  ng-validate-form="vm.forgotValidation"
+             ng-submit="vm.submitEmail()" novalidate>
+        <div class="form-group">
+          <input class="form-control form-control-solid placeholder-no-fix form-group" type="text"
+                  name="username"
+                 placeholder="Username"
+                 ng-model="vm.forgotModel.username"
+                 ng-validate="vm.forgotValidation.username">
+          <p ng-if="!vm.forgotValidation.username && vm.forgotValidation.$showError"
+             style="color:red !important;"  class="help-block text-danger">Username is required</p>
+        </div>
+        <button type="submit" class="btn btn-primary block full-width m-b">Submit</button>
+        <a ui-sref="login"><small>Back to login</small></a>
+      </form>
+    </div>
+</div>

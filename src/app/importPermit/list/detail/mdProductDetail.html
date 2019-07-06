@@ -1,0 +1,41 @@
+<div class="ibox-content">
+    <table class="table table-child">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Item</th>
+                <th>Pack Size</th>
+                <th>MA Expiry </th>
+                <th>Manufacturer</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="detail in vm.importPermit.importPermitDetails" track by $index>
+                <td>{{$index+1}}</td>
+                <td>{{detail.product.brandName}}
+                    <br/>
+                    <small>
+                                {{
+                                    (detail.product.genericName||'-') + ' - ' +
+                                    (detail.mdDevicePresentation.model||'-') +' - '+
+                                    (detail.mdDevicePresentation.size||'-') +' - '+
+                                    (detail.mdDevicePresentation.description||'-')
+                                }}
+                            </small>
+                </td>
+                <td>{{detail.mdDevicePresentation.packSize.name}}</td>
+                <td>{{detail.product.expiryDate | date:'MMM d,y'}}</td>
+                <td><span title="{{detail.manufacturerAddress.manufacturer.name + ' - ' + detail.manufacturerAddress.address.country.name}}">{{detail.manufacturerAddress.manufacturer.name|limitTo:13}}</span></td>
+                <td>{{detail.quantity|number:1}}</td>
+                <td>{{vm.importPermit.currency.symbol + ' '}}{{detail.unitPrice|number}}</td>
+                <td>{{vm.importPermit.currency.symbol + ' '}}{{detail.discount||0|number}}</td>
+                <td>{{vm.importPermit.currency.symbol + ' '}}{{(detail.unitPrice * detail.quantity) - detail.discount |number:1}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

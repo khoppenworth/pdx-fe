@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-12">
+        <script type="text/ng-template" id="nodes_renderer.html">
+            <div class="tree-node tree-node-content">
+                <div style="margin-bottom: 1%;" class="form-group" data-nodrag>
+                    <div class="row">
+                        <input icheck type="checkbox" ng-model="node.isSelected" class="pull-left" ng-change="vm.notify(node)" />
+                        <label class="col-lg-6">{{vm.formatCamelCase(node.name)}}</label>
+
+                        <a class="pull-right" ng-if="node.children && node.children.length > 0" data-nodrag ng-click="toggle(this)">
+                            <span ng-class="{'btn-sm glyphicon glyphicon-menu-down': !collapsed, 'btn-sm glyphicon glyphicon-menu-up': collapsed}">
+                
+              </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <ol ui-tree-nodes="" ng-model="node.children" ng-if="collapsed" data-nodrop-enabled="true">
+                <li ng-repeat="node in node.children" ui-tree-node ng-include="'nodes_renderer.html'">
+                </li>
+            </ol>
+        </script>
+
+        <div class="col-xs-12">
+            <div ui-tree id="tree-root">
+                <ol ui-tree-nodes ng-model="vm.maField" data-nodrop-enabled="true">
+                    <li ng-repeat="node in vm.maField" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

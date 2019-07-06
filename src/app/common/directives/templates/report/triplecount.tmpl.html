@@ -1,0 +1,34 @@
+<div class="report-count" ng-class="colWidth">
+    <div class="ibox">
+        <div class="ibox-content ibox-content-light">
+            <!-- DATA LOADING -->
+            <div ng-if="!reportOptions.dataLoaded">
+                <div class="animated-background facebook"></div>
+            </div>
+            <!-- NO DATA AFTER LOADING -->
+            <div ng-if="!reportOptions.dataAvailable && reportOptions.dataLoaded">
+                <h5 class="report-title" title="{{reportOptions.description}}">{{reportOptions.title}}</h5>
+                <h3>No Data</h3>
+            </div>
+            <!-- DATA LOADED AND AVAILABLE -->
+            <div class="row" ng-if="reportOptions.dataLoaded && reportOptions.dataAvailable">
+                <div class="col-md-6 ">
+                    <h5 class="report-title " title="{{reportOptions.description}}">{{reportOptions.title}} </h5>
+                    <div class="triple-value"> {{reportOptions.data[0].value| typeof}} </div>
+                    <div class="triple-title no-margins  pull-left"> {{reportOptions.data[0].name }} </div>
+                </div>
+                <div class="col-md-6">
+                    <small class="triple-sub-title no-margins pull-right">{{reportOptions.data[1].name }}  </small>
+                    <br/>
+                    <h5 class="triple-sub-value no-margins pull-right">{{reportOptions.data[1].value| typeof}}</h5>
+                    <br/>
+                    <div class="theme-line"></div>
+                    <h5 class="triple-sub-value no-margins  pull-right">{{reportOptions.data[2].value| typeof}}</h5>
+                    <br/>
+                    <small class="triple-sub-title no-margins pull-right"> {{reportOptions.data[2].name }}</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

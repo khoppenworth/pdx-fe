@@ -1,0 +1,90 @@
+<ng-include src="'app/public/view/temp_banner.html'"></ng-include>
+
+<div class="login">
+    <div class="user-login-5">
+        <div class="row bs-reset">
+            <div class="col-sm-5 col-md-push-7 login-container bs-reset login-form-container">
+                <div class="login-content ">
+                    <div class="row clearfix text-center heading">
+                        <div class=" col-md-8 col-md-offset-2">
+                            <img alt="FDRE" src="assets/images/FDRE.png" />
+                            <h1><strong>Welcome to eRIS</strong></h1>
+                            <h2> Ethiopian Food and Drug Authority. </h2>
+                        </div>
+                    </div>
+
+                    <form class="login-form" name="loginForm" ng-validate-form="vm.loginModelValidation" ng-submit="vm.Authenticate()">
+                        <div class="row clearfix">
+                            <div class=" col-md-8 col-md-offset-2">
+                                <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" ng-model="vm.loginModel.UserName" ng-validate="vm.loginModelValidation.username" placeholder="Username" name="username" required/>                                </div>
+                            <p ng-if="!vm.loginModelValidation.username && vm.showError" class="help-block text-danger">Username is required</p>
+                        </div>
+                        <div class="row clearfix">
+                            <div class=" col-md-8 col-md-offset-2">
+                                <input class="form-control form-control-solid placeholder-no-fix form-group" ng-model="vm.loginModel.Password" ng-validate="vm.loginModelValidation.password" type="password" autocomplete="off" placeholder="Password" name="password" required/>                                </div>
+                            <p ng-if="!vm.loginModelValidation.password && vm.showError" class="help-block text-danger">Password is required</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-4">
+                                <p ng-if="vm.loginFailed && vm.showError" style="color:red !important;" class="help-block text-danger">Incorrect username or password</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-2">
+                                <button type="button" class="btn btn-inverse" ng-click="$state.go('public')">Home</button>
+                            </div>
+                            <div class="col-md-5 text-right">
+                                <div class="forgot-password">
+                                    <a ui-sref="forgot" id="forget-password" class="forget-password">Forgot Password?</a>
+                                </div>
+                                <button class="btn btn-primary" type="submit">Sign In</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="login-footer">
+                    <div class="row bs-reset">
+                        <div class="col-md-5 bs-reset">
+
+                        </div>
+                        <div class="col-md-7 bs-reset">
+                            <div class="login-version text-right">
+                                <p>Version&nbsp;{{app_version}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7 col-md-pull-5 login-container bs-reset promotion-content-container">
+                <div class="login-content">
+                    <h1 class="text-center">Welcome to Electronic Regulatory Information System (eRIS) of EFDA</h1>
+                    <br>
+                    <img class="main-logo" alt="iRegister Logo" src="assets/images/iLicense.png" />
+                    <h4>iLicense</h4>
+                    <blockquote>iLicense is an online application that allows importers, exporters, wholesalers and manufacturers to apply for the certificate of competency and FMHACA staff to manage these applications online.</blockquote>
+                    <br>
+                    <img class="main-logo" alt="iRegister Logo" src="assets/images/iregister.png" />
+                    <h4>iRegister</h4>
+                    <blockquote>iRegister is an online application which allows importers to apply for and receive medicine registration certificate to import medicines online and EFDA staff to manage these applications online.</blockquote>
+                    <br>
+                    <img class="main-logo-iimport" alt="iImport Logo" src="assets/images/iImport.png" />
+                    <h4>iImport</h4>
+                    <blockquote>iImport is an online application which allows importers to apply for and receive permits to import medicines online and EFDA staff to manage these applications online.</blockquote>
+                    <ul>
+                        <li>
+                            <p>Increased transparency</p>
+                        </li>
+                        <li>
+                            <p>Increased efficiency</p>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

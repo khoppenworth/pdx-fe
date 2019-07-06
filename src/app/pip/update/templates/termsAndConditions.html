@@ -1,0 +1,15 @@
+<fieldset ng-validate-form="vm.importPermitValidation.terms">
+
+    <ol ng-if="vm.subModuleType.selected.submoduleTypeCode !=vm.CONSTANT.SUB_MODULE_TYPE.MEDICAL_DEVICE" ng-include src="'app/pip/templates/termsAndConditions.html'"></ol>
+    <ol ng-if="vm.subModuleType.selected.submoduleTypeCode == vm.CONSTANT.SUB_MODULE_TYPE.MEDICAL_DEVICE" ng-include src="'app/pip/templates/termsAndConditionsForMedicalDevice.html'"></ol>
+
+    <input id="acceptTerms" name="acceptTerms" type="checkbox" ng-model="formData.terms" class="required" ng-validate="vm.importPermitValidation.terms.term">
+    <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+    <small ng-if="!vm.importPermitValidation.terms.term && vm.importPermitValidation.terms.$showError" ng-include="'app/importPermit/new/templates/requiredField.html'"></small>
+
+</fieldset>
+<fieldset class="m-t-md">
+    <a ui-sref="ipermit.update.attachments" class="btn btn-default">Previous</a>
+    <button type="submit" class="btn btn-primary btn-outline" ng-click="vm.UpdateImportPermit()">Update</button>
+
+</fieldset>

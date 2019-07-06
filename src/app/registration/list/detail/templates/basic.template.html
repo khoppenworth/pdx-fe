@@ -1,0 +1,171 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox-content">
+            <div class="col-lg-6">
+                <dl class="dl-horizontal ">
+                    <dt>Application No:</dt>
+                    <dd>{{vm.maregistration.ma.maNumber | filterNull}}</dd>
+                    <dt ng-if="vm.maregistration.ma.certificateNumber">Certificate No:</dt>
+                    <dd ng-if="vm.maregistration.ma.certificateNumber">{{vm.maregistration.ma.certificateNumber | filterNull}}</dd>
+                    <dt ng-if="vm.maregistration.ma.originalMAID">Previous Application:</dt>
+                    <dd ng-if="vm.maregistration.ma.originalMAID"><a ng-click="vm.gotoOriginalMA(vm.maregistration.ma.originalMAID)">
+            {{vm.maregistration.ma.originalMA.certificateNumber | filterNull}}
+          </a>
+                    </dd>
+                    <dt>Application Type:</dt>
+                    <dd>{{vm.maregistration.ma.maType.name | filterNull}}</dd>
+                    <dt>Agent:</dt>
+                    <dd>{{vm.maregistration.ma.agent.name | filterNull}}</dd>
+                    <dt>License Holder:</dt>
+                    <dd>{{vm.maregistration.ma.supplier.name | filterNull}}</dd>
+                </dl>
+            </div>
+            <div class="col-lg-6">
+                <dl class="dl-horizontal ">
+                    <dt>SRA:</dt>
+                    <dd>{{vm.maregistration.ma.sra | filterNull}}</dd>
+                    <dt>Registration Date:</dt>
+                    <dd>{{vm.maregistration.ma.registrationDate | date | filterNull}}</dd>
+                    <dt>Expiry Date:</dt>
+                    <dd>{{vm.maregistration.ma.expiryDate | date | filterNull}}</dd>
+                    <dt>Status:</dt>
+                    <dd ng-if="!vm.userInfo.isAgent">{{vm.maregistration.ma.maStatus.name}}</dd>
+                    <dd ng-if="vm.userInfo.isAgent">
+                        {{((vm.maregistration.ma.maStatus.displayName) || (vm.maregistration.ma.maStatus.name)) | filterNull}}
+                    </dd>
+                    <!-- <dt ng-if="!vm.userInfo.isAgent">Assignee:</dt>
+                    <dd ng-if="!vm.userInfo.isAgent">{{(vm.assignedCSOUser.assignedToUser.firstName +' '+vm.assignedCSOUser.assignedToUser.lastName)||'-'}}
+                    </dd> -->
+
+                </dl>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-lg-12">
+        <hr/>
+    </div>
+    <div class="col-lg-12">
+        <div class="tabs-container">
+            <uib-tabset>
+                <uib-tab heading="TimeLine">
+                    <h3 style="text-align: center;"><strong>Timeline</strong></h3>
+                    <div class="col-lg-8">
+                        <div id="vertical-timeline" class="vertical-container dark-timeline ">
+                            <div ng-repeat="event in vm.matimeline" class="vertical-timeline-block">
+                                <div ng-if="event.toMAStatus.maStatusCode == 'RQST'" class="vertical-timeline-icon navy-bg">
+                                    <i class="fa fa-bell-o"></i>
+                                </div>
+                                <div ng-if="!event.toMAStatus.maStatusCode == 'RQST'" class="vertical-timeline-icon gray-bg">
+                                    <i class="fa fa-circle"></i>
+                                </div>
+                                <div class="vertical-timeline-content">
+                                    <strong ng-if="vm.userInfo.isAgent">{{event.toMAStatus.displayName}}</strong>
+                                    <strong ng-if="!vm.userInfo.isAgent">{{event.toMAStatus.name}}</strong>
+                                    <small class="pull-right">{{event.modifiedByUser.firstName + ' ' + event.modifiedByUser.lastName}}</small>
+                                    <p ng-bind-html="event.comment">
+                                    </p>
+                                    <span class="col-lg-7 left vertical-date small text-muted">{{ event.createdDate|date:'medium'}}</span>
+                                    <small class="col-lg-5  right badge badge-info">
+                    <time am-time-ago="event.createdDate"></time>
+                    </span></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Review">
+                    <h3 style="text-align: center;"><strong>Review Comments</strong></h3>
+
+                    <div id="vertical-timeline" class="vertical-container dark-timeline ">
+                        <div ng-repeat="event in vm.maCommentTimeline" class="vertical-timeline-block">
+                            <div class="vertical-timeline-content">
+                                <strong>{{event.responderType.name}} - <span
+                  data-ng-class="vm.getStatusColor('{{event.suggestedStatus.maStatusCode}}')">{{event.suggestedStatus.displayName}}</span></strong>
+
+
+                  <strong ng-if="event.firDueDate" class="pull-right ">FIR Due Date:
+                        <span class="label label-danger">{{event.firDueDate |date:'medium'}}</span>
+                  </strong>
+                                </br>
+                                </br>
+                                <pre ng-bind-html="event.comment" style="background:#fbfbe8">
+                                </pre>
+                                <span class="pull-left">{{event.responder.firstName}}</span>
+                                <span class="pull-right vertical-date small text-muted" style="clear:right">{{ event.createdDate|date:'medium'}}</span>
+                                <small class="pull-right badge badge-info" style="clear:right">
+                  <time am-time-ago="event.createdDate"></time>
+                  </span></small>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab permission="permissions.MA.MAAssignmentHistory" heading="Assessor History">
+                  <h3 style="text-align: center;"><strong>Assessor History</strong></h3>
+                  <div id="vertical-timeline" class="vertical-container dark-timeline ">
+                    <uib-tabset>
+                      <uib-tab heading="Pre Screener">
+                          <div ng-if="!vm.maAssignmentHistory || vm.maAssignmentHistory &&(vm.maAssignmentHistory | filter:{responderType:{responderTypeCode:'PRS'}}).length==0">
+                            <span style="margin-left:40px;" class="text-danger"> No Record Found </span>
+                          </div>
+                          <div ng-repeat="event in vm.maAssignmentHistory | filter:{responderType:{responderTypeCode:'PRS'}}" class="vertical-timeline-block">
+                            <div class="vertical-timeline-content">
+                              <label>Assigned To: &nbsp;</label><strong>{{event.assignedToUser.firstName + event.assignedToUser.lastName}}</strong>
+                              </br>
+                              <label>Assigned By: &nbsp;</label><strong>{{event.assignedByUser.firstName + event.assignedByUser.lastName}}</strong>
+                              <br/>
+                              <pre ng-bind-html="event.comment" style="background:#fbfbe8"></pre>
+                              <span class="pull-left">{{event.responder.firstName}}</span>
+                              <span class="pull-right vertical-date small text-muted" style="clear:right">{{ event.createdDate|date:'medium'}}</span>
+                              <small class="pull-right badge badge-info" style="clear:right">
+                                <time am-time-ago="event.createdDate"></time>
+                                </span></small>
+                            </div>
+                          </div>
+                      </uib-tab>
+                      <uib-tab heading="Primary Assessor">
+                          <div ng-if="!vm.maAssignmentHistory || vm.maAssignmentHistory &&  (vm.maAssignmentHistory | filter:{responderType:{responderTypeCode:'PRAS'}}).length==0">
+                            <span  style="margin-left:40px;"  class="text-danger"> No Record Found </span>
+                          </div>
+                          <div ng-repeat="event in vm.maAssignmentHistory | filter:{responderType:{responderTypeCode:'PRAS'}}" class="vertical-timeline-block">
+                            <div class="vertical-timeline-content">
+                              <label>Assigned To: &nbsp;</label><strong>{{event.assignedToUser.firstName + event.assignedToUser.lastName}}</strong>
+                              </br>
+                              <label>Assigned By: &nbsp;</label><strong>{{event.assignedByUser.firstName + event.assignedByUser.lastName}}</strong>
+                              <br/>
+                              <pre ng-bind-html="event.comment" style="background:#fbfbe8"></pre>
+                              <span class="pull-left">{{event.responder.firstName}}</span>
+                              <span class="pull-right vertical-date small text-muted" style="clear:right">{{ event.createdDate|date:'medium'}}</span>
+                              <small class="pull-right badge badge-info" style="clear:right">
+                                <time am-time-ago="event.createdDate"></time>
+                                </span></small>
+                            </div>
+                          </div>
+                      </uib-tab>
+                      <uib-tab heading="Secondary Assessor">
+                          <div ng-if="!vm.maAssignmentHistory || vm.maAssignmentHistory && (vm.maAssignmentHistory | filter:{responderType:{responderTypeCode:'SCAS'}}).length==0">
+                            <span  style="margin-left:40px;"  class="text-danger"> No Record Found </span>
+                          </div>
+                          <div ng-repeat="event in vm.maAssignmentHistory | filter:{responderType:{responderTypeCode:'SCAS'}}" class="vertical-timeline-block">
+                            <div class="vertical-timeline-content">
+                              <label>Assigned To: &nbsp;</label><strong>{{event.assignedToUser.firstName + event.assignedToUser.lastName}}</strong>
+                              </br>
+                              <label>Assigned By: &nbsp;</label><strong>{{event.assignedByUser.firstName + event.assignedByUser.lastName}}</strong>
+                              <br/>
+                              <pre ng-bind-html="event.comment" style="background:#fbfbe8"></pre>
+                              <span class="pull-left">{{event.responder.firstName}}</span>
+                              <span class="pull-right vertical-date small text-muted" style="clear:right">{{ event.createdDate|date:'medium'}}</span>
+                              <small class="pull-right badge badge-info" style="clear:right">
+                                <time am-time-ago="event.createdDate"></time>
+                                </span></small>
+                            </div>
+                          </div>
+                      </uib-tab>
+                    </uib-tabset>
+                  </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

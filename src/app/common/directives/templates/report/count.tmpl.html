@@ -1,0 +1,25 @@
+<div ng-class="colWidth">
+    <div class="ibox">
+        <div class="ibox-content ibox-content-light">
+            <!-- DATA LOADING -->
+            <div ng-if="!reportOptions.dataLoaded">
+                <div class="animated-background facebook"></div>
+            </div>
+            <!-- NO DATA AFTER LOADING -->
+            <div ng-if="!reportOptions.dataAvailable && reportOptions.dataLoaded">
+                <h5 class="report-title" title="{{reportOptions.description}}">{{reportOptions.title}}</h5>
+                <h3>No Data</h3>
+            </div>
+            <!-- DATA LOADED AND AVAILABLE -->
+            <div ng-if="reportOptions.dataLoaded && reportOptions.dataAvailable">
+                <h5 class="report-title" title="{{reportOptions.description}}">{{reportOptions.title}}</h5>
+                <div class="row">
+                    <div class="col-lg-{{reportOptions.data.length > 4 ? 3: 12/reportOptions.data.length}} col-md-{{reportOptions.data.length>4? 3: 12/(reportOptions.data.length + 1)}} col-sm-12" ng-repeat="report in reportOptions.data | limitTo: 4">
+                        <div class="report-name">{{report.name}}</div>
+                        <div class="report-value" title="{{report.value | typeof}}" class="no-margins">{{report.value| typeof}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

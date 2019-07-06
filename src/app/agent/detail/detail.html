@@ -1,0 +1,35 @@
+<div class="ibox-title">
+    <div class="row actionButtons">
+        <div class="col-lg-5 ">
+            <h4><a ui-sref="agent.list" class="btn btn-primary btn-outline  btn-xs"><i class="fa fa-arrow-left" ></i></a>{{vm.agent.name.charAt(0).toUpperCase()+vm.agent.name.slice(1)}}</h4>
+        </div>
+        <div class="col-lg-7 pull-right">
+
+            <div class="pull-right">
+                <div ng-show="vm.activeTab == 0">
+                    <button class="btn btn-primary btn-outline btn-sm" permission="permissions.Agent.UpdateAgent" ng-click="vm.updateAgent()">Update</button>
+                    <button class="btn btn-primary btn-outline btn-sm" permission="permissions.Agent.SuspendAgent" ng-click="vm.suspend()">{{vm.agentStatus[vm.agent.isActive].action}}
+              </button>
+                </div>
+                <div ng-show="vm.activeTab == 1">
+                    <button class="btn btn-primary btn-outline btn-sm" permission="permissions.Agent.LinkUserAndAgent" ng-click="vm.LinkAgentAndUser()">Add</button>
+                    <!--<button class="btn btn-primary btn-outline btn-sm" permission="vm.permissions.LinkSupplierAndAgent"-->
+                    <!--ng-click="vm.removeSupplierAgent()">Remove</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ibox-content">
+    <uib-tabset id="agentDetail" active="vm.activeTab" justified="false">
+        <uib-tab index="0" heading="Detail" select="vm.tabChanged(0)">
+            <div ng-include="'app/agent/template/agent.detail.template.html'"></div>
+        </uib-tab>
+        <uib-tab index="1" heading="Representatives" select="vm.tabChanged(1)">
+            <div ng-include="'app/agent/template/agent.users.template.html'"></div>
+        </uib-tab>
+        <uib-tab index="2" heading="License Holders" select="vm.tabChanged(2)">
+            <div ng-include="'app/agent/template/agent.suppliers.template.html'"></div>
+        </uib-tab>
+    </uib-tabset>
+</div>

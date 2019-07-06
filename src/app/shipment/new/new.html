@@ -1,0 +1,28 @@
+<div class="ibox-content wizard ">
+    <li class="steps clearfix ">
+        <ul>
+            <li ui-sref-active="current" ng-class="{current: $state.is(vm.shipmentStates.registered) }">
+                <a ui-sref="{{vm.shipmentStates.registered}}" class="btn-default "><span>1.</span>Registered Import Permits</a>
+            </li>
+            <li ui-sref-active="current" ng-class="{current: $state.is(vm.shipmentStates.general)}">
+                <a ui-sref="{{vm.shipmentStates.general}}" ng-disabled="!vm.shipmentValidation.registeredApplication.$isValid && !vm.editMode" class="btn-default ">
+                    <span>2.</span> General</a>
+            </li>
+            <li ui-sref-active="current" ng-class="{current: $state.is(vm.shipmentStates.detail)}">
+                <a ui-sref="{{vm.shipmentStates.detail}}" ng-disabled="!vm.shipmentValidation.generalInformation.$isValid && !vm.editMode" class="btn-default ">
+                    <span>3.</span> Detail</a>
+            </li>
+        </ul>
+</div>
+<div class="wizard ">
+    <div class="content ">
+
+        <form name="shipmentForm " ng-submit="processForm() " class="p-sm no-padding" ng-validate-form="vm.shipmentValidation">
+
+            <!-- our nested state views will be injected here -->
+            <div id="form-views" ui-view="shipmentSteps "></div>
+        </form>
+
+    </div>
+</div>
+</div>
